@@ -8,8 +8,19 @@ which rows to auto-post and which to route to an AP clerk.
 Requires Python 3.9+.
 
 ```bash
+pip install -r requirements.txt
 python scripts/download_emnist.py   # downloads EMNIST ByClass (~0.5 GB) into data/emnist/
+python scripts/audit_emnist.py      # checks labels/orientation, writes outputs/emnist_audit/
 ```
 
 Data files are not committed; the script recreates them and verifies their
 checksums against `configs/emnist_sha256.json`.
+
+## Character data (`mlreader/emnist.py`)
+
+`load_split("train" | "val" | "test")` returns upright 28x28 images (white ink
+on black) and labels 0-35, decoded with `CLASSES = "0-9A-Z"`. Lowercase
+ByClass classes are dropped because Form ML-7 only holds digits and capitals.
+Validation is a stratified 10% of EMNIST train (seed 6642); test is EMNIST's
+own test split, which is also the only source of characters for synthetic
+test logs.
