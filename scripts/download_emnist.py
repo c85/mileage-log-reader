@@ -18,6 +18,7 @@ import hashlib
 import json
 import shutil
 import sys
+import urllib.error
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -33,6 +34,10 @@ BYCLASS_FILES = [
     "emnist-byclass-test-labels-idx1-ubyte.gz",
     "emnist-byclass-mapping.txt",
 ]
+
+# NIST's server answers 403 Forbidden to Python's default User-Agent, so
+# identify as a regular browser.
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = REPO_ROOT / "data" / "raw"
@@ -57,7 +62,16 @@ def download(url, dest):
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = dest.with_suffix(".part")  # avoid leaving a half file if interrupted
     print(f"Downloading {url}")
-    with urllib.request.urlopen(url) as resp, open(tmp, "wb") as out:
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    try:
+        resp = urllib.request.urlopen(request)
+    except urllib.error.HTTPError as e:
+        sys.exit(
+            f"ERROR: download refused ({e.code} {e.reason}).\n"
+            f"Download {url} in your browser instead, unzip it, copy the five\n"
+            f"emnist-byclass-* files into {OUT_DIR}, and re-run this script."
+        )
+    with resp, open(tmp, "wb") as out:
         total = int(resp.headers.get("Content-Length", 0))
         done = 0
         while chunk := resp.read(1 << 20):
