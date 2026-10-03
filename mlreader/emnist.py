@@ -11,12 +11,17 @@ Three things this module guarantees (each one is checked, not assumed):
 3. Splits: EMNIST ships train and test only. We carve a validation set out of
    train with a fixed seed, so every teammate gets the identical split.
 
+Two helpers for SCRUM-11:
+- class_weights(): per-class training weights that offset EMNIST's imbalance.
+- duplicate_indices(): finds images that appear in two splits (leakage check).
+
 Usage:
     from mlreader.emnist import load_split
     x_train, y_train = load_split("train")   # x: (N, 28, 28) uint8, y: (N,) int64
 """
 
 import gzip
+import hashlib
 from pathlib import Path
 
 import numpy as np
@@ -147,3 +152,40 @@ def load_split(split, data_dir=EMNIST_DIR):
         pick = train_idx if split == "train" else val_idx
         images, labels = images[pick], labels[pick]
     return images, labels
+
+
+def class_weights(labels):
+    """Training weight per class: weight[c] = N / (36 * count[c]).
+
+    EMNIST is imbalanced (digits are ~65% of train; letter K has ~1/16 the
+    images of digit 1), but on Form ML-7 letters are roughly uniform. Weighting
+    the loss by inverse class frequency makes every class count equally in
+    training, so the model doesn't learn to favor common characters. A class
+    with average frequency gets weight 1.0; rare letters get more.
+
+    Use with e.g. torch.nn.CrossEntropyLoss(weight=torch.tensor(w, dtype=torch.float32)).
+    """
+    counts = np.bincount(labels, minlength=NUM_CLASSES)
+    if (counts == 0).any():
+        missing = [CLASSES[c] for c in np.flatnonzero(counts == 0)]
+        raise ValueError(f"No training images for classes {missing}")
+    return len(labels) / (NUM_CLASSES * counts)
+
+
+def _image_hashes(images):
+    """A short fingerprint of each image's exact pixels."""
+    return [hashlib.blake2b(img.tobytes(), digest_size=8).digest() for img in images]
+
+
+def duplicate_indices(reference, query):
+    """Indices of images in `query` whose pixels exactly match an image in `reference`.
+
+    Used for the leakage check: a test image that also appears in train would
+    let the model be scored on something it has already seen.
+    """
+    seen = {}
+    for i, h in enumerate(_image_hashes(reference)):
+        seen.setdefault(h, i)
+    dup = [j for j, h in enumerate(_image_hashes(query))
+           if h in seen and np.array_equal(reference[seen[h]], query[j])]
+    return np.array(dup, dtype=np.int64)

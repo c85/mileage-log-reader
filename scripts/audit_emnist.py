@@ -1,4 +1,5 @@
-"""SCRUM-10 audit: prove the EMNIST input path is correct and report class coverage.
+"""SCRUM-10/11 audit: prove the EMNIST input path is correct, report class
+coverage and the imbalance weights, and check the splits for leakage.
 
 Usage (from the repo root, after scripts/download_emnist.py):
     python scripts/audit_emnist.py
@@ -9,6 +10,8 @@ Writes to outputs/emnist_audit/:
     class_counts.csv              images per class in train / val / test
     class_counts.png              bar chart of the train counts (shows the imbalance)
     split_summary.json            split sizes, seed, and imbalance figures
+    class_weights.csv             training weight per class (SCRUM-11 imbalance method)
+    leakage_check.json            exact-duplicate images shared between splits (SCRUM-11)
 """
 
 import csv
@@ -149,6 +152,29 @@ def main():
     }
     (OUT_DIR / "split_summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
+    # SCRUM-11: imbalance weights, computed from the training split only.
+    weights = emnist.class_weights(splits["train"][1])
+    with open(OUT_DIR / "class_weights.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["class", "type", "train_count", "weight"])
+        for c, ch in enumerate(emnist.CLASSES):
+            w.writerow([ch, "digit" if c < 10 else "letter", tr[c], round(float(weights[c]), 4)])
+
+    # SCRUM-11: leakage, i.e. identical images present in two splits.
+    print("Checking for images shared between splits (takes a minute)...")
+    x = {name: imgs for name, (imgs, _) in splits.items()}
+    pairs = {"test_in_train": ("train", "test"), "test_in_val": ("val", "test"),
+             "val_in_train": ("train", "val")}
+    leaks = {k: emnist.duplicate_indices(x[a], x[b]) for k, (a, b) in pairs.items()}
+    leakage = {
+        "method": "exact pixel match (blake2b hash, confirmed byte-for-byte)",
+        "counts": {k: int(v.size) for k, v in leaks.items()},
+        "test_indices_also_in_train_or_val": sorted(
+            set(leaks["test_in_train"].tolist()) | set(leaks["test_in_val"].tolist())),
+        "policy": "Synthetic test logs never use these test images (enforced in the generator).",
+    }
+    (OUT_DIR / "leakage_check.json").write_text(json.dumps(leakage, indent=2) + "\n")
+
     orientation_figure(OUT_DIR / "orientation_before_after.png")
     samples_figure(OUT_DIR / "samples_per_class.png", *splits["train"])
     counts_chart(OUT_DIR / "class_counts.png", tr)
@@ -157,6 +183,9 @@ def main():
     print(f"Digits are {summary['digits_share_of_train_pct']}% of train; largest class "
           f"{summary['largest_class'][0]} has {summary['largest_to_smallest_ratio']}x the "
           f"images of smallest class {summary['smallest_class'][0]}.")
+    print(f"Class weights range from {weights.min():.2f} ({emnist.CLASSES[weights.argmin()]}) to "
+          f"{weights.max():.2f} ({emnist.CLASSES[weights.argmax()]}).")
+    print("Duplicate images between splits:", json.dumps(leakage["counts"]))
     print(f"Wrote audit files to {OUT_DIR.relative_to(REPO_ROOT)}/")
 
 
