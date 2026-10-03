@@ -1,0 +1,7 @@
+{
+  "emnist-byclass-train-images-idx3-ubyte.gz": "9e21987f03a6eb8b870187e785883ddad96947299587908f1a7ec2ca0f4be5f0",
+  "emnist-byclass-train-labels-idx1-ubyte.gz": "f7ef403d48dc18a89dae0d83d11ee69cecb6e1c12c3a961d03712e495c02a8fa",
+  "emnist-byclass-test-images-idx3-ubyte.gz": "5ec835bd5d5b1a66378a132e727fef20fe994b3cc666899befcca5ac766f50cd",
+  "emnist-byclass-test-labels-idx1-ubyte.gz": "501e305eeeacb093b162592d80e8a2632040872360fa6d85cfcb2200d91ca92a",
+  "emnist-byclass-mapping.txt": "68fa9091ed325830418b5a8d732f32316e54a480b9f8994a161abb4eddd0d078"
+}
