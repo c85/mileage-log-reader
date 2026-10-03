@@ -23,9 +23,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from mlreader import emnist  # noqa: E402
+from mlreader import OUTPUT_DIR, REPO_ROOT, emnist  # noqa: E402
 
-OUT_DIR = emnist.REPO_ROOT / "outputs" / "emnist_audit"
+OUT_DIR = OUTPUT_DIR / "emnist_audit"
 SEED = 0  # only picks which examples appear in the figures
 
 # Chart colors: light surface, one blue series, neutral text and grid.
@@ -157,7 +157,7 @@ def main():
     print(f"Digits are {summary['digits_share_of_train_pct']}% of train; largest class "
           f"{summary['largest_class'][0]} has {summary['largest_to_smallest_ratio']}x the "
           f"images of smallest class {summary['smallest_class'][0]}.")
-    print(f"Wrote audit files to {OUT_DIR.relative_to(emnist.REPO_ROOT)}/")
+    print(f"Wrote audit files to {OUT_DIR.relative_to(REPO_ROOT)}/")
 
 
 if __name__ == "__main__":

@@ -3,6 +3,18 @@
 ISM 6642 final project: reads handwritten Form ML-7 mileage logs and decides
 which rows to auto-post and which to route to an AP clerk.
 
+## Folder layout
+
+| Folder | What goes in it |
+|---|---|
+| `mlreader/` | Reusable code (loaders, models, pipeline steps), one module per topic. Shared paths live in `mlreader/__init__.py`. |
+| `scripts/` | Short runnable commands (`python scripts/<name>.py`) that call `mlreader/`. No logic that another script would need. |
+| `configs/` | Small committed settings and checksums. |
+| `data/`, `outputs/` | Created by the scripts; never committed. |
+
+Add to an existing module before creating a new one, and check open branches
+and pull requests first so two people don't build the same thing.
+
 ## Setup
 
 Requires Python 3.9+.

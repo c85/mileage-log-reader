@@ -21,8 +21,7 @@ from pathlib import Path
 
 import numpy as np
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = REPO_ROOT / "data" / "emnist"
+from mlreader import EMNIST_DIR
 
 # Our class index i <-> CLASSES[i]. Identical to ByClass labels 0-35.
 CLASSES = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -60,7 +59,7 @@ def read_idx(path):
     return data.reshape(shape)
 
 
-def read_mapping(data_dir=DATA_DIR):
+def read_mapping(data_dir=EMNIST_DIR):
     """Read NIST's mapping file: each line is '<label> <ASCII code>'."""
     mapping = {}
     for line in (Path(data_dir) / "emnist-byclass-mapping.txt").read_text().split("\n"):
@@ -101,7 +100,7 @@ def check_orientation(images, labels):
     )
 
 
-def load_raw(prefix, data_dir=DATA_DIR):
+def load_raw(prefix, data_dir=EMNIST_DIR):
     """Load one raw EMNIST file pair, without filtering or orientation fix."""
     data_dir = Path(data_dir)
     images = read_idx(data_dir / f"{prefix}-images-idx3-ubyte.gz")
@@ -128,7 +127,7 @@ def train_val_indices(labels, seed=SPLIT_SEED, val_fraction=VAL_FRACTION):
     return np.sort(np.concatenate(train_idx)), np.sort(np.concatenate(val_idx))
 
 
-def load_split(split, data_dir=DATA_DIR):
+def load_split(split, data_dir=EMNIST_DIR):
     """Return (images, labels) for 'train', 'val' or 'test'.
 
     images: (N, 28, 28) uint8, upright, white ink on black like EMNIST.

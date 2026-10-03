@@ -23,6 +23,9 @@ import urllib.request
 import zipfile
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from mlreader import CONFIG_DIR, DATA_DIR, EMNIST_DIR, REPO_ROOT  # noqa: E402
+
 NIST_URL = "https://biometrics.nist.gov/cs_links/EMNIST/gzip.zip"
 
 # The only files we need from the zip: ByClass train/test images and labels,
@@ -39,10 +42,9 @@ BYCLASS_FILES = [
 # identify as a regular browser.
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-RAW_DIR = REPO_ROOT / "data" / "raw"
-OUT_DIR = REPO_ROOT / "data" / "emnist"
-CHECKSUM_FILE = REPO_ROOT / "configs" / "emnist_sha256.json"
+RAW_DIR = DATA_DIR / "raw"
+OUT_DIR = EMNIST_DIR
+CHECKSUM_FILE = CONFIG_DIR / "emnist_sha256.json"
 
 
 def sha256_of(path):
