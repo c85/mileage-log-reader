@@ -1,0 +1,10 @@
+# Downloaded datasets and generated outputs are rebuilt by scripts, never committed.
+data/
+outputs/
+
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+.DS_Store
