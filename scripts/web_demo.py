@@ -57,6 +57,8 @@ class DemoHandler(BaseHTTPRequestHandler):
     server_version = "MileageLogDemo/1.0"
 
     def log_message(self, format_string, *args):
+        if self.path == "/favicon.ico":
+            return
         print("%s - %s" % (self.address_string(), format_string % args))
 
     def _send_bytes(self, status, content_type, body, extra_headers=None):
@@ -97,6 +99,11 @@ class DemoHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlsplit(self.path)
+        if parsed.path == "/favicon.ico":
+            self.send_response(204)
+            self.send_header("Cache-Control", "public, max-age=86400")
+            self.end_headers()
+            return
         if parsed.path in {"/", "/index.html"}:
             try:
                 body = INDEX_FILE.read_bytes()
