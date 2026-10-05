@@ -57,7 +57,11 @@ class DemoHandler(BaseHTTPRequestHandler):
     server_version = "MileageLogDemo/1.0"
 
     def log_message(self, format_string, *args):
-        if self.path == "/favicon.ico":
+        if urlsplit(self.path).path in {
+            "/favicon.ico",
+            "/apple-touch-icon.png",
+            "/apple-touch-icon-precomposed.png",
+        }:
             return
         print("%s - %s" % (self.address_string(), format_string % args))
 
@@ -99,7 +103,11 @@ class DemoHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlsplit(self.path)
-        if parsed.path == "/favicon.ico":
+        if parsed.path in {
+            "/favicon.ico",
+            "/apple-touch-icon.png",
+            "/apple-touch-icon-precomposed.png",
+        }:
             self.send_response(204)
             self.send_header("Cache-Control", "public, max-age=86400")
             self.end_headers()
