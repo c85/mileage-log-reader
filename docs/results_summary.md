@@ -1,0 +1,116 @@
+# Results summary
+
+## Executive result
+
+The prototype can register the tested synthetic page captures and can learn
+EMNIST characters, but clean isolated-character accuracy does not transfer to
+the supplied handwritten sample reliably enough to justify posting a whole
+log. On the generated test set, the configured policy auto-posted 7 of 90
+rows (7.8%) with no errors among those 7; none of the 15 logs had every row
+eligible for auto-post. Under the conservative assumption that AP still keys
+any log containing a review row, the measured gross keying-cost saving is
+$0/month. This is a useful fail-closed result, not a production savings
+claim.
+
+## Registration spike
+
+The SCRUM-12 spike evaluated 15 synthetic blank-form captures: five clean,
+five rotated, and five with moderate perspective and shadow. All 15 pages
+registered; all 214 mapped character boxes per sample passed the four-edge
+grid check, and both odometer fields retained exactly six mapped cells. Mean
+corner error was 1.0 pixels for clean, 1.1 for rotated, and 0.4 for
+perspective/shadow. The full table and per-photo evidence are in
+`docs/spike_results.md` and `outputs/spike_registration/results.json`.
+
+This supports the tested blank-template capture conditions only. It does not
+measure handwriting segmentation or recognition.
+
+## Character classifier
+
+The model is a NumPy MLP trained from scratch for 10 epochs on 90,000 EMNIST
+ByClass training images (90,000 selected across all 36 classes). It uses
+192 ReLU hidden units, batch size 256, learning rate 0.001, inverse-frequency
+loss weights, and the same threshold/20 × 20/center-of-mass transform as
+inference. The final test set contains 89,262 images after excluding two
+exact duplicates shared with train or validation.
+
+| Held-out isolated-character metric | Result |
+|---|---:|
+| Unrestricted 36-class accuracy | 85.07% |
+| Unrestricted digit accuracy | 85.04% |
+| Unrestricted capital-letter accuracy | 85.14% |
+| Field-restricted accuracy | 95.73% |
+| Field-restricted digit accuracy | 97.44% |
+| Field-restricted capital-letter accuracy | 92.56% |
+| Macro accuracy across 36 restricted classes | 93.88% |
+
+The largest restricted test confusions were O→D (199), O→Q (112), U→V (107),
+9→4 (79), and S→J (75). B, E, U, Y, and N were the lowest-accuracy classes.
+Detailed results are in `outputs/model_eval/metrics.json` and
+`outputs/model_eval/test_confusion.csv`.
+
+## Synthetic end-to-end logs
+
+Fifteen six-row forms were rendered from leak-free EMNIST test characters,
+with five logs per capture condition. Every log deliberately has row 5 miles
+five miles away from its odometer difference; the total still matches the
+written mileage column. The set contains 2,220 non-empty cells, 495 fields,
+and 90 trip rows.
+
+| Metric | Result |
+|---|---:|
+| Character accuracy across generated forms | 97.48% (2,164 / 2,220) |
+| Digit accuracy | 97.92% (1,880 / 1,920) |
+| Capital-letter accuracy | 94.67% (284 / 300) |
+| Exact field accuracy | 90.10% (446 / 495) |
+| Exact row accuracy | 60.00% (54 / 90) |
+| Empty/unreadable cell crops among expected cells | 0 / 2,220 |
+| Rows routed to auto-post candidate | 7 / 90 (7.78%) |
+| Errors among auto-post candidates | 0 / 7 (0%; small synthetic sample) |
+| Logs with every row auto-post eligible | 0 / 15 |
+
+| Capture condition | Character accuracy | Exact row accuracy | Auto-post row share | Residual error among auto rows |
+|---|---:|---:|---:|---:|
+| Clean | 98.24% | 63.33% | 10.00% | 0 / 3 |
+| Rotated | 97.16% | 63.33% | 0.00% | n/a |
+| Perspective and shadow | 97.03% | 53.33% | 13.33% | 0 / 4 |
+
+The most frequent exact-field errors were client codes (14 of 15 logs had at
+least one), dates (9), odometer starts (8), and odometer ends (6). A cell
+crop with no usable ink is counted separately from a classifier read; these
+generated boxes had no crop failures. The classifier still made wrong reads,
+so `recognition_failures: 0` means it returned a class for every usable crop,
+not that every read was correct.
+
+The bundled clean scan (`examples/figure1_clean_scan.png`) is a harder
+handwriting-domain example. In a live run, the model read employee ID
+RC5107 as RC6107 and week ending 09/27/26 as 07/27/26. It also misread
+multiple odometer digits, including row 5's end value. All seven rows were
+sent to review even though there were no empty crops. This is the failure the
+demo should show: segmentation succeeded, while recognition and the business
+checks did not support a safe post.
+
+The supplied field-condition phone photo
+(`examples/figure2_phone_photo.jpg`) registers to the page, but the coffee
+ring and uneven shadow cause blank lower rows to look occupied. The run had
+nine cell-extraction failures and no model-output failures; all rows were
+routed to review. This capture is outside the successful synthetic blank-page
+spike conditions and demonstrates why registration success alone does not
+mean a form is readable.
+
+## Reproduction and limits
+
+```bash
+python scripts/run_spike.py
+python scripts/train_model.py
+python scripts/generate_synthetic_logs.py --count 15 --quality mixed --fault-row 5
+python scripts/evaluate_synthetic_logs.py
+```
+
+Generated logs use held-out EMNIST test images rather than train images, but
+they still share EMNIST's centered stroke style. The field-restricted result
+is not a phone-photo or handwritten-form accuracy claim. Thresholds are
+prototype settings, the 0/7 residual result is too small to establish a safe
+error rate, and the bundled handwriting example routes every row to a
+clerk. A larger, independently labeled set of team-filled made-up forms is
+required before raising the straight-through rate.
