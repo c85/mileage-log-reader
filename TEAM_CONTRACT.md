@@ -11,8 +11,8 @@ We, the members of Team 1, agree to the following commitments for the duration o
 
 ## 1. Time to meet
 
-- **Weekly sync:** Tuesdays, 7:30–8:30 PM. Review the previous week, plan the coming week, and groom the backlog.
-- **Weekly stand-up:** Thursdays, 7:30–7:45 PM. Give a brief done / doing / blockers update.
+- **Weekly sync:** Monday, 7:30–8:30 PM. Review the previous week, plan the coming week, and groom the backlog.
+- **Weekly stand-up:** Friday, 7:30–7:45 PM. Give a brief done / doing / blockers update.
 - **Response times:** Messages are answered within 12 hours. During an active sprint, blockers posted in the WhatsApp group chat are acknowledged within 4 hours.
 
 ## 2. Meeting tools
