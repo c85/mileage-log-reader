@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f7f6">
+  <title>Form ML-7 | Mileage Review Demo</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #132a35;
+      --muted: #60737a;
+      --line: #dce5e2;
+      --paper: #ffffff;
+      --canvas: #f4f7f5;
+      --teal: #087e78;
+      --teal-dark: #076660;
+      --teal-light: #e3f4f0;
+      --amber: #a95c08;
+      --amber-light: #fff2dc;
+      --red: #a63238;
+      --red-light: #fff0ef;
+      --green: #20734b;
+      --green-light: #e9f6ee;
+      --shadow: 0 12px 34px rgba(21, 48, 56, .07);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--canvas);
+      color: var(--ink);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; background: var(--canvas); }
+    button, input, select, textarea { font: inherit; }
+    button, .button { -webkit-tap-highlight-color: transparent; }
+    .shell { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .topbar { border-bottom: 1px solid var(--line); background: rgba(255,255,255,.85); }
+    .topbar-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 750; letter-spacing: -.02em; }
+    .brand-mark { width: 37px; height: 37px; display: grid; place-items: center; border-radius: 12px; color: white; background: var(--teal); }
+    .brand-mark svg { width: 22px; height: 22px; }
+    .top-tag { color: var(--teal-dark); background: var(--teal-light); border-radius: 999px; padding: 8px 12px; font-size: 12px; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
+    main { padding: 43px 0 70px; }
+    .hero { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 27px; }
+    .eyebrow { margin: 0 0 9px; color: var(--teal); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(29px, 4.4vw, 43px); line-height: 1.08; letter-spacing: -.045em; }
+    .hero-copy { max-width: 680px; margin: 12px 0 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
+    .local-tag { flex: none; color: #52676e; font-size: 12px; font-weight: 650; }
+    .panel { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+    .upload-panel { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr); gap: 24px; padding: 24px; }
+    .upload-copy h2, .section-title h2 { margin: 0; font-size: 18px; letter-spacing: -.02em; }
+    .upload-copy p { color: var(--muted); font-size: 13px; line-height: 1.55; margin: 7px 0 18px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .button { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 0 16px; border: 1px solid transparent; border-radius: 11px; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: 750; transition: background .15s, transform .15s, border-color .15s; }
+    .button:hover:not(:disabled) { transform: translateY(-1px); }
+    .button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid rgba(8,126,120,.24); outline-offset: 2px; }
+    .button-primary { color: white; background: var(--teal); }
+    .button-primary:hover:not(:disabled) { background: var(--teal-dark); }
+    .button-secondary { color: var(--ink); border-color: var(--line); background: white; }
+    .button-secondary:hover:not(:disabled) { background: #f7faf8; border-color: #bdcfca; }
+    .button:disabled { opacity: .45; cursor: not-allowed; }
+    .button svg { width: 18px; height: 18px; }
+    .file-input { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .dropzone { min-height: 158px; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 18px; border: 1px dashed #b7cbc5; border-radius: 14px; background: #f9fcfa; text-align: center; transition: background .15s, border-color .15s; }
+    .dropzone.dragover { border-color: var(--teal); background: var(--teal-light); }
+    .drop-icon { width: 37px; height: 37px; display: grid; place-items: center; margin-bottom: 9px; border-radius: 12px; color: var(--teal); background: var(--teal-light); }
+    .drop-icon svg { width: 20px; height: 20px; }
+    .dropzone strong { font-size: 13px; }
+    .dropzone span { color: var(--muted); font-size: 12px; margin-top: 5px; }
+    .preview { display: none; width: 100%; height: 212px; object-fit: contain; border-radius: 12px; background: #edf1ef; }
+    .preview.visible { display: block; }
+    .preview-name { display: none; overflow: hidden; margin-top: 9px; color: var(--muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+    .preview-name.visible { display: block; }
+    .run-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 14px; }
+    .hint { color: var(--muted); font-size: 11px; line-height: 1.45; }
+    .network-note { margin-top: 15px; padding: 12px 13px; border-radius: 10px; color: #52676e; background: #f3f7f5; font-size: 11px; line-height: 1.5; }
+    .network-note strong { color: var(--ink); }
+    .notice { display: flex; gap: 11px; align-items: flex-start; margin-top: 16px; padding: 13px 15px; border: 1px solid #f0d6a8; border-radius: 12px; color: #79500d; background: #fff9ed; font-size: 12px; line-height: 1.5; }
+    .notice svg { flex: none; width: 17px; height: 17px; margin-top: 1px; }
+    .notice strong { color: #684304; }
+    .loading { display: none; align-items: center; gap: 10px; margin-top: 14px; color: var(--teal-dark); font-size: 13px; font-weight: 700; }
+    .loading.visible { display: flex; }
+    .spinner { width: 17px; height: 17px; border: 2px solid #c4e3dc; border-top-color: var(--teal); border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error { display: none; margin-top: 13px; padding: 11px 13px; border-radius: 10px; color: var(--red); background: var(--red-light); font-size: 13px; line-height: 1.45; }
+    .error.visible { display: block; }
+    .results { display: none; margin-top: 28px; }
+    .results.visible { display: block; }
+    .results-head { display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 15px; }
+    .results-head h2 { margin: 0; font-size: 22px; letter-spacing: -.035em; }
+    .results-head p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+    .quiet-button { padding: 9px 11px; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); background: white; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .status-banner { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 17px 20px; border-radius: 15px; border: 1px solid; }
+    .status-banner.needs_review { color: #7a4d04; border-color: #efd9ae; background: var(--amber-light); }
+    .status-banner.auto_post { color: #185f3c; border-color: #c1e4ce; background: var(--green-light); }
+    .status-banner.reviewed { color: #245d68; border-color: #c8e1e4; background: #eaf6f7; }
+    .source-panel { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(170px, .8fr); gap: 17px; align-items: center; margin-bottom: 13px; padding: 12px; }
+    .source-panel img { display: block; width: 100%; max-height: 225px; object-fit: contain; border-radius: 9px; background: #eef2f0; }
+    .source-label { color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .source-label strong { display: block; margin-bottom: 4px; color: var(--ink); font-size: 13px; }
+    .status-lead { display: flex; align-items: center; gap: 12px; }
+    .status-symbol { width: 34px; height: 34px; flex: none; display: grid; place-items: center; border-radius: 50%; background: rgba(255,255,255,.72); font-weight: 900; }
+    .status-title { display: block; font-size: 14px; font-weight: 850; }
+    .status-copy { display: block; margin-top: 3px; font-size: 12px; opacity: .9; }
+    .status-side { max-width: 38%; text-align: right; font-size: 11px; line-height: 1.5; opacity: .9; }
+    .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 11px; margin: 14px 0; }
+    .stat { padding: 14px 15px; border: 1px solid var(--line); border-radius: 13px; background: white; }
+    .stat-label { display: block; color: var(--muted); font-size: 11px; font-weight: 650; }
+    .stat-value { display: block; margin-top: 5px; font-size: 20px; font-weight: 820; letter-spacing: -.04em; }
+    .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+    .overview-card { padding: 18px; }
+    .card-kicker { margin: 0 0 13px; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .header-values { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .value-label { display: block; color: var(--muted); font-size: 11px; }
+    .value-text { display: block; margin-top: 4px; font-size: 17px; font-weight: 760; letter-spacing: -.02em; overflow-wrap: anywhere; }
+    .value-sub { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
+    .check-pills { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+    .check-pill { padding: 6px 8px; border-radius: 7px; color: var(--green); background: var(--green-light); font-size: 10px; font-weight: 750; }
+    .check-pill.fail { color: var(--red); background: var(--red-light); }
+    .section-title { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 25px 0 11px; }
+    .section-title span { color: var(--muted); font-size: 12px; }
+    .rows-list { display: grid; gap: 9px; }
+    .trip-card { overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: white; }
+    .trip-card summary { display: grid; grid-template-columns: 55px minmax(100px, 1fr) minmax(150px, 1.3fr) minmax(85px, .7fr) minmax(120px, auto); align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; list-style: none; }
+    .trip-card summary::-webkit-details-marker { display: none; }
+    .trip-card summary:hover { background: #fbfdfc; }
+    .row-number { color: var(--muted); font-size: 11px; font-weight: 750; }
+    .row-main { min-width: 0; }
+    .row-main strong, .row-main span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .row-main strong { font-size: 13px; }
+    .row-main span { margin-top: 3px; color: var(--muted); font-size: 11px; }
+    .route-chip { display: inline-flex; align-items: center; justify-content: center; width: fit-content; max-width: 100%; padding: 7px 9px; border-radius: 8px; font-size: 10px; font-weight: 850; letter-spacing: .03em; text-transform: uppercase; white-space: nowrap; }
+    .route-chip.needs_review { color: #805204; background: var(--amber-light); }
+    .route-chip.auto_post { color: #21613e; background: var(--green-light); }
+    .route-chip.reviewed { color: #245d68; background: #eaf6f7; }
+    .row-detail { padding: 16px; border-top: 1px solid var(--line); background: #fcfdfc; }
+    .field-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .field-card { min-width: 0; padding: 12px; border: 1px solid var(--line); border-radius: 11px; background: white; }
+    .field-card-head { display: flex; justify-content: space-between; gap: 8px; }
+    .field-card-name { color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .confidence { color: var(--teal-dark); font-size: 10px; font-weight: 800; white-space: nowrap; }
+    .field-read { margin-top: 5px; font-size: 16px; font-weight: 780; letter-spacing: .04em; overflow-wrap: anywhere; }
+    .field-read.corrected { color: var(--teal-dark); }
+    .field-error { margin-top: 4px; color: var(--red); font-size: 10px; line-height: 1.4; }
+    .glyph-strip { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+    .glyph { width: 42px; padding: 4px 3px 3px; border: 1px solid #e5ebe8; border-radius: 7px; background: #f7faf8; text-align: center; }
+    .glyph img { display: block; width: 28px; height: 28px; margin: 0 auto; object-fit: contain; image-rendering: pixelated; }
+    .glyph-cap { margin-top: 2px; color: var(--muted); font-size: 9px; font-weight: 700; }
+    .alts { margin-top: 4px; color: #718187; font-size: 9px; line-height: 1.3; }
+    .checks-panel { margin-top: 13px; padding: 12px; border-radius: 11px; background: #f4f7f6; }
+    .checks-panel h4 { margin: 0 0 8px; color: #52676e; font-size: 10px; font-weight: 850; letter-spacing: .07em; text-transform: uppercase; }
+    .check-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 14px; }
+    .check-item { display: flex; align-items: flex-start; gap: 7px; color: #54696f; font-size: 11px; line-height: 1.4; }
+    .check-item.pass .check-icon { color: var(--green); }
+    .check-item.fail .check-icon { color: var(--red); }
+    .check-icon { flex: none; width: 14px; font-weight: 900; }
+    .global-issues { margin-top: 10px; color: var(--red); font-size: 11px; line-height: 1.5; }
+    .correction-panel { margin-top: 15px; padding: 17px 18px; }
+    .correction-head { display: flex; justify-content: space-between; gap: 18px; align-items: start; }
+    .correction-head h3 { margin: 0; font-size: 15px; }
+    .correction-head p { max-width: 510px; margin: 5px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .correction-form { display: grid; grid-template-columns: minmax(170px, .9fr) minmax(120px, .7fr) minmax(180px, 1.3fr) auto; gap: 9px; margin-top: 13px; }
+    .control { width: 100%; min-height: 42px; padding: 9px 10px; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); background: white; font-size: 12px; }
+    .correction-message { min-height: 17px; margin-top: 8px; color: var(--teal-dark); font-size: 11px; }
+    .audit-path { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; overflow-wrap: anywhere; }
+    .footer-note { margin-top: 17px; color: #74848a; font-size: 10px; line-height: 1.5; text-align: center; }
+    .no-rows { padding: 18px; border: 1px dashed #dfc38e; border-radius: 12px; color: #805204; background: #fffaf1; font-size: 12px; line-height: 1.5; }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 28px, 620px); }
+      main { padding-top: 28px; }
+      .hero { display: block; }
+      .local-tag { display: inline-block; margin-top: 13px; }
+      .upload-panel { grid-template-columns: 1fr; padding: 17px; gap: 17px; }
+      .dropzone { min-height: 126px; }
+      .preview { height: 190px; }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+      .overview-grid { grid-template-columns: 1fr; }
+      .trip-card summary { grid-template-columns: 32px 1fr auto; gap: 8px; padding: 12px; }
+      .trip-card summary .odo-main { grid-column: 2; }
+      .trip-card summary .row-route { grid-column: 3; grid-row: 1 / span 2; }
+      .trip-card summary .amount-main { display: none; }
+      .field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .correction-form { grid-template-columns: 1fr 1fr; }
+      .correction-form .reason-control { grid-column: 1 / -1; }
+      .correction-form .button { grid-column: 1 / -1; width: 100%; }
+      .status-banner { align-items: flex-start; }
+      .status-side { max-width: 36%; }
+      .source-panel { grid-template-columns: 1fr; }
+      .source-panel img { max-height: 210px; }
+    }
+    @media (max-width: 430px) {
+      .shell { width: calc(100% - 22px); }
+      .topbar-inner { min-height: 62px; }
+      .brand { font-size: 13px; }
+      .top-tag { padding: 7px 9px; font-size: 10px; }
+      h1 { font-size: 31px; }
+      .hero-copy { font-size: 13px; }
+      .actions { display: grid; grid-template-columns: 1fr 1fr; }
+      .button { min-height: 45px; padding: 0 9px; font-size: 12px; }
+      .run-row { align-items: flex-start; flex-direction: column-reverse; }
+      .run-row .button { width: 100%; }
+      .results-head { align-items: flex-start; }
+      .results-head h2 { font-size: 19px; }
+      .status-banner { padding: 13px; }
+      .status-side { display: none; }
+      .header-values { gap: 9px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .check-list { grid-template-columns: 1fr; }
+      .correction-head { display: block; }
+      .route-chip { font-size: 9px; padding: 6px 7px; }
+      .row-main strong { font-size: 12px; }
+      .row-main span { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 17.5 7.5 7l3.1 7.2L13 9l2.1 5.2L18 6.5 20 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
+        <span>Sabal Coast <span style="font-weight:500;color:#60737a">/ Mileage review</span></span>
+      </div>
+      <span class="top-tag">Course prototype</span>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Form ML-7 · Accounts Payable</p>
+        <h1>Review a mileage log</h1>
+        <p class="hero-copy">Capture or upload a made-up mileage form. The reader aligns the page, extracts its fields, checks the mileage, and shows which rows need a person to review them.</p>
+      </div>
+      <span class="local-tag">● Local demonstration · No ERP connection</span>
+    </section>
+
+    <section class="panel upload-panel" aria-labelledby="upload-title">
+      <div class="upload-copy">
+        <h2 id="upload-title">Add a form image</h2>
+        <p>Use the rear camera on a phone or choose a JPEG/PNG already on this device. Keep the full form in frame with good light.</p>
+        <div class="actions">
+          <label class="button button-primary" for="camera-input">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7.5h3l1.5-2h7l1.5 2h3A1.5 1.5 0 0 1 21.5 9v9a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 18V9A1.5 1.5 0 0 1 4 7.5Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="13" r="3.5" stroke="currentColor" stroke-width="1.8"/></svg>
+            Take a photo
+          </label>
+          <input id="camera-input" class="file-input" type="file" accept="image/*" capture="environment" aria-label="Take a picture of a mileage log">
+          <label class="button button-secondary" for="file-input">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14v4.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Choose a photo
+          </label>
+          <input id="file-input" class="file-input" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" aria-label="Choose a JPEG or PNG mileage-log image">
+        </div>
+        <div class="network-note"><strong>Using a phone?</strong> Start the app on your laptop with <code>--host 0.0.0.0</code>, then open the laptop’s Wi-Fi address on the phone. Both devices need to be on the same trusted Wi-Fi network.</div>
+      </div>
+      <div>
+        <div class="dropzone" id="dropzone">
+          <span class="drop-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14v4.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <strong id="drop-title">Your selected image will appear here</strong>
+          <span id="drop-subtitle">You can also drag and drop a JPEG or PNG.</span>
+        </div>
+        <img id="preview" class="preview" alt="Preview of the selected mileage log">
+        <div id="preview-name" class="preview-name"></div>
+        <div class="run-row">
+          <span class="hint">Best results: show all four page edges and avoid glare.</span>
+          <button class="button button-primary" id="analyze-button" type="button" disabled>Read this form <span aria-hidden="true">→</span></button>
+        </div>
+        <div class="loading" id="loading"><span class="spinner" aria-hidden="true"></span><span>Registering page and checking fields…</span></div>
+        <div class="error" id="upload-error" role="alert"></div>
+      </div>
+    </section>
+
+    <div class="notice" role="note">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5 2.9 19.2A1.2 1.2 0 0 0 4 21h16a1.2 1.2 0 0 0 1.1-1.8L12 3.5Z" stroke="currentColor" stroke-width="1.8"/><path d="M12 9v5m0 3h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <div><strong>Made-up forms only.</strong> Do not upload real mileage logs, employee records, expense forms, or patient information. A displayed reimbursement is a calculation for review; this prototype never approves or sends a payment.</div>
+    </div>
+
+    <section class="results" id="results" aria-live="polite">
+      <div class="results-head">
+        <div><h2>Read and review</h2><p id="result-filename"></p></div>
+        <button class="quiet-button" id="reset-button" type="button">Analyze another form</button>
+      </div>
+      <div class="panel source-panel"><img id="source-preview" alt="The uploaded Form ML-7 image"><div class="source-label"><strong>Submitted image</strong>Compare the original writing with the recognized values and cell crops below.</div></div>
+      <div class="status-banner needs_review" id="status-banner">
+        <div class="status-lead">
+          <span class="status-symbol" id="status-symbol">!</span>
+          <span><span class="status-title" id="status-title">Needs review</span><span class="status-copy" id="status-copy"></span></span>
+        </div>
+        <span class="status-side" id="status-side">No reimbursement is posted by this demo.</span>
+      </div>
+      <div class="stat-grid" id="stat-grid"></div>
+      <div class="overview-grid">
+        <div class="panel overview-card">
+          <p class="card-kicker">Form header</p>
+          <div class="header-values" id="header-values"></div>
+          <div class="check-pills" id="header-checks"></div>
+        </div>
+        <div class="panel overview-card">
+          <p class="card-kicker">Weekly mileage check</p>
+          <div class="header-values" id="total-values"></div>
+          <div id="global-issues"></div>
+        </div>
+      </div>
+      <div class="section-title"><h2>Trip rows</h2><span id="row-summary"></span></div>
+      <div class="rows-list" id="rows-list"></div>
+      <div class="panel correction-panel" id="correction-panel" hidden>
+        <div class="correction-head">
+          <div><h3>Reviewer correction</h3><p>Record a made-up correction with a reason. The reader keeps the original read, recalculates the checks, and appends an audit entry with the source crop evidence.</p></div>
+          <span class="route-chip reviewed">Human review</span>
+        </div>
+        <form class="correction-form" id="correction-form">
+          <select class="control" id="correction-field" aria-label="Field to correct"></select>
+          <input class="control" id="correction-value" type="text" maxlength="12" placeholder="Corrected value" aria-label="Corrected field value" required>
+          <input class="control reason-control" id="correction-reason" type="text" maxlength="500" placeholder="Reason for correction" aria-label="Reason for correction" required>
+          <button class="button button-secondary" id="correction-button" type="submit">Save correction</button>
+        </form>
+        <div class="correction-message" id="correction-message" role="status"></div>
+        <div class="audit-path" id="audit-path"></div>
+      </div>
+      <p class="footer-note">Prototype confidence and reference records are synthetic. “Auto-post candidate” is a demo route only; no payment, ERP update, or reimbursement approval occurs.</p>
+    </section>
+  </main>
+
+  <script>
+    "use strict";
+    var selectedFile = null;
+    var currentRunId = null;
+    var currentDocument = null;
+    var currentAuditFile = null;
+    var previewUrl = null;
+    var filePicker = document.getElementById("file-input");
+    var cameraPicker = document.getElementById("camera-input");
+    var preview = document.getElementById("preview");
+    var previewName = document.getElementById("preview-name");
+    var analyzeButton = document.getElementById("analyze-button");
+    var dropzone = document.getElementById("dropzone");
+
+    function escapeHtml(value) {
+      return String(value == null ? "" : value).replace(/[&<>"']/g, function(character) {
+        return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[character];
+      });
+    }
+
+    function confidenceText(value) {
+      return value == null || !Number.isFinite(Number(value)) ? "Not available" : (Number(value) * 100).toFixed(1) + "% confidence";
+    }
+
+    function fieldValue(field) {
+      if (!field) return "Unreadable";
+      return field.value || field.raw_value || "Unreadable";
+    }
+
+    function readFileAsDataUrl(file) {
+      return new Promise(function(resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function() { resolve(reader.result); };
+        reader.onerror = function() { reject(new Error("Could not read this image.")); };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function fileAsSupportedDataUrl(file) {
+      if (file.type === "image/jpeg" || file.type === "image/png") return readFileAsDataUrl(file);
+      if (!file.type || !file.type.startsWith("image/")) throw new Error("Choose a photo image in JPEG or PNG format.");
+      if (typeof createImageBitmap !== "function") throw new Error("This browser could not convert the photo. Choose a JPEG or PNG image.");
+      var bitmap;
+      try {
+        bitmap = await createImageBitmap(file);
+        var canvas = document.createElement("canvas");
+        canvas.width = bitmap.width;
+        canvas.height = bitmap.height;
+        var context = canvas.getContext("2d");
+        context.drawImage(bitmap, 0, 0);
+        bitmap.close();
+        var converted = await new Promise(function(resolve) { canvas.toBlob(resolve, "image/jpeg", 0.92); });
+        if (!converted) throw new Error("Could not convert this photo to JPEG.");
+        return readFileAsDataUrl(converted);
+      } catch (error) {
+        if (bitmap && typeof bitmap.close === "function") bitmap.close();
+        throw new Error("This browser could not convert the photo. Choose a JPEG or PNG image.");
+      }
+    }
+
+    function setError(message) {
+      var errorBox = document.getElementById("upload-error");
+      errorBox.textContent = message || "";
+      errorBox.classList.toggle("visible", Boolean(message));
+    }
+
+    function chooseFile(file) {
+      if (!file) return;
+      setError("");
+      if (!file.type.startsWith("image/")) {
+        setError("That file is not an image. Choose a JPEG or PNG photo.");
+        return;
+      }
+      if (file.size > 15 * 1024 * 1024) {
+        setError("Choose an image under 15 MB.");
+        return;
+      }
+      selectedFile = file;
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      previewUrl = URL.createObjectURL(file);
+      preview.src = previewUrl;
+      preview.classList.add("visible");
+      previewName.textContent = file.name + " · " + (file.size / (1024 * 1024)).toFixed(1) + " MB";
+      previewName.classList.add("visible");
+      document.getElementById("drop-title").textContent = "Photo ready to read";
+      document.getElementById("drop-subtitle").textContent = "Check that the full form is visible, then continue.";
+      dropzone.style.display = "none";
+      analyzeButton.disabled = false;
+    }
+
+    function handlePickerChange(event) {
+      chooseFile(event.target.files[0]);
+      event.target.value = "";
+    }
+    filePicker.addEventListener("change", handlePickerChange);
+    cameraPicker.addEventListener("change", handlePickerChange);
+    ["dragenter", "dragover"].forEach(function(name) {
+      dropzone.addEventListener(name, function(event) {
+        event.preventDefault();
+        dropzone.classList.add("dragover");
+      });
+    });
+    ["dragleave", "drop"].forEach(function(name) {
+      dropzone.addEventListener(name, function(event) {
+        event.preventDefault();
+        dropzone.classList.remove("dragover");
+      });
+    });
+    dropzone.addEventListener("drop", function(event) {
+      var files = event.dataTransfer && event.dataTransfer.files;
+      if (files && files.length) chooseFile(files[0]);
+    });
+
+    analyzeButton.addEventListener("click", async function() {
+      if (!selectedFile) return;
+      setError("");
+      analyzeButton.disabled = true;
+      document.getElementById("loading").classList.add("visible");
+      try {
+        var dataUrl = await fileAsSupportedDataUrl(selectedFile);
+        var response = await fetch("/api/read", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({filename: selectedFile.name, data_url: dataUrl})
+        });
+        var result = await response.json();
+        if (!response.ok) throw new Error(result.error || "The reader could not process this image.");
+        currentRunId = result.run_id;
+        currentAuditFile = result.audit_file;
+        renderResults(result.document, result.filename);
+      } catch (error) {
+        setError(error.message || "The reader could not process this image.");
+      } finally {
+        document.getElementById("loading").classList.remove("visible");
+        analyzeButton.disabled = !selectedFile;
+      }
+    });
+
+    function labelForCheck(name) {
+      var labels = {
+        employee_id_format: "Employee ID format",
+        employee_exists: "Employee is in synthetic reference data",
+        week_ending_format: "Week ending is a valid date",
+        week_ending_is_sunday: "Week ending is Sunday",
+        week_ending_within_last_60_days: "Week ending is within 60 days",
+        trip_date_format_and_in_week: "Trip date falls inside the week",
+        client_on_visit_schedule: "Client appears on the visit schedule",
+        odometer_end_after_start: "End odometer is greater than start",
+        odometer_continuity: "Odometers move forward",
+        miles_equals_odometer_difference: "Written miles match odometers",
+        weekly_total_matches: "Weekly total matches row miles"
+      };
+      return labels[name] || name.replace(/_/g, " ");
+    }
+
+    function routeLabel(route) {
+      if (route === "auto_post") return "Auto-post candidate";
+      if (route === "reviewed") return "Reviewed";
+      return "Needs review";
+    }
+
+    function routeClass(route) {
+      return route === "auto_post" ? "auto_post" : (route === "reviewed" ? "reviewed" : "needs_review");
+    }
+
+    function smallField(label, field, normalized) {
+      var value = fieldValue(field);
+      var confidence = field && field.confidence != null ? confidenceText(field.confidence) : "Confidence unavailable";
+      var secondary = normalized && normalized !== value ? '<span class="value-sub">Normalized: ' + escapeHtml(normalized) + '</span>' : '<span class="value-sub">' + escapeHtml(confidence) + '</span>';
+      return '<div><span class="value-label">' + escapeHtml(label) + '</span><span class="value-text">' + escapeHtml(value) + '</span>' + secondary + '</div>';
+    }
+
+    function confidencePills(checks) {
+      if (!checks) return "";
+      return Object.entries(checks).map(function(entry) {
+        var name = entry[0], passed = entry[1];
+        return '<span class="check-pill ' + (passed ? "" : "fail") + '">' + (passed ? "✓ " : "! ") + escapeHtml(labelForCheck(name)) + '</span>';
+      }).join("");
+    }
+
+    function glyphStrip(field, runId) {
+      if (!field || !Array.isArray(field.characters)) return "";
+      return '<div class="glyph-strip">' + field.characters.map(function(character) {
+        var imageUrl = "/api/cell?run_id=" + encodeURIComponent(runId)
+          + "&field=" + encodeURIComponent(field.field)
+          + "&position=" + encodeURIComponent(character.position);
+        var alts = (character.top_alternatives || []).slice(0, 3).map(function(alt) {
+          return escapeHtml(alt.character) + " " + confidenceText(alt.confidence);
+        }).join("<br>");
+        return '<div class="glyph"><img src="' + imageUrl + '" alt="Cell crop for ' + escapeHtml(field.field) + ', character ' + (character.position + 1) + '" loading="lazy"><div class="glyph-cap">' + escapeHtml(character.character) + ' · ' + (character.confidence == null ? "—" : (character.confidence * 100).toFixed(0) + "%") + '</div>' + (alts ? '<div class="alts">' + alts + '</div>' : "") + '</div>';
+      }).join("") + "</div>";
+    }
+
+    function fieldCard(label, field, runId) {
+      if (!field) return "";
+      var isCorrected = Boolean(field.correction);
+      var read = fieldValue(field);
+      var normalized = field.normalized_value && field.normalized_value !== read ? '<div class="value-sub">Normalized: ' + escapeHtml(field.normalized_value) + '</div>' : "";
+      var error = field.normalization_error ? '<div class="field-error">' + escapeHtml(field.normalization_error) + '</div>' : "";
+      var correction = isCorrected ? '<div class="field-error">Corrected from ' + escapeHtml(field.correction.original_value) + ': ' + escapeHtml(field.correction.reason) + '</div>' : "";
+      return '<div class="field-card"><div class="field-card-head"><span class="field-card-name">' + escapeHtml(label) + '</span><span class="confidence">' + escapeHtml(confidenceText(field.confidence)) + '</span></div><div class="field-read ' + (isCorrected ? "corrected" : "") + '">' + escapeHtml(read) + '</div>' + normalized + error + correction + glyphStrip(field, runId) + '</div>';
+    }
+
+    function renderCheckList(row) {
+      var checks = row.validation && row.validation.checks ? row.validation.checks : {};
+      var confidence = row.validation && row.validation.confidence_checks ? row.validation.confidence_checks : {};
+      var parts = Object.entries(checks).map(function(entry) {
+        return '<div class="check-item ' + (entry[1] ? "pass" : "fail") + '"><span class="check-icon">' + (entry[1] ? "✓" : "!") + '</span><span>' + escapeHtml(labelForCheck(entry[0])) + '</span></div>';
+      });
+      Object.entries(confidence).forEach(function(entry) {
+        parts.push('<div class="check-item ' + (entry[1].passed ? "pass" : "fail") + '"><span class="check-icon">' + (entry[1].passed ? "✓" : "!") + '</span><span>' + escapeHtml(entry[0].replace(/_/g, " ") + " confidence") + (entry[1].reason ? ": " + entry[1].reason : "") + '</span></div>');
+      });
+      var failed = row.validation && row.validation.route_reasons ? row.validation.route_reasons : [];
+      return '<div class="checks-panel"><h4>Validation evidence</h4><div class="check-list">' + parts.join("") + '</div>' + (failed.length ? '<div class="global-issues">Review reasons: ' + escapeHtml(failed.map(labelForCheck).join(", ")) + '</div>' : "") + '</div>';
+    }
+
+    function renderRow(row, runId) {
+      var fields = row.fields || {};
+      var validation = row.validation || {};
+      var route = validation.route || "needs_review";
+      var dateField = fields.date;
+      var dateValue = dateField && dateField.normalized_value ? dateField.normalized_value : fieldValue(dateField);
+      var odo = fieldValue(fields.odometer_start) + " → " + fieldValue(fields.odometer_end);
+      var routeCss = routeClass(route);
+      var showOpen = (validation.route_reasons || []).length > 0 && (validation.route_reasons || []).indexOf("miles_equals_odometer_difference") >= 0;
+      var fieldCards = [
+        fieldCard("Trip date", fields.date, runId),
+        fieldCard("Client", fields.client, runId),
+        fieldCard("Odometer start", fields.odometer_start, runId),
+        fieldCard("Odometer end", fields.odometer_end, runId),
+        fieldCard("Written miles", fields.miles, runId)
+      ].join("");
+      return '<details class="trip-card" ' + (showOpen ? "open" : "") + '><summary><span class="row-number">ROW ' + escapeHtml(row.row_number) + '</span><span class="row-main"><strong>' + escapeHtml(dateValue) + ' · ' + escapeHtml(fieldValue(fields.client)) + '</strong><span>Trip date and client</span></span><span class="row-main odo-main"><strong>' + escapeHtml(odo) + '</strong><span>Odometer start → end</span></span><span class="row-main amount-main"><strong>' + escapeHtml(validation.reimbursement == null ? "—" : "$" + validation.reimbursement) + '</strong><span>Calculated only</span></span><span class="route-chip ' + routeCss + ' row-route">' + escapeHtml(routeLabel(route)) + '</span></summary><div class="row-detail"><div class="field-grid">' + fieldCards + '</div>' + renderCheckList(row) + '</div></details>';
+    }
+
+    function collectCorrectionFields(doc) {
+      var fields = [];
+      if (doc.header) {
+        if (doc.header.employee_id) fields.push(["header.employee_id", "Employee ID", doc.header.employee_id]);
+        if (doc.header.week_ending) fields.push(["header.week_ending", "Week ending", doc.header.week_ending]);
+      }
+      (doc.rows || []).forEach(function(row) {
+        Object.entries(row.fields || {}).forEach(function(entry) {
+          fields.push(["rows." + row.row_number + "." + entry[0], "Row " + row.row_number + " · " + entry[0].replace(/_/g, " "), entry[1]]);
+        });
+      });
+      if (doc.footer && doc.footer.total_miles) fields.push(["footer.total_miles", "Weekly total miles", doc.footer.total_miles]);
+      return fields;
+    }
+
+    function updateCorrectionValue() {
+      var select = document.getElementById("correction-field");
+      var match = collectCorrectionFields(currentDocument).find(function(item) { return item[0] === select.value; });
+      document.getElementById("correction-value").value = match ? fieldValue(match[2]).replace(/\?/g, "") : "";
+    }
+
+    function renderResults(doc, filename) {
+      currentDocument = doc;
+      var registration = doc.registration || {};
+      var validation = doc.validation || {};
+      var rows = doc.rows || [];
+      var status = doc.status || validation.outcome || "needs_review";
+      var banner = document.getElementById("status-banner");
+      var statusClass = routeClass(status);
+      banner.className = "status-banner " + statusClass;
+      document.getElementById("status-symbol").textContent = status === "auto_post" ? "✓" : (status === "reviewed" ? "↺" : "!");
+      document.getElementById("status-title").textContent = status === "auto_post" ? "Auto-post candidate" : (status === "reviewed" ? "Reviewed by a person" : "Needs review");
+      document.getElementById("status-copy").textContent = status === "auto_post" ? "All detected rows passed this prototype’s configured checks." : "One or more fields need a person to verify or correct them.";
+      document.getElementById("status-side").textContent = "Demo route only · No payment is created, approved, or transmitted.";
+      document.getElementById("result-filename").textContent = filename + " · " + (registration.ok ? "Page registered with " + registration.method : "Page registration failed");
+      document.getElementById("source-preview").src = previewUrl || preview.src;
+
+      var reviewRows = rows.filter(function(row) { return !row.validation || row.validation.route !== "auto_post"; }).length;
+      var extractionCount = (doc.cell_extraction_failures || []).length;
+      var recognitionCount = (doc.recognition_failures || []).length;
+      var statItems = [
+        ["Trip rows found", rows.length],
+        ["Rows needing review", reviewRows],
+        ["Cell extraction issues", extractionCount],
+        ["Recognition issues", recognitionCount]
+      ];
+      document.getElementById("stat-grid").innerHTML = statItems.map(function(item) {
+        return '<div class="stat"><span class="stat-label">' + escapeHtml(item[0]) + '</span><span class="stat-value">' + escapeHtml(item[1]) + '</span></div>';
+      }).join("");
+
+      var header = doc.header || {};
+      var headerHtml = smallField("Employee ID", header.employee_id)
+        + smallField("Week ending", header.week_ending, header.week_ending && header.week_ending.normalized_value);
+      document.getElementById("header-values").innerHTML = headerHtml;
+      document.getElementById("header-checks").innerHTML = confidencePills(validation.header_checks);
+      var total = validation.weekly_total || {};
+      document.getElementById("total-values").innerHTML =
+        smallField("Written on form", doc.footer && doc.footer.total_miles)
+        + '<div><span class="value-label">Sum of row miles</span><span class="value-text">' + escapeHtml(total.sum_of_written_row_miles == null ? "Unavailable" : total.sum_of_written_row_miles) + '</span><span class="value-sub">' + (total.passed ? "Totals reconcile" : "Totals do not reconcile") + '</span></div>';
+      var issues = (validation.global_issues || []).map(labelForCheck);
+      if (!registration.ok && registration.reason) issues.push(registration.reason);
+      if (!doc.model_available && registration.ok) issues.push("Model checkpoint is unavailable; train it with the README setup steps.");
+      document.getElementById("global-issues").innerHTML = issues.length ? '<div class="global-issues">' + escapeHtml(issues.join(" · ")) + '</div>' : '<div class="check-pills"><span class="check-pill">' + (registration.ok ? "✓ Page registered" : "! Page needs review") + '</span><span class="check-pill ' + (total.passed ? "" : "fail") + '">' + (total.passed ? "✓ Total reconciles" : "! Total check failed") + '</span></div>';
+
+      document.getElementById("row-summary").textContent = rows.length ? reviewRows + " of " + rows.length + " rows need review" : "No readable trip rows";
+      var rowsList = document.getElementById("rows-list");
+      rowsList.innerHTML = rows.length ? rows.map(function(row) { return renderRow(row, currentRunId); }).join("") : '<div class="no-rows">' + escapeHtml(registration.ok ? "No trip rows were detected. Check the page and cell crops; this image is routed for review." : (registration.reason || "This image could not be aligned to the supported form.")) + '</div>';
+      renderCorrectionForm(doc);
+      document.getElementById("results").classList.add("visible");
+      document.getElementById("correction-message").textContent = "";
+      document.getElementById("audit-path").textContent = currentAuditFile ? "Audit file: " + currentAuditFile : "";
+      document.getElementById("results").scrollIntoView({behavior: "smooth", block: "start"});
+    }
+
+    function renderCorrectionForm(doc) {
+      var panel = document.getElementById("correction-panel");
+      var fields = collectCorrectionFields(doc);
+      panel.hidden = !doc.registration || !doc.registration.ok || fields.length === 0;
+      if (panel.hidden) return;
+      var select = document.getElementById("correction-field");
+      var priorValue = select.value;
+      select.innerHTML = fields.map(function(item) {
+        return '<option value="' + escapeHtml(item[0]) + '">' + escapeHtml(item[1]) + '</option>';
+      }).join("");
+      if (fields.some(function(item) { return item[0] === priorValue; })) select.value = priorValue;
+      updateCorrectionValue();
+    }
+
+    document.getElementById("correction-field").addEventListener("change", updateCorrectionValue);
+    document.getElementById("correction-form").addEventListener("submit", async function(event) {
+      event.preventDefault();
+      if (!currentRunId) return;
+      var button = document.getElementById("correction-button");
+      var message = document.getElementById("correction-message");
+      button.disabled = true;
+      message.textContent = "Saving correction and recalculating checks…";
+      try {
+        var response = await fetch("/api/correct", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            run_id: currentRunId,
+            field_path: document.getElementById("correction-field").value,
+            value: document.getElementById("correction-value").value,
+            reason: document.getElementById("correction-reason").value
+          })
+        });
+        var result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Could not save this correction.");
+        currentAuditFile = result.audit_file;
+        renderResults(result.document, document.getElementById("result-filename").textContent.split(" · ")[0]);
+        message.textContent = "Correction saved. Updated route: " + (result.audit_outcome === "reviewed_ready_for_manual_entry" ? "ready for manual entry" : "still needs review") + ".";
+        document.getElementById("audit-path").textContent = "Audit file: " + currentAuditFile;
+        document.getElementById("correction-reason").value = "";
+      } catch (error) {
+        message.textContent = error.message || "Could not save this correction.";
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    document.getElementById("reset-button").addEventListener("click", function() {
+      selectedFile = null;
+      currentRunId = null;
+      currentDocument = null;
+      currentAuditFile = null;
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      previewUrl = null;
+      filePicker.value = "";
+      cameraPicker.value = "";
+      preview.removeAttribute("src");
+      document.getElementById("source-preview").removeAttribute("src");
+      preview.classList.remove("visible");
+      previewName.textContent = "";
+      previewName.classList.remove("visible");
+      dropzone.style.display = "flex";
+      document.getElementById("drop-title").textContent = "Your selected image will appear here";
+      document.getElementById("drop-subtitle").textContent = "You can also drag and drop a JPEG or PNG.";
+      analyzeButton.disabled = true;
+      document.getElementById("results").classList.remove("visible");
+      document.getElementById("correction-message").textContent = "";
+      setError("");
+      window.scrollTo({top: 0, behavior: "smooth"});
+    });
+  </script>
+</body>
+</html>

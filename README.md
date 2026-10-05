@@ -28,7 +28,34 @@ by Git. The checksum file in `configs/` pins the five ByClass files used by the
 loader. Training writes `data/models/emnist_mlp.npz`; measured model outputs
 go under `outputs/model_eval/`.
 
-## Run the demo
+## Run the browser demo
+
+After the setup above, start the presentation interface with:
+
+~~~bash
+python scripts/web_demo.py
+~~~
+
+Open the printed address in a browser, then choose **Take a photo** on a
+supported mobile browser or **Choose a photo** to upload a JPEG or PNG. The
+page shows registration, field reads and confidence, cell crops, business
+checks, row routing, and the correction audit flow. It is a local prototype;
+it does not post reimbursements.
+
+To use a phone camera while the server runs on a laptop, connect both devices
+to the same trusted Wi-Fi network and start the server on the laptop with:
+
+~~~bash
+python scripts/web_demo.py --host 0.0.0.0
+~~~
+
+Open the laptop's Wi-Fi address printed by the server on the phone. The
+camera button requests the rear camera where the browser supports it; the
+file-picker button remains available as a fallback. Use synthetic or
+made-up forms only. Uploaded images and corrections are stored under the
+Git-ignored outputs/web_demo/ directory.
+
+## Terminal fallback
 
 After the setup above, this is the one command to try a new image:
 

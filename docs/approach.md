@@ -78,7 +78,11 @@ checks is an auto-post candidate.
 `--correction rows.5.miles=047 --reason "..."`; the original prediction,
 corrected value, reason, source cell crops, and recalculated check result go
 to an append-only JSONL file. A corrected row remains marked as reviewed; it
-does not become an unreviewed automatic post.
+does not become an unreviewed automatic post. The browser interface accepts
+local image uploads and camera photos from a phone connected to the laptop's
+local network. It shows page registration, field values, cell crops,
+confidence, validation checks, and row routing. The CLI remains available as
+a fallback.
 
 ## Data and model choices
 

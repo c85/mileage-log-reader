@@ -20,6 +20,30 @@ reference/arithmetic checks, and confidence routing. Defend three choices:
 
 ## Live run — 3 minutes
 
+For the classroom presentation, start the browser interface:
+
+~~~bash
+python scripts/web_demo.py
+~~~
+
+Generate a known-failing synthetic log, select its image in the browser, and
+expand row 5 to show the cell crops, confidence, odometer mismatch, and review
+route:
+
+~~~bash
+python scripts/generate_synthetic_logs.py --count 1 --quality clean --fault-row 5
+~~~
+
+On a phone connected to the laptop's trusted Wi-Fi, start the server with
+~~~bash
+python scripts/web_demo.py --host 0.0.0.0
+~~~
+and open the laptop's Wi-Fi address on the phone. Use **Take a photo** for a
+made-up form; the regular image picker is the fallback. The correction panel
+can demonstrate SCRUM-28 and show where its audit record is saved.
+
+If the browser is unavailable, use the CLI fallback:
+
 Generate the known failing input and run it:
 
 ```bash
