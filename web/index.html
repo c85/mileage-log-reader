@@ -73,9 +73,6 @@
     .hint { color: var(--muted); font-size: 11px; line-height: 1.45; }
     .network-note { margin-top: 15px; padding: 12px 13px; border-radius: 10px; color: #52676e; background: #f3f7f5; font-size: 11px; line-height: 1.5; }
     .network-note strong { color: var(--ink); }
-    .notice { display: flex; gap: 11px; align-items: flex-start; margin-top: 16px; padding: 13px 15px; border: 1px solid #f0d6a8; border-radius: 12px; color: #79500d; background: #fff9ed; font-size: 12px; line-height: 1.5; }
-    .notice svg { flex: none; width: 17px; height: 17px; margin-top: 1px; }
-    .notice strong { color: #684304; }
     .loading { display: none; align-items: center; gap: 10px; margin-top: 14px; color: var(--teal-dark); font-size: 13px; font-weight: 700; }
     .loading.visible { display: flex; }
     .spinner { width: 17px; height: 17px; border: 2px solid #c4e3dc; border-top-color: var(--teal); border-radius: 50%; animation: spin .8s linear infinite; }
@@ -270,11 +267,6 @@
         <div class="error" id="upload-error" role="alert"></div>
       </div>
     </section>
-
-    <div class="notice" role="note">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5 2.9 19.2A1.2 1.2 0 0 0 4 21h16a1.2 1.2 0 0 0 1.1-1.8L12 3.5Z" stroke="currentColor" stroke-width="1.8"/><path d="M12 9v5m0 3h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <div><strong>Made-up forms only.</strong> Do not upload real mileage logs, employee records, expense forms, or patient information. A displayed reimbursement is a calculation for review; this prototype never approves or sends a payment.</div>
-    </div>
 
     <section class="results" id="results" aria-live="polite">
       <div class="results-head">
