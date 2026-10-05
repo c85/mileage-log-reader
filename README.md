@@ -16,11 +16,16 @@ or connect to an ERP.
 
 Use Python 3.10 or newer.
 
+The commands below create a local virtual environment and use its Python for
+every install and run command. The paths shown are for macOS/Linux; on Windows
+replace .venv/bin/python with .venv\Scripts\python.exe.
+
 ```bash
-python -m pip install -r requirements.txt
-python scripts/download_emnist.py
-python scripts/audit_emnist.py
-python scripts/train_model.py
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python scripts/download_emnist.py
+.venv/bin/python scripts/audit_emnist.py
+.venv/bin/python scripts/train_model.py
 ```
 
 The data download is about 0.5 GB. It is kept under `data/`, which is ignored
@@ -33,7 +38,7 @@ go under `outputs/model_eval/`.
 After the setup above, start the presentation interface with:
 
 ~~~bash
-python scripts/web_demo.py
+.venv/bin/python scripts/web_demo.py
 ~~~
 
 Open the printed address in a browser, then choose **Take a photo** on a
@@ -46,7 +51,7 @@ To use a phone camera while the server runs on a laptop, connect both devices
 to the same trusted Wi-Fi network and start the server on the laptop with:
 
 ~~~bash
-python scripts/web_demo.py --host 0.0.0.0
+.venv/bin/python scripts/web_demo.py --host 0.0.0.0
 ~~~
 
 Open the laptop's Wi-Fi address printed by the server on the phone. The
@@ -60,18 +65,18 @@ Git-ignored outputs/web_demo/ directory.
 After the setup above, this is the one command to try a new image:
 
 ```bash
-python scripts/demo.py /path/to/form_ml7_photo.jpg
+.venv/bin/python scripts/demo.py /path/to/form_ml7_photo.jpg
 ```
 
 The bundled clean sample demonstrates the known row-mile discrepancy from
 the project brief:
 
 ```bash
-python scripts/demo.py examples/figure1_clean_scan.png
+.venv/bin/python scripts/demo.py examples/figure1_clean_scan.png
 ```
 
 The phone-photo sample is available at `examples/figure2_phone_photo.jpg`.
-Run it with `python scripts/demo.py examples/figure2_phone_photo.jpg` to see
+Run it with `.venv/bin/python scripts/demo.py examples/figure2_phone_photo.jpg` to see
 how the current prototype routes a difficult capture.
 The default policy and reference records are explicitly synthetic and live in
 `configs/reader_policy.json` and `configs/reference_data.json`. Unknown
@@ -87,7 +92,7 @@ outcome are appended to `correction_audit.jsonl`.
 ## Reproduce the registration spike
 
 ```bash
-python scripts/run_spike.py
+.venv/bin/python scripts/run_spike.py
 ```
 
 This creates 15 synthetic blank-form captures (clean, rotated, and
@@ -98,8 +103,8 @@ handwriting accuracy.
 ## Generate and measure synthetic logs
 
 ```bash
-python scripts/generate_synthetic_logs.py --count 15 --quality mixed --fault-row 5
-python scripts/evaluate_synthetic_logs.py
+.venv/bin/python scripts/generate_synthetic_logs.py --count 15 --quality mixed --fault-row 5
+.venv/bin/python scripts/evaluate_synthetic_logs.py
 ```
 
 The generator draws characters only from the EMNIST ByClass test split and
@@ -113,13 +118,13 @@ disagree with its odometers while keeping the weekly total aligned with the
 written-mile column. To inspect one of those failures in the demo, run:
 
 ```bash
-python scripts/demo.py outputs/synthetic_logs/log_001_clean.jpg
+.venv/bin/python scripts/demo.py outputs/synthetic_logs/log_001_clean.jpg
 ```
 
 ## Automated regression suite
 
 ```bash
-python -m unittest discover -s tests
+.venv/bin/python -m unittest discover -s tests
 ```
 
 It uses made-up reference data only. No real mileage logs, employee records,

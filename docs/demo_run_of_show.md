@@ -23,7 +23,7 @@ reference/arithmetic checks, and confidence routing. Defend three choices:
 For the classroom presentation, start the browser interface:
 
 ~~~bash
-python scripts/web_demo.py
+.venv/bin/python scripts/web_demo.py
 ~~~
 
 Generate a known-failing synthetic log, select its image in the browser, and
@@ -31,12 +31,12 @@ expand row 5 to show the cell crops, confidence, odometer mismatch, and review
 route:
 
 ~~~bash
-python scripts/generate_synthetic_logs.py --count 1 --quality clean --fault-row 5
+.venv/bin/python scripts/generate_synthetic_logs.py --count 1 --quality clean --fault-row 5
 ~~~
 
 On a phone connected to the laptop's trusted Wi-Fi, start the server with
 ~~~bash
-python scripts/web_demo.py --host 0.0.0.0
+.venv/bin/python scripts/web_demo.py --host 0.0.0.0
 ~~~
 and open the laptop's Wi-Fi address on the phone. Use **Take a photo** for a
 made-up form; the regular image picker is the fallback. The correction panel
@@ -47,18 +47,18 @@ If the browser is unavailable, use the CLI fallback:
 Generate the known failing input and run it:
 
 ```bash
-python scripts/generate_synthetic_logs.py --count 1 --quality clean --fault-row 5
-python scripts/demo.py outputs/synthetic_logs/log_001_clean.jpg
+.venv/bin/python scripts/generate_synthetic_logs.py --count 1 --quality clean --fault-row 5
+.venv/bin/python scripts/demo.py outputs/synthetic_logs/log_001_clean.jpg
 ```
 
 Point out rows that pass and rows sent to review. The generator deliberately
 makes row 5's written miles disagree with its odometer difference while the
 weekly total still matches the written column. Explain every displayed
 review reason. Then, if time allows, run
-`python scripts/demo.py examples/figure1_clean_scan.png` to show how a clean
+`.venv/bin/python scripts/demo.py examples/figure1_clean_scan.png` to show how a clean
 looking handwriting sample can still produce confident but wrong reads.
 The field-condition phone sample is another useful failure:
-`python scripts/demo.py examples/figure2_phone_photo.jpg`. Registration
+`.venv/bin/python scripts/demo.py examples/figure2_phone_photo.jpg`. Registration
 works, but the coffee ring and shadows trigger spurious occupied cells and
 the values are routed to review.
 
