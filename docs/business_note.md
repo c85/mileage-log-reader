@@ -2,6 +2,8 @@
 
 ## Recommended policy
 
+Keep clerk approval for reimbursements. Use the prototype to flag cases for
+review while testing whether it reduces clerk handling time. 
 Do not post a row just because its characters look confident. Make a row an
 auto-post candidate only when the image is registered, every required
 character has confidence above the configured threshold, the employee and
@@ -36,19 +38,16 @@ Let `q` be the measured share of logs for which **every** row passes policy.
 If any row needs review and AP still keys the full log, the rough handling
 cost is:
 
-| Fully auto-posted log share `q` | Logs still keyed | Keying cost | Gross keying cost avoided |
+| Fully auto-posted log share `q` | Logs still keyed | Monthly Keying cost | Gross keying cost avoided |
 |---:|---:|---:|---:|
 | 0% | 10,000 | $34,000 | $0 |
 | 50% | 5,000 | $17,000 | $17,000 |
 | 80% | 2,000 | $6,800 | $27,200 |
 
-These are scenarios, not measured savings. They assume no partial-log review
-and exclude software, monitoring, exception handling, audit, payroll tax,
-false-post, and correction costs. `scripts/evaluate_synthetic_logs.py` writes
-the same transparent scenario using the observed fully auto-posted log
-share. It reports residual errors among posted rows separately; those errors
-must be costed by field and odometer position before a CFO business case is
-made.
+These are scenarios, not measured savings. They assume the remaining logs
+still cost $3.40 each to key. Software, monitoring, review, audit and error
+costs have not been measured; additional costs reduce the gross opportunity.
+Partial-row assistance needs its own measured handling cost.
 
 In the current 15-log synthetic evaluation, **0 of 15 logs** passed every
 row, so the conservative gross keying cost avoided is $0 per month. Seven of
