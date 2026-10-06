@@ -151,16 +151,24 @@ transcriptions are in that folder; one row preserves a written mileage value
 that differs from its odometer change. Use them to inspect recognition errors
 and guide changes, but do not treat their scores as held-out performance.
 They guided printed-template alignment, local box cleanup and border-stroke
-recovery while keeping the original model weights. Preprocessing was settled before the 12-form evaluation
+recovery and cell lighting correction while keeping the original model weights.
+Preprocessing was settled before the 12-form evaluation
 was rerun. Versioned scores are in `docs/results_summary.md`; current detailed
-outputs use `outputs/development_forms_border_eval/` and
-`outputs/team_filled_border_eval/`. The earlier v1 comparisons remain under
-the corresponding `*_preprocessed_eval/` directories. Nine derived views
+outputs use `outputs/development_forms_lighting_eval/` and
+`outputs/team_filled_lighting_eval/`. Earlier v1 and v2 comparisons remain
+under the corresponding `*_preprocessed_eval/` and `*_border_eval/`
+directories. Nine derived views
 (1-degree rotation, JPEG quality 70 and intensity ×0.85 +15, each applied to
 the three original development PNGs) checked capture sensitivity before
 freezing border recovery. These are repeated views of the same handwriting,
 not additional independent forms; their metrics are in
 `outputs/border_capture_development/{v1,v2}/`.
+
+A separate nine-view lighting check used intensity ×0.45 +140, a horizontal
+illumination ramp from 0.65 to 1.0, and their combination on each original
+development PNG, clipping and rounding to uint8. These are deliberately
+difficult paired views, not additional writers. V2/v3 metrics and derived
+images are in `outputs/lighting_capture_development/`.
 
 The 12 team-filled photos in `examples/team_filled_forms/` have made-up values
 and hand-labeled fields in `ground_truth.csv` (67 trip rows). They are scored

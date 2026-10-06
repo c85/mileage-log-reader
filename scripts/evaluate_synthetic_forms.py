@@ -244,6 +244,7 @@ def _case_score(case):
         "model_available": bool(document.get("model_available")),
         "preprocessing_warning_cells": document.get("preprocessing", {}).get("cells_requiring_review", 0),
         "border_recovered_cells": document.get("preprocessing", {}).get("border_recovered_cells", 0),
+        "lighting_adjusted_cells": document.get("preprocessing", {}).get("lighting_adjusted_cells", 0),
         "character_count": char_count,
         "correct_characters": char_correct,
         "character_accuracy": char_correct / char_count if char_count else None,
@@ -296,6 +297,7 @@ def _aggregate(case_scores):
             "trip_rows", "exact_rows", "extra_predicted_rows", "cell_extraction_successes",
             "auto_post_rows", "incorrect_auto_post_rows",
             "preprocessing_warning_cells", "border_recovered_cells",
+            "lighting_adjusted_cells",
         ):
             totals[name] += case[name]
         for label, row in zip(CLASSES, case["character_confusion"]):
@@ -323,6 +325,7 @@ def _aggregate(case_scores):
         "images": len(case_scores),
         "preprocessing_warning_cells": totals["preprocessing_warning_cells"],
         "border_recovered_cells": totals["border_recovered_cells"],
+        "lighting_adjusted_cells": totals["lighting_adjusted_cells"],
         "registered_images": sum(case["registration_ok"] for case in case_scores),
         "registration_success_rate": (
             sum(case["registration_ok"] for case in case_scores) / len(case_scores)

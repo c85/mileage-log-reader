@@ -52,7 +52,7 @@ expected business-check failures. Valid written values do not guarantee
 automatic approval: confidence and the team's review policy still apply.
 Keep these evaluation characters out of training, and keep related image
 variants together when grouping results. Run
-`.venv/bin/python scripts/evaluate_synthetic_forms.py --output-dir outputs/synthetic_forms_border_eval` to score the pack; the
+`.venv/bin/python scripts/evaluate_synthetic_forms.py --output-dir outputs/synthetic_forms_lighting_eval` to score the pack; the
 separate summary is in `docs/results_summary.md`.
 
 These are the same 18 images as the complete dataset package. Their answers

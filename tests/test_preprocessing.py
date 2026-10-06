@@ -11,7 +11,7 @@ from mlreader.layout import CANVAS_HEIGHT, CANVAS_WIDTH, FIELDS
 from mlreader.fields import assemble_field
 from mlreader.pipeline import _predict_cell
 from mlreader.registration import (
-    BORDER_RECOVERY_WARNING, CellCrop, _recover_border_ink,
+    BORDER_RECOVERY_WARNING, LIGHTING_WARNING, CellCrop, _prepare_cell_gray, _recover_border_ink,
     extract_cells, normalize_cell, register_page,
 )
 
@@ -88,6 +88,75 @@ class PreprocessingTests(unittest.TestCase):
         cell = extract_cells(image)["header.employee_id"][0]
         self.assertEqual(cell.extraction_status, "ok")
         self.assertIn("Writing touches the crop boundary and may be clipped.", cell.preprocessing_issues)
+
+
+class CellLightingTests(unittest.TestCase):
+    def test_clear_ink_keeps_original_mask(self):
+        gray = np.full((52, 52), 255, np.uint8)
+        gray[10:40, 20:25] = 20
+        prepared, details = _prepare_cell_gray(gray)
+        self.assertIs(prepared, gray)
+        self.assertIsNone(details)
+
+    def test_faint_stroke_uses_the_existing_normalization(self):
+        gray = np.full((52, 52), 255, np.uint8)
+        gray[10:40, 20:25] = 175
+        self.assertEqual(normalize_cell(gray)[1], "empty")
+        prepared, details = _prepare_cell_gray(gray)
+        normalized, status, pixels, _ = normalize_cell(prepared)
+        self.assertEqual(status, "ok")
+        self.assertEqual(pixels, 150)
+        self.assertTrue(details["faint_ink"])
+        dark = gray.copy()
+        dark[10:40, 20:25] = 20
+        np.testing.assert_array_equal(normalized, normalize_cell(dark)[0])
+
+    def test_smooth_shadow_does_not_become_handwriting(self):
+        gray = np.tile(np.linspace(140, 255, 52).astype(np.uint8), (52, 1))
+        prepared, details = _prepare_cell_gray(gray)
+        self.assertTrue(details["uneven_lighting"])
+        self.assertEqual(normalize_cell(prepared)[1:3], ("empty", 0))
+
+    def test_shadow_removal_preserves_the_actual_stroke(self):
+        gray = np.tile(np.linspace(140, 255, 52).astype(np.uint8), (52, 1))
+        gray[10:40, 20:25] = 20
+        prepared, details = _prepare_cell_gray(gray)
+        self.assertTrue(details["uneven_lighting"])
+        self.assertEqual(normalize_cell(prepared)[1:3], ("ok", 150))
+
+    def test_pale_specks_do_not_create_characters(self):
+        gray = np.full((52, 52), 255, np.uint8)
+        gray[20:23, 20:23] = 175
+        prepared, details = _prepare_cell_gray(gray)
+        self.assertIsNone(details)
+        self.assertEqual(normalize_cell(prepared)[1], "empty")
+
+    def test_extremely_dark_image_is_still_unreadable(self):
+        gray = np.zeros((52, 52), np.uint8)
+        prepared, details = _prepare_cell_gray(gray)
+        self.assertIsNone(details)
+        self.assertEqual(normalize_cell(prepared)[1], "unreadable")
+
+    def test_faint_cell_keeps_raw_source_and_adjustment_evidence(self):
+        image = cv2.imread(str(REPO_ROOT / "assets/form_ml7_blank.png"))
+        left, top, _, _ = FIELDS["header.employee_id"][0].rect
+        cv2.putText(image, "7", (left + 15, top + 45), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (175, 175, 175), 2)
+        cell = extract_cells(image)["header.employee_id"][0]
+        self.assertEqual(cell.extraction_status, "ok")
+        self.assertIn(LIGHTING_WARNING, cell.preprocessing_issues)
+        x0, y0, x1, y1 = cell.crop_rect
+        np.testing.assert_array_equal(cell.image, image[y0:y1, x0:x1])
+        field = assemble_field("header.employee_id", [_predict_cell(cell, None)] * 6)
+        self.assertTrue(field["characters"][0]["lighting_adjustment"]["applied"])
+
+    def test_unverified_box_does_not_get_lighting_adjustment(self):
+        image = np.full((CANVAS_HEIGHT, CANVAS_WIDTH, 3), 255, np.uint8)
+        left, top, _, _ = FIELDS["header.employee_id"][0].rect
+        cv2.putText(image, "7", (left + 15, top + 45), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (175, 175, 175), 2)
+        cell = extract_cells(image)["header.employee_id"][0]
+        self.assertIsNone(cell.lighting_adjustment)
+        self.assertEqual(cell.extraction_status, "empty")
+        self.assertTrue(cell.preprocessing_issues)
 
 
 class BorderRecoveryTests(unittest.TestCase):

@@ -61,7 +61,7 @@ discarding substantial handwriting connected to an edge. Dark pixels become
 white ink on black; the glyph is fit within a
 20 × 20 area and centered by its mass in a 28 × 28 frame. The same transform
 is applied to EMNIST train, validation, and test characters. The original model
-weights and ink threshold remain in use. Unverified borders and handwriting
+weights and default ink threshold remain in use. Unverified borders and handwriting
 touching a crop boundary are retained as review warnings with each character.
 
 For a readable cell with verified borders, border recovery tests a smaller
@@ -75,6 +75,20 @@ truth. Applied recoveries always carry a review warning. Result JSON retains
 the printed frame (`source_rect`), actual crop bounds (`crop_rect`), original
 crop bounds and recovered-pixel counts (`border_recovery`). Saved crop images
 show the raw expanded source, before line removal and normalization.
+
+Cell lighting correction estimates the paper background with a 21 × 21
+morphological closing and divides out smooth illumination changes. It runs
+only inside verified boxes with measurable faint ink or darker/uneven paper.
+Strong ink uses the default relative threshold of 165; faint ink uses 185.
+Changes smaller than five pixels or 3% of the original ink are ignored.
+Excessively dark backgrounds, dense candidate masks and small pale specks
+do not qualify. The EMNIST checkpoint and 20 × 20/28 × 28 normalization remain
+unchanged. Any applied adjustment adds a review warning and a
+`lighting_adjustment` record containing the background measurements, threshold
+and changed-pixel count. Source crop images remain unmodified. The frozen
+comparison raised team-form character accuracy from 54.1% to 69.5%, with
+no exact trip rows; the generated synthetic test score slipped from 97.34%
+to 97.25%. These tradeoffs are reported in `docs/results_summary.md`.
 
 **Classification and assembly.** The model is a one-hidden-layer NumPy MLP
 (784 input values, ReLU hidden layer, 36 output classes). It is trained from

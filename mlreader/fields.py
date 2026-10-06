@@ -23,6 +23,7 @@ def assemble_field(field_name, predictions):
                 "source_rect": prediction.get("source_rect"),
                 "crop_rect": prediction.get("crop_rect"),
                 "border_recovery": prediction.get("border_recovery"),
+                "lighting_adjustment": prediction.get("lighting_adjustment"),
                 "ink_pixels": prediction.get("ink_pixels"),
                 "preprocessing_issues": prediction.get("preprocessing_issues", []),
             }

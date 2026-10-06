@@ -26,6 +26,7 @@ def _predict_cell(cell, model):
         "source_rect": list(cell.rect),
         "crop_rect": list(cell.crop_rect) if cell.crop_rect else None,
         "border_recovery": cell.border_recovery,
+        "lighting_adjustment": cell.lighting_adjustment,
         "ink_pixels": cell.ink_pixels,
         "preprocessing_issues": list(cell.preprocessing_issues),
     }
@@ -168,6 +169,10 @@ def read_form(
             ),
             "border_recovered_cells": sum(
                 bool(cell.border_recovery and cell.border_recovery.get("applied"))
+                for field_name in expected_fields for cell in crops[field_name]
+            ),
+            "lighting_adjusted_cells": sum(
+                bool(cell.lighting_adjustment and cell.lighting_adjustment.get("applied"))
                 for field_name in expected_fields for cell in crops[field_name]
             ),
             "review_reasons": (

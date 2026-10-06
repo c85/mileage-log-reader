@@ -5,13 +5,16 @@
 Keep a person checking and approving every reimbursement. The prototype can
 read mileage forms and flag problems, but it is not ready to approve payments
 automatically. After improving cell preprocessing, the team's test of 12
-handwritten forms read **54.1% of characters correctly** and did not read any
+handwritten forms read **69.5% of characters correctly** and did not read any
 complete trip row correctly
 (**0 of 67 rows**). Every trip row needed review. This improved the earlier
 17.7% character baseline using the existing model, but still requires human
 checking of every reimbursement.
 Recovering strokes near box borders added a modest gain over the previous
 52.6% score. Expanded crops remain flagged for a person to verify.
+Cell lighting correction subsequently raised the score from 54.1% to 69.5%
+and exact fields from 84 to 158 out of 371. Adjusted ink also needs source
+verification; this gain does not yet support automatic reimbursement approval.
 
 Before a row could qualify for automatic processing, the system would need
 a properly aligned image, reliable character readings, valid employee and
@@ -37,7 +40,7 @@ needs review, at the same $3.40 cost per log.
 **These are examples, not achieved savings.** Software, staff checking and
 error-correction costs must also be measured and included.
 
-In a separate test of 15 computer-generated logs, seven of 90 rows passed
+In a separate test of 15 computer-generated logs, three of 90 rows passed
 the checks, but no complete log passed. Every log deliberately included a
 mileage mistake, so this test does not predict how many normal AP logs could
 be processed automatically. No labor savings have been demonstrated.

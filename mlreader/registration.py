@@ -10,10 +10,11 @@ import numpy as np
 from mlreader import REPO_ROOT
 from mlreader.layout import CANVAS_HEIGHT, CANVAS_WIDTH, CELL_MARGIN, FIELDS
 
-PREPROCESSING_VERSION = "ml7-border-recovery-v2"
+PREPROCESSING_VERSION = "ml7-cell-lighting-v3"
 BORDER_RECOVERY_MARGIN = 2
 CROP_BOUNDARY_WARNING = "Writing touches the crop boundary and may be clipped."
 BORDER_RECOVERY_WARNING = "Expanded crop requires verification against the source."
+LIGHTING_WARNING = "Lighting-adjusted ink requires verification against the source."
 
 
 @dataclass
@@ -41,6 +42,7 @@ class CellCrop:
     preprocessing_issues: tuple[str, ...] = ()
     crop_rect: tuple[int, int, int, int] | None = None
     border_recovery: dict | None = None
+    lighting_adjustment: dict | None = None
 
 
 def load_image(source):
@@ -230,6 +232,52 @@ def _clean_cell_ink(gray):
     return ink
 
 
+def _prepare_cell_gray(gray):
+    """Flatten paper illumination and recover faint ink only when warranted.
+
+    This chooses a mask from image measurements, without model predictions.
+    The raw source is kept separately; the model's 28x28 transform is unchanged.
+    """
+    if gray.size == 0 or min(gray.shape) < 21:
+        return gray, None
+    background = cv2.morphologyEx(gray, cv2.MORPH_CLOSE, np.ones((21, 21), np.uint8))
+    paper_low, paper_high = np.percentile(background, [5, 95])
+    if paper_low < 60:
+        return gray, None  # Too dark to infer the paper reliably.
+    corrected = np.clip(
+        np.rint(gray.astype(np.float32) * 255 / np.maximum(background, 1)), 0, 255,
+    ).astype(np.uint8)
+    foreground = corrected[corrected < 225]
+    faint = len(foreground) >= 25 and np.percentile(foreground, 25) >= 100
+    uneven = paper_low < 225 or paper_high - paper_low >= 20
+    if not faint and not uneven:
+        return gray, None
+    threshold = 185 if faint else 165
+    prepared = np.where(corrected < threshold, 0, 255).astype(np.uint8)
+    original = _clean_cell_ink(gray)
+    candidate = _clean_cell_ink(prepared)
+    original_pixels = int(np.count_nonzero(original))
+    candidate_pixels = int(np.count_nonzero(candidate))
+    changed = int(np.count_nonzero((original > 0) != (candidate > 0)))
+    if changed < max(5, original_pixels * 0.03) or candidate_pixels > candidate.size * 0.55:
+        return gray, None
+    if original_pixels < 5 and candidate_pixels:
+        ys, xs = np.where(candidate > 0)
+        if candidate_pixels < 25 or np.ptp(ys) < 8 or np.ptp(xs) < 2:
+            return gray, None  # Do not turn a few pale specks into a character.
+    return prepared, {
+        "applied": True,
+        "method": "local-paper-background",
+        "background_kernel": 21,
+        "paper_intensity_p05": float(paper_low),
+        "paper_intensity_p95": float(paper_high),
+        "faint_ink": bool(faint),
+        "uneven_lighting": bool(uneven),
+        "relative_ink_threshold": threshold,
+        "changed_ink_pixels": changed,
+    }
+
+
 def normalize_cell(cell):
     """Convert a dark-ink cell crop into centered, white-on-black 28x28 data."""
     if cell is None or cell.size == 0:
@@ -258,7 +306,7 @@ def _recover_border_ink(image, cell):
     newly exposed margin. Every applied recovery requires human verification.
     """
     if cell.extraction_status != "ok" or any(
-        issue != CROP_BOUNDARY_WARNING for issue in cell.preprocessing_issues
+        issue not in (CROP_BOUNDARY_WARNING, LIGHTING_WARNING) for issue in cell.preprocessing_issues
     ):
         return cell
     left, top, right, bottom = cell.rect
@@ -268,7 +316,7 @@ def _recover_border_ink(image, cell):
     if not (0 <= x0 < x1 <= image.shape[1] and 0 <= y0 < y1 <= image.shape[0]):
         return cell
     crop = image[y0:y1, x0:x1]
-    gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
+    gray, lighting = _prepare_cell_gray(cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY))
     ink = (gray < 165).astype(np.uint8) * 255
     height, width = ink.shape
     band = CELL_MARGIN - margin
@@ -290,6 +338,7 @@ def _recover_border_ink(image, cell):
     cleaned_gray[lines > 0] = 255
     cleaned = _clean_cell_ink(cleaned_gray)
     seed = np.zeros_like(cleaned)
+    old_gray, _ = _prepare_cell_gray(old_gray)
     seed[band:-band, band:-band] = _clean_cell_ink(old_gray)
     count, labels, _, _ = cv2.connectedComponentsWithStats(
         (cleaned > 0).astype(np.uint8), connectivity=8,
@@ -314,6 +363,7 @@ def _recover_border_ink(image, cell):
     return replace(
         cell, image=crop, normalized=center_ink(retained), ink_pixels=pixels,
         crop_rect=crop_rect,
+        lighting_adjustment=lighting or cell.lighting_adjustment,
         border_recovery={
             "applied": True,
             "original_crop_rect": list(cell.crop_rect or (
@@ -325,6 +375,7 @@ def _recover_border_ink(image, cell):
         },
         preprocessing_issues=tuple(dict.fromkeys(
             cell.preprocessing_issues + (BORDER_RECOVERY_WARNING,)
+            + ((LIGHTING_WARNING,) if lighting else ())
         )),
     )
 
@@ -462,9 +513,13 @@ def extract_cells(registered_image):
             left, top, right, bottom = rect
             margin = CELL_MARGIN
             crop = registered_image[top + margin : bottom - margin, left + margin : right - margin]
-            normalized, status, ink_pixels, reason = normalize_cell(crop)
+            crop_gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY) if crop.size else np.empty((0, 0), np.uint8)
+            prepared, lighting = _prepare_cell_gray(crop_gray) if not issues else (crop_gray, None)
+            normalized, status, ink_pixels, reason = normalize_cell(prepared)
+            if lighting:
+                issues += (LIGHTING_WARNING,)
             if status == "ok":
-                cleaned = _clean_cell_ink(cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY))
+                cleaned = _clean_cell_ink(prepared)
                 edge_pixels = int(np.count_nonzero(cleaned[0]) + np.count_nonzero(cleaned[-1])
                                   + np.count_nonzero(cleaned[:, 0]) + np.count_nonzero(cleaned[:, -1]))
                 if edge_pixels >= max(5, ink_pixels * 0.05):
@@ -483,6 +538,7 @@ def extract_cells(registered_image):
                     extraction_reason=reason,
                     preprocessing_issues=issues,
                     crop_rect=(left + margin, top + margin, right - margin, bottom - margin),
+                    lighting_adjustment=lighting,
                 ))
             )
         crops[field] = cells
