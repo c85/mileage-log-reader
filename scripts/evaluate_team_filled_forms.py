@@ -328,6 +328,8 @@ def main():
         "expected_cells": expected_cells,
         "cell_extraction_success_rate": _rate(usable_cells, expected_cells),
         "cell_extraction_failures": expected_cells - usable_cells,
+        "expected_blank_cells": expected_blank_cells,
+        "correctly_empty_blank_cells": correctly_empty_cells,
         "correct_characters_on_usable_cells": correct_on_usable_cells,
         "character_accuracy_on_usable_cells": _rate(correct_on_usable_cells, usable_cells),
         "row_validation_routes": dict(route_counts),
