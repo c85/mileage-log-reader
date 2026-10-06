@@ -33,6 +33,15 @@ def _fixed_width(value, width, column, form_id, row_number=None):
     return value
 
 
+def _right_aligned_cells(value, width, column, form_id):
+    value = value.strip()
+    if not value.isdigit() or not 1 <= len(value) <= width:
+        raise ValueError(
+            f"{form_id} {column} label must contain 1 to {width} digits: {value!r}"
+        )
+    return [None] * (width - len(value)) + list(value)
+
+
 def _label_fields(form_id, rows):
     employee_id = _single_value(rows, "EMPLOYEE_ID", form_id).upper()
     if len(employee_id) != 6 or not employee_id.isalnum():
@@ -40,13 +49,13 @@ def _label_fields(form_id, rows):
     week_ending = datetime.strptime(
         _single_value(rows, "WEEK_ENDING", form_id), "%m/%d/%y"
     ).strftime("%m%d%y")
-    total_miles = _fixed_width(
+    total_miles = _right_aligned_cells(
         _single_value(rows, "TOTAL_MILES", form_id), 4, "TOTAL_MILES", form_id
     )
 
     fields = [
-        ("header.employee_id", employee_id),
-        ("header.week_ending", week_ending),
+        ("header.employee_id", list(employee_id)),
+        ("header.week_ending", list(week_ending)),
     ]
     ordered_rows = sorted(rows, key=lambda row: int(row["ROW_NUMBER"]))
     row_labels = {}
@@ -56,15 +65,15 @@ def _label_fields(form_id, rows):
         if len(client) != 3 or not client.isalpha():
             raise ValueError(f"{form_id} row {row_number} CLIENT label must be three letters.")
         values = {
-            "date": _fixed_width(row["DATE_MMDD"], 4, "DATE_MMDD", form_id, row_number),
-            "client": client,
-            "odometer_start": _fixed_width(
-                row["ODOMETER_START"], 6, "ODOMETER_START", form_id, row_number
+            "date": list(_fixed_width(row["DATE_MMDD"], 4, "DATE_MMDD", form_id, row_number)),
+            "client": list(client),
+            "odometer_start": list(
+                _fixed_width(row["ODOMETER_START"], 6, "ODOMETER_START", form_id, row_number)
             ),
-            "odometer_end": _fixed_width(
-                row["ODOMETER_END"], 6, "ODOMETER_END", form_id, row_number
+            "odometer_end": list(
+                _fixed_width(row["ODOMETER_END"], 6, "ODOMETER_END", form_id, row_number)
             ),
-            "miles": _fixed_width(row["MILES"], 3, "MILES", form_id, row_number),
+            "miles": list(_fixed_width(row["MILES"], 3, "MILES", form_id, row_number)),
         }
         row_labels[row_number] = values
         for name, value in values.items():
@@ -84,6 +93,33 @@ def _read_field(document, key):
         None,
     )
     return row.get("fields", {}).get(name) if row else None
+
+
+def _prediction_cells(field, width):
+    characters = field.get("characters", []) if field else []
+    predicted = []
+    statuses = []
+    for position in range(width):
+        if position < len(characters):
+            character = characters[position]
+            predicted.append(character.get("character") or "?")
+            statuses.append(character.get("extraction_status", "unknown"))
+        else:
+            predicted.append("?")
+            statuses.append("not_read")
+    return predicted, statuses
+
+
+def _field_matches(field, expected_cells):
+    predicted, statuses = _prediction_cells(field, len(expected_cells))
+    return all(
+        status == "empty" if truth is None else status == "ok" and guess == truth
+        for truth, guess, status in zip(expected_cells, predicted, statuses)
+    )
+
+
+def _display_cells(cells):
+    return "".join("∅" if character is None else character for character in cells)
 
 
 def _row_validation(document, row_number):
