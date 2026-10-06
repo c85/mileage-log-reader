@@ -2,15 +2,14 @@
 
 ## Executive result
 
-The prototype can register the tested synthetic page captures and can learn
-EMNIST characters, but clean isolated-character accuracy does not transfer to
-the supplied handwritten sample reliably enough to justify posting a whole
-log. On the generated test set, the configured policy auto-posted 7 of 90
-rows (7.8%) with no errors among those 7; none of the 15 logs had every row
-eligible for auto-post. Under the conservative assumption that AP still keys
-any log containing a review row, the measured gross keying-cost saving is
-$0/month. This is a useful fail-closed result, not a production savings
-claim.
+The prototype registers the tested synthetic page captures and learns
+EMNIST characters, but the independent team-filled set shows a large gap on
+actual handwriting: no complete trip row was read exactly. On the generated
+test set, the configured policy auto-posted 7 of 90 rows (7.8%) with no errors
+among those 7; none of the 15 logs had every row eligible for auto-post. Under
+the conservative assumption that AP still keys any log containing a review
+row, the measured gross keying-cost saving is $0/month. This is a useful
+fail-closed result, not a production savings claim.
 
 ## Registration spike
 
@@ -82,6 +81,34 @@ generated boxes had no crop failures. The classifier still made wrong reads,
 so `recognition_failures: 0` means it returned a class for every usable crop,
 not that every read was correct.
 
+## Team-filled handwritten forms
+
+The independent set has 12 photographed forms, 67 trip rows, and 1,665
+handwritten characters. Ground truth preserves the six-digit odometers; form
+5's total is `172` with its first box blank, which is scored as a blank cell.
+The fixed model and policy were run without corrections or tuning on this set.
+
+| Metric | Result |
+|---|---:|
+| Page transforms accepted by the reader | 12 / 12 |
+| Expected character cells extracted | 1,478 / 1,665 (88.8%) |
+| Character accuracy, all labeled characters | 295 / 1,665 (17.7%) |
+| Character accuracy on extracted cells | 295 / 1,478 (20.0%) |
+| Digit accuracy | 269 / 1,440 (18.7%) |
+| Capital-letter accuracy | 26 / 225 (11.6%) |
+| Exact fields | 11 / 371 (3.0%) |
+| Exact trip rows | 0 / 67 |
+
+The reader marked 36 unlabeled blank rows as active, and all 67 labeled rows
+were routed to review under the current confidence and business rules, with
+validation evaluated as of 2026-10-05. Among usable crops, common confusions
+included 0→5 (65) and 0→6 (61). The accepted page transform alone did not
+ensure useful crops. These results show that the
+synthetic character and form metrics do not transfer to this handwriting and
+capture set. The sample meets the adjusted 12-form target, but it represents
+only the team's made-up entries and is too small to calibrate production
+thresholds.
+
 The bundled clean scan (`examples/figure1_clean_scan.png`) is a harder
 handwriting-domain example. In a live run, the model read employee ID
 RC5107 as RC6107 and week ending 09/27/26 as 07/27/26. It also misread
@@ -105,12 +132,13 @@ python scripts/run_spike.py
 python scripts/train_model.py
 python scripts/generate_synthetic_logs.py --count 15 --quality mixed --fault-row 5
 python scripts/evaluate_synthetic_logs.py
+python scripts/evaluate_team_filled_forms.py --as-of 2026-10-05
 ```
 
 Generated logs use held-out EMNIST test images rather than train images, but
 they still share EMNIST's centered stroke style. The field-restricted result
 is not a phone-photo or handwritten-form accuracy claim. Thresholds are
-prototype settings, the 0/7 residual result is too small to establish a safe
-error rate, and the bundled handwriting example routes every row to a
-clerk. A larger, independently labeled set of team-filled made-up forms is
-required before raising the straight-through rate.
+prototype settings, and the 0/7 residual result is too small to establish a
+safe error rate. The 12-form handwritten evaluation is a small initial check;
+more writers and capture conditions are needed before calibrating or raising
+the straight-through rate.

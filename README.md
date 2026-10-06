@@ -121,6 +121,20 @@ written-mile column. To inspect one of those failures in the demo, run:
 .venv/bin/python scripts/demo.py outputs/synthetic_logs/log_001_clean.jpg
 ```
 
+## Evaluate the team-filled forms
+
+```bash
+.venv/bin/python scripts/evaluate_team_filled_forms.py --as-of 2026-10-05
+```
+
+This scores the 12 hand-filled photos in `examples/team_filled_forms/` against
+`ground_truth.csv`. The labels preserve written leading zeroes; a blank leading
+box in the form 5 total is scored as blank. The script does not train or tune
+the model. It writes summary metrics, per-form scores, field errors, and
+character confusion tables under the Git-ignored
+`outputs/team_filled_eval/` directory. Keep these handwritten results separate
+from the synthetic-log evaluation above.
+
 ## Automated regression suite
 
 ```bash

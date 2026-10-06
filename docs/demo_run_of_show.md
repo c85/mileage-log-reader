@@ -4,8 +4,8 @@
 
 Recommend using this build as a review-triage prototype, not as a payment
 poster. It auto-posted 7 of 90 synthetic rows but cleared no complete log;
-therefore it produced no measured whole-log keying savings. The bundled
-handwriting example sent every row to review.
+the independent team-filled evaluation also had 0 exact rows out of 67.
+Therefore the prototype produced no measured whole-log keying savings.
 
 ## Approach — 3 minutes
 
@@ -42,6 +42,13 @@ and open the laptop's Wi-Fi address on the phone. Use **Take a photo** for a
 made-up form; the regular image picker is the fallback. The correction panel
 can demonstrate SCRUM-28 and show where its audit record is saved.
 
+For a handwritten file-upload example, choose
+`examples/team_filled_forms/form_04.png`, which had the strongest partial
+field score in the set. Show the raw result first, then use
+`ground_truth.csv` to point out correct reads and errors. The full-set
+handwriting metrics belong in the results section, not in this single-image
+demo.
+
 If the browser is unavailable, use the CLI fallback:
 
 Generate the known failing input and run it:
@@ -66,19 +73,21 @@ the values are routed to review.
 
 Use `docs/results_summary.md`. Keep isolated EMNIST accuracy (85.07%
 unrestricted, 95.73% field restricted), generated-form accuracy (97.48%
-characters, 60.00% exact rows), and the 15-image registration spike separate.
-State the set sizes and quality conditions. Emphasize that 0 residual errors
-among 7 auto-post candidates is far too small to establish a safe error rate.
+characters, 60.00% exact rows), the 15-image registration spike, and the
+team-filled result (17.7% character accuracy, 0/67 exact rows) separate. State
+the set sizes and quality conditions. Emphasize that 0 residual errors among
+7 auto-post candidates is far too small to establish a safe error rate.
 
 ## Four-week next step — 1 minute
 
-1. Collect team-filled forms with made-up employee/client values and hand-label
-   every field.
-2. Measure page/cell failure and character/field/row error on that independent
-   set, including actual phone captures.
-3. Calibrate confidence by field and odometer position; compare residual cost
-   with clerk review before changing policy thresholds.
-4. Add reviewer feedback and retain the source crop and correction history.
+1. Expand the handwritten set with more writers and lighting, angle, and focus
+   conditions; label every field.
+2. Improve occupied-row detection and cell extraction, then measure character,
+   field, and row error on a separate evaluation set.
+3. Calibrate confidence by field and odometer position on development data;
+   keep the held-out forms out of tuning.
+4. Compare residual cost with clerk review and retain source crops and
+   correction history.
 
 ## Backup and Q&A
 

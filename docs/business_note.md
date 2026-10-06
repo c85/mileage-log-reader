@@ -12,11 +12,12 @@ the first three digits of either six-digit odometer. Route every failed or
 unsupported case to AP and preserve the original crop and checks.
 
 The committed thresholds are prototype settings in
-`configs/reader_policy.json`, not approved production cutoffs. They must be
-chosen on an independently labeled set of team-filled, made-up logs by
-comparing residual error against the cost of review. Until that evidence
-exists, the model is a sorting aid and a clerk remains responsible for
-reimbursement approval.
+`configs/reader_policy.json`, not approved production cutoffs. An initial
+12-form labeled set has now been scored, but no rows qualified for auto-post,
+so it provides no residual false-post estimate and is too small to calibrate
+thresholds. The model remains a sorting aid and a clerk remains responsible
+for reimbursement approval. Thresholds need a larger, more varied labeled
+set and a comparison of residual error against review cost.
 
 ## Monthly cost frame
 
@@ -63,6 +64,6 @@ estimating savings.
 Compare manual review cost with the cost-weighted false-post rate at several
 configured confidence thresholds. Prefer a low straight-through rate with
 measured near-zero residual errors over a high rate whose errors cannot be
-reproduced. Expand automation only after phone-photo tests, team-filled
-handwriting, and independent review establish that the thresholds work for
+reproduced. Expand automation only after phone-photo tests, additional
+team-filled handwriting, and independent review establish that the thresholds work for
 the forms AP will actually receive.

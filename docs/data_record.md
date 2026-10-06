@@ -119,8 +119,12 @@ characters are not used for training or model selection.
   synthetic test logs or final test metrics. The generator records every
   source test index it used.
 
-## Remaining data work
+## Independent handwritten evaluation set
 
-- Run the audit and training commands, then report actual digit, letter, and
-  field-restricted metrics. Synthetic phone-like captures are not a substitute
-  for an independently labeled set of team-filled forms.
+The 12 team-filled photos in `examples/team_filled_forms/` have made-up values
+and hand-labeled fields in `ground_truth.csv` (67 trip rows). They are scored
+separately from EMNIST and the generated-log test set with
+`scripts/evaluate_team_filled_forms.py`. Fixed-width odometer and mileage
+labels retain written leading zeroes; a blank leading box remains blank. The
+sample is an initial check of this team's handwriting and phone captures, not
+a representative population for threshold calibration.

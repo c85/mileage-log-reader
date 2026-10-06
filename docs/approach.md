@@ -133,7 +133,7 @@ documents. Blank and unsupported fields go to review.
 | Risk | Mitigation |
 |---|---|
 | Page corners or grid lines are missed under glare, cropping, or severe skew | Measure conditions in the spike; reject unregistered images and retain the reason |
-| Clean isolated EMNIST characters do not represent handwriting in photographed boxes | Match transforms in train and inference; report phone-like synthetic results separately; add team-filled made-up forms |
+| Clean isolated EMNIST characters do not represent handwriting in photographed boxes | Keep the 12-form handwritten evaluation separate from synthetic results; improve extraction and occupied-row detection; expand to more writers and capture conditions |
 | A confident character error has a position-dependent dollar cost | Use arithmetic/reference checks, a higher threshold for high odometer places, and a conservative row route; do not claim calibrated confidence |
 
 ## AI assistance disclosure
