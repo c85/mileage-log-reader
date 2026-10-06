@@ -1,5 +1,9 @@
 # Results summary
 
+The user froze `ml7-cell-lighting-v3` on 2026-10-06. See
+[version_freeze.md](version_freeze.md) for the revision, artifact hashes and
+requirements for a fresh evaluation.
+
 ## Executive result
 
 Printed-template alignment, local box detection, small-artifact cleanup and

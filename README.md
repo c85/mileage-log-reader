@@ -156,6 +156,13 @@ This uses the trained model checkpoint and writes detailed scores under
 command-generated logs scored above. The valid images are three paired views
 of five forms, not 15 independent forms; the score report keeps them separate.
 
+## Frozen baseline
+
+The current reader is frozen at `ml7-cell-lighting-v3` as of 2026-10-06.
+[Version freeze](docs/version_freeze.md) records the code revision, model and
+configuration hashes, baseline scores and the plan for evaluating new forms.
+Keep this version as the baseline for any explicitly authorized future work.
+
 ## Handwritten development forms
 
 The three newly labeled handwritten forms in `examples/development_forms/`
