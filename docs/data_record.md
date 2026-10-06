@@ -145,6 +145,12 @@ elsewhere in the project.
 
 ## Independent handwritten evaluation set
 
+The three newly hand-filled forms in `examples/development_forms/` are a small
+development set with 16 labeled trip rows. Their made-up records and manual
+transcriptions are in that folder; one row preserves a written mileage value
+that differs from its odometer change. Use them to inspect recognition errors
+and guide changes, but do not treat their scores as held-out performance.
+
 The 12 team-filled photos in `examples/team_filled_forms/` have made-up values
 and hand-labeled fields in `ground_truth.csv` (67 trip rows). They are scored
 separately from EMNIST and the generated-log test set with

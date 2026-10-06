@@ -155,6 +155,25 @@ This uses the trained model checkpoint and writes detailed scores under
 command-generated logs scored above. The valid images are three paired views
 of five forms, not 15 independent forms; the score report keeps them separate.
 
+## Handwritten development forms
+
+The three newly labeled handwritten forms in `examples/development_forms/`
+provide a small development set for inspecting recognition errors and guiding
+reader changes. Score them separately from the 12 held-out forms with:
+
+```bash
+.venv/bin/python scripts/evaluate_team_filled_forms.py \
+  --forms-dir examples/development_forms \
+  --ground-truth examples/development_forms/ground_truth.csv \
+  --output-dir outputs/development_forms_eval \
+  --as-of 2026-10-05
+```
+
+See that folder's README for the labels and a note about a mileage discrepancy
+written on form 2. These development results are for iteration only. Do not
+change the held-out `examples/team_filled_forms/` or tune against it; rerun its
+evaluation after development changes are settled.
+
 ## Evaluate the team-filled forms
 
 ```bash

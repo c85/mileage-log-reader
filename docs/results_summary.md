@@ -137,6 +137,21 @@ images, labels, and metrics are reproducible under the Git-ignored
 `outputs/synthetic_dev/` and `outputs/synthetic_dev_eval/` directories using
 the development command in `README.md`.
 
+## Handwritten development forms
+
+Three additional handwritten forms were labeled for development, giving 16
+trip rows and 400 character cells. The fixed model registered all three pages
+and extracted 399 of the 400 expected cells, but recognized only 35 characters
+correctly (8.8%); no field or trip row was exact. The reader also treated 11
+blank rows as filled. This is a small development baseline showing that the
+current EMNIST character model does not transfer well to this handwriting. The
+labels preserve the source writing, including form 2 row 5's `278` miles even
+though its odometer difference is `268`.
+
+These measurements are for development only. They are not the held-out result
+and do not justify a performance claim. Detailed errors are under the
+Git-ignored `outputs/development_forms_eval/` directory.
+
 ## Team-filled handwritten forms
 
 The independent set has 12 photographed forms, 67 trip rows, and 1,665
