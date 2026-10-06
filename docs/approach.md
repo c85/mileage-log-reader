@@ -31,7 +31,7 @@ look similar within a single letter-only or digit-only field.
 ```mermaid
 flowchart LR
   A[Photo or scan] --> B[Page registration]
-  B --> C[Fixed ML-7 cell map]
+  B --> C[Printed box detection near ML-7 cell map]
   C --> D[Ink cleanup and 28x28 normalization]
   D --> E[36-class NumPy MLP]
   E --> F[Field assembly with character evidence]
@@ -45,15 +45,24 @@ flowchart LR
 **Registration.** OpenCV searches for a page-shaped quadrilateral, corrects
 perspective, and warps it to the dimensions of the blank form included in the
 brief. A flatbed image with matching page proportions has an aspect-ratio
-fallback. If neither method can establish a supported page boundary, the
-image is sent to review. The first spike is limited to synthetic blank forms
-with controlled rotation, perspective, and shadow.
+fallback. ORB feature matches to the supplied blank template then correct
+printing offsets, subject to inlier, spatial coverage and geometry checks.
+This uses printed layout features, not a pretrained text reader. A page whose
+template alignment cannot be verified carries a review reason even when its
+paper boundary is accepted. The first spike is limited to synthetic blank
+forms with controlled rotation, perspective, and shadow.
 
 **Cell extraction and normalization.** A versioned coordinate map names each
-character position on the 2200 × 1400 template. Crops are inset from printed
-box borders. Dark pixels become white ink on black; the glyph is fit within a
+character position on the 2200 × 1400 template. Local thresholding and line
+detection locate the actual printed box groups near those coordinates. Crops
+are inset from the detected borders; near-identical boxes retain the canonical
+coordinates. Isolated specks and tiny thin border fragments are removed without
+discarding substantial handwriting connected to an edge. Dark pixels become
+white ink on black; the glyph is fit within a
 20 × 20 area and centered by its mass in a 28 × 28 frame. The same transform
-is applied to EMNIST train, validation, and test characters.
+is applied to EMNIST train, validation, and test characters. The original model
+weights and ink threshold remain in use. Unverified borders and handwriting
+touching a crop boundary are retained as review warnings with each character.
 
 **Classification and assembly.** The model is a one-hidden-layer NumPy MLP
 (784 input values, ReLU hidden layer, 36 output classes). It is trained from
@@ -72,7 +81,10 @@ written mileage column. Reimbursement is calculated at $0.62 per written
 mile. Every failed check is retained. The configured policy also requires
 character-confidence thresholds, with a higher threshold for the three
 highest odometer places. Only a row that passes both evidence and business
-checks is an auto-post candidate.
+checks is an auto-post candidate. Unverified template alignment, failed cell
+extraction and crop warnings also block automatic routing, including when the
+model gives a high probability. Reviewers can see the source crop and warning;
+an explicit correction remains marked as reviewed.
 
 **Review and correction.** The CLI accepts new file paths. A clerk can submit
 `--correction rows.5.miles=047 --reason "..."`; the original prediction,

@@ -146,6 +146,36 @@ class ReimbursementRuleTests(unittest.TestCase):
         self.assertEqual(document["rows"][0]["fields"]["miles"]["value"], "025")
         self.assertEqual(document["rows"][0]["fields"]["miles"]["raw_value"], "024")
 
+    def test_high_confidence_does_not_override_uncertain_preprocessing(self):
+        document = valid_document()
+        character = document["rows"][0]["fields"]["miles"]["characters"][0]
+        character["preprocessing_issues"] = ["Printed cell borders could not all be verified."]
+        document = self.validate(document)
+        confidence = document["rows"][0]["validation"]["confidence_checks"]["miles"]
+        self.assertFalse(confidence["passed"])
+        self.assertIn("borders", confidence["reason"])
+        self.assertEqual(document["rows"][0]["validation"]["route"], "needs_review")
+
+    def test_high_confidence_does_not_override_failed_extraction(self):
+        document = valid_document()
+        document["rows"][0]["fields"]["miles"]["characters"][0]["extraction_status"] = "unreadable"
+        document = self.validate(document)
+        self.assertEqual(document["rows"][0]["validation"]["route"], "needs_review")
+
+    def test_unverified_template_routes_even_when_business_checks_pass(self):
+        document = valid_document()
+        document["preprocessing"] = {"review_reasons": ["Printed form alignment could not be verified."]}
+        document = self.validate(document)
+        self.assertEqual(document["rows"][0]["validation"]["route"], "needs_review")
+        self.assertIn("Printed form alignment could not be verified.", document["rows"][0]["validation"]["route_reasons"])
+
+    def test_reviewed_correction_can_resolve_a_crop_warning(self):
+        document = valid_document()
+        document["rows"][0]["fields"]["miles"]["characters"][0]["preprocessing_issues"] = ["Unverified crop"]
+        apply_correction(document, "rows.1.miles", "025", "Verified the mileage on the source form")
+        document = self.validate(document)
+        self.assertEqual(document["rows"][0]["validation"]["route"], "reviewed")
+
 
 if __name__ == "__main__":
     unittest.main()

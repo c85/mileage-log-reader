@@ -7,7 +7,8 @@
 
 This repository contains a from-scratch prototype for reading the supplied
 synthetic Sabal Coast Form ML-7. It accepts an image path at demo time,
-registers the page, crops each defined box, classifies uppercase letters and
+aligns the printed template, locates the actual box borders, cleans small ink
+artifacts, classifies uppercase letters and
 digits with an EMNIST-trained NumPy MLP, checks the assembled fields, and
 routes each row to auto-post or clerk review. It does not send reimbursements
 or connect to an ERP.
@@ -104,7 +105,7 @@ handwriting accuracy.
 
 ```bash
 .venv/bin/python scripts/generate_synthetic_logs.py --count 15 --quality mixed --fault-row 5
-.venv/bin/python scripts/evaluate_synthetic_logs.py
+.venv/bin/python scripts/evaluate_synthetic_logs.py --data-dir outputs/synthetic_preprocessed_eval
 ```
 
 By default, the generator draws characters only from the EMNIST ByClass test
@@ -131,7 +132,7 @@ use a different output folder and score it separately:
   --source-split val --output outputs/synthetic_dev
 .venv/bin/python scripts/evaluate_synthetic_logs.py \
   --manifest outputs/synthetic_dev/manifest.json \
-  --data-dir outputs/synthetic_dev_eval --as-of 2026-10-05
+  --data-dir outputs/synthetic_dev_preprocessed_eval --as-of 2026-10-05
 ```
 
 This makes 15 new logs, five per capture condition. The evaluator labels this
@@ -147,11 +148,11 @@ seeds, related-form groups, and expected failed checks. See the folder's
 README for case details. Score the pack separately with:
 
 ```bash
-.venv/bin/python scripts/evaluate_synthetic_forms.py
+.venv/bin/python scripts/evaluate_synthetic_forms.py --output-dir outputs/synthetic_forms_preprocessed_eval
 ```
 
 This uses the trained model checkpoint and writes detailed scores under
-`outputs/synthetic_forms_eval/`. The fixtures are separate from the 15
+`outputs/synthetic_forms_preprocessed_eval/`. The fixtures are separate from the 15
 command-generated logs scored above. The valid images are three paired views
 of five forms, not 15 independent forms; the score report keeps them separate.
 
@@ -165,7 +166,7 @@ reader changes. Score them separately from the 12 held-out forms with:
 .venv/bin/python scripts/evaluate_team_filled_forms.py \
   --forms-dir examples/development_forms \
   --ground-truth examples/development_forms/ground_truth.csv \
-  --output-dir outputs/development_forms_eval \
+  --output-dir outputs/development_forms_preprocessed_eval \
   --dataset-name "handwritten development forms" \
   --as-of 2026-10-05
 ```
@@ -173,14 +174,17 @@ reader changes. Score them separately from the 12 held-out forms with:
 See that folder's README for the labels and a note about a mileage discrepancy
 written on form 2. These development results are for iteration only. Do not
 change the held-out `examples/team_filled_forms/` or tune against it; rerun its
-evaluation after development changes are settled. The folder README also
-documents an optional handwriting adaptation experiment; it saves a separate
-checkpoint and does not replace the default model.
+evaluation after development changes are settled. Current preprocessing keeps
+the original EMNIST model weights and confidence thresholds. Unverified form
+alignment, uncertain box borders, clipped writing, failed extraction, low
+confidence, or failed business checks require review. Source crops and the
+reason for review are available in the browser and CLI result JSON.
 
 ## Evaluate the team-filled forms
 
 ```bash
-.venv/bin/python scripts/evaluate_team_filled_forms.py --as-of 2026-10-05
+.venv/bin/python scripts/evaluate_team_filled_forms.py \
+  --output-dir outputs/team_filled_preprocessed_eval --as-of 2026-10-05
 ```
 
 This scores the 12 hand-filled photos in `examples/team_filled_forms/` against
@@ -188,7 +192,10 @@ This scores the 12 hand-filled photos in `examples/team_filled_forms/` against
 box in the form 5 total is scored as blank. The script does not train or tune
 the model. It writes summary metrics, per-form scores, field errors, and
 character confusion tables under the Git-ignored
-`outputs/team_filled_eval/` directory. Keep these handwritten results separate
+`outputs/team_filled_preprocessed_eval/` directory. The current held-out result
+is 52.6% character accuracy, 76/371 exact fields, and 0/67 exact trip rows;
+all 67 rows require review. The earlier 17.7% baseline is preserved in the
+results summary. Keep these handwritten results separate
 from the synthetic-log evaluation above.
 
 ## Automated regression suite

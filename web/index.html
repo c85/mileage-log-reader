@@ -479,11 +479,23 @@
       return route === "auto_post" ? "auto_post" : (route === "reviewed" ? "reviewed" : "needs_review");
     }
 
+    function preprocessingWarnings(field) {
+      var warnings = [];
+      ((field && field.characters) || []).forEach(function(character) {
+        (character.preprocessing_issues || []).forEach(function(issue) {
+          if (warnings.indexOf(issue) < 0) warnings.push(issue);
+        });
+      });
+      return warnings;
+    }
+
     function smallField(label, field, normalized) {
       var value = fieldValue(field);
       var confidence = field && field.confidence != null ? confidenceText(field.confidence) : "Confidence unavailable";
       var secondary = normalized && normalized !== value ? '<span class="value-sub">Normalized: ' + escapeHtml(normalized) + '</span>' : '<span class="value-sub">' + escapeHtml(confidence) + '</span>';
-      return '<div><span class="value-label">' + escapeHtml(label) + '</span><span class="value-text">' + escapeHtml(value) + '</span>' + secondary + '</div>';
+      var warnings = preprocessingWarnings(field);
+      var warning = warnings.length ? '<span class="value-sub field-error">' + escapeHtml((field.correction ? "Original crop: " : "Crop needs review: ") + warnings.join(" ")) + '</span>' : "";
+      return '<div><span class="value-label">' + escapeHtml(label) + '</span><span class="value-text">' + escapeHtml(value) + '</span>' + secondary + warning + '</div>';
     }
 
     function confidencePills(checks) {
@@ -514,7 +526,9 @@
       var normalized = field.normalized_value && field.normalized_value !== read ? '<div class="value-sub">Normalized: ' + escapeHtml(field.normalized_value) + '</div>' : "";
       var error = field.normalization_error ? '<div class="field-error">' + escapeHtml(field.normalization_error) + '</div>' : "";
       var correction = isCorrected ? '<div class="field-error">Corrected from ' + escapeHtml(field.correction.original_value) + ': ' + escapeHtml(field.correction.reason) + '</div>' : "";
-      return '<div class="field-card"><div class="field-card-head"><span class="field-card-name">' + escapeHtml(label) + '</span><span class="confidence">' + escapeHtml(confidenceText(field.confidence)) + '</span></div><div class="field-read ' + (isCorrected ? "corrected" : "") + '">' + escapeHtml(read) + '</div>' + normalized + error + correction + glyphStrip(field, runId) + '</div>';
+      var warnings = preprocessingWarnings(field);
+      var warning = warnings.length ? '<div class="field-error">' + escapeHtml((isCorrected ? "Original crop: " : "Crop needs review: ") + warnings.join(" ")) + '</div>' : "";
+      return '<div class="field-card"><div class="field-card-head"><span class="field-card-name">' + escapeHtml(label) + '</span><span class="confidence">' + escapeHtml(confidenceText(field.confidence)) + '</span></div><div class="field-read ' + (isCorrected ? "corrected" : "") + '">' + escapeHtml(read) + '</div>' + normalized + error + correction + warning + glyphStrip(field, runId) + '</div>';
     }
 
     function renderCheckList(row) {
@@ -524,7 +538,7 @@
         return '<div class="check-item ' + (entry[1] ? "pass" : "fail") + '"><span class="check-icon">' + (entry[1] ? "✓" : "!") + '</span><span>' + escapeHtml(labelForCheck(entry[0])) + '</span></div>';
       });
       Object.entries(confidence).forEach(function(entry) {
-        parts.push('<div class="check-item ' + (entry[1].passed ? "pass" : "fail") + '"><span class="check-icon">' + (entry[1].passed ? "✓" : "!") + '</span><span>' + escapeHtml(entry[0].replace(/_/g, " ") + " confidence") + (entry[1].reason ? ": " + entry[1].reason : "") + '</span></div>');
+        parts.push('<div class="check-item ' + (entry[1].passed ? "pass" : "fail") + '"><span class="check-icon">' + (entry[1].passed ? "✓" : "!") + '</span><span>' + escapeHtml(entry[0].replace(/_/g, " ") + " confidence" + (entry[1].reason ? ": " + entry[1].reason : "")) + '</span></div>');
       });
       var failed = row.validation && row.validation.route_reasons ? row.validation.route_reasons : [];
       return '<div class="checks-panel"><h4>Validation evidence</h4><div class="check-list">' + parts.join("") + '</div>' + (failed.length ? '<div class="global-issues">Review reasons: ' + escapeHtml(failed.map(labelForCheck).join(", ")) + '</div>' : "") + '</div>';

@@ -4,9 +4,12 @@
 
 Keep a person checking and approving every reimbursement. The prototype can
 read mileage forms and flag problems, but it is not ready to approve payments
-automatically. In the team's test of 12 handwritten forms, it read **17.7% of
-characters correctly** and did not read any complete trip row correctly
-(**0 of 67 rows**). Every trip row needed review.
+automatically. After improving cell preprocessing, the team's test of 12
+handwritten forms read **52.6% of characters correctly** and did not read any
+complete trip row correctly
+(**0 of 67 rows**). Every trip row needed review. This improved the earlier
+17.7% character baseline using the existing model, but still requires human
+checking of every reimbursement.
 
 Before a row could qualify for automatic processing, the system would need
 a properly aligned image, reliable character readings, valid employee and

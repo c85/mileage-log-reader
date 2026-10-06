@@ -20,17 +20,18 @@ To score this development set, run:
 .venv/bin/python scripts/evaluate_team_filled_forms.py \
   --forms-dir examples/development_forms \
   --ground-truth examples/development_forms/ground_truth.csv \
-  --output-dir outputs/development_forms_eval \
+  --output-dir outputs/development_forms_preprocessed_eval \
   --dataset-name "handwritten development forms" \
   --as-of 2026-10-05
 ```
 
 The results are development measurements only, not held-out performance.
+Printed-template alignment, local box detection and small-artifact cleanup
+raised character accuracy from 35/400 (8.8%) to 359/400 (89.8%) using the same
+EMNIST checkpoint. Exact fields increased to 58/89; exact trip rows are 2/16.
+No blank rows were treated as filled, compared with 11 in the initial baseline.
+All 16 rows still require review under the image-quality and business checks.
 
-An experimental output-layer adaptation can be trained from these labels with
-`.venv/bin/python scripts/adapt_handwritten_model.py`. It writes a separate
-checkpoint under the ignored `data/models/` folder and leaves the default model
-unchanged. To score that checkpoint on the held-out set, pass
-`--model data/models/emnist_mlp_handwritten.npz` and a separate
-`--output-dir` to the evaluator. The first adaptation trial did not show a
-reliable improvement on the 12 held-out forms; see `docs/results_summary.md`.
+The earlier output-layer adaptation experiment used the old fixed crops and
+did not reliably improve the held-out result. It is recorded in
+`docs/results_summary.md`; the current reader uses the original model.

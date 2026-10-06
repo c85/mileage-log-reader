@@ -2,14 +2,21 @@
 
 ## Executive result
 
-The prototype registers the tested synthetic page captures and learns
-EMNIST characters, but the independent team-filled set shows a large gap on
-actual handwriting: no complete trip row was read exactly. On the generated
+Printed-template alignment, local box detection and small-artifact cleanup
+improved the 12-form handwritten score from 17.7% to 52.6% with the existing
+EMNIST model. Exact fields increased from 11 to 76 out of 371, but no complete
+trip row was read exactly and all 67 rows require review. On the generated
 test set, the configured policy auto-posted 7 of 90 rows (7.8%) with no errors
 among those 7; none of the 15 logs had every row eligible for auto-post. Under
 the conservative assumption that AP still keys any log containing a review
 row, the measured gross keying-cost saving is $0/month. This is a useful
 fail-closed result, not a production savings claim.
+
+Current form scores use `ml7-template-grid-cleanup-v1`, with validation as of
+2026-10-05. Preprocessing was developed on the three new handwritten forms and
+EMNIST-validation synthetic logs, then frozen before the held-out comparison.
+The original model weights and policy thresholds were retained. A model's
+high probability cannot override an unverified layout or a suspect crop.
 
 ## Registration spike
 
@@ -66,11 +73,11 @@ and 90 trip rows.
 
 | Metric | Result |
 |---|---:|
-| Character accuracy across generated forms | 97.48% (2,164 / 2,220) |
-| Digit accuracy | 97.92% (1,880 / 1,920) |
-| Capital-letter accuracy | 94.67% (284 / 300) |
-| Exact field accuracy | 90.10% (446 / 495) |
-| Exact row accuracy | 60.00% (54 / 90) |
+| Character accuracy across generated forms | 97.34% (2,161 / 2,220) |
+| Digit accuracy | 97.71% (1,876 / 1,920) |
+| Capital-letter accuracy | 95.00% (285 / 300) |
+| Exact field accuracy | 89.70% (444 / 495) |
+| Exact row accuracy | 57.78% (52 / 90) |
 | Empty/unreadable cell crops among expected cells | 0 / 2,220 |
 | Rows routed to auto-post candidate | 7 / 90 (7.78%) |
 | Errors among auto-post candidates | 0 / 7 (0%; small synthetic sample) |
@@ -79,15 +86,18 @@ and 90 trip rows.
 | Capture condition | Character accuracy | Exact row accuracy | Auto-post row share | Residual error among auto rows |
 |---|---:|---:|---:|---:|
 | Clean | 98.24% | 63.33% | 10.00% | 0 / 3 |
-| Rotated | 97.16% | 63.33% | 0.00% | n/a |
+| Rotated | 96.76% | 56.67% | 0.00% | n/a |
 | Perspective and shadow | 97.03% | 53.33% | 13.33% | 0 / 4 |
 
-The most frequent exact-field errors were client codes (14 of 15 logs had at
-least one), dates (9), odometer starts (8), and odometer ends (6). A cell
+The most frequent exact-field errors were client codes and dates (12 of 15
+logs had at least one of each), odometer starts (8), and odometer ends (7). A cell
 crop with no usable ink is counted separately from a classifier read; these
 generated boxes had no crop failures. The classifier still made wrong reads,
 so `recognition_failures: 0` means it returned a class for every usable crop,
-not that every read was correct.
+not that every read was correct. The earlier fixed-crop baseline scored
+97.48% characters and 54/90 exact rows; the current changes traded a few
+synthetic reads for substantially better handwritten cropping. The current
+metrics are in `outputs/synthetic_preprocessed_eval/`.
 
 ## Pre-rendered synthetic QA fixtures
 
@@ -95,15 +105,15 @@ not that every read was correct.
 pack using the existing model, policy, fixture reference records, and
 2026-10-05 validation date. All 15 valid images registered and all 2,220
 expected character cells were extracted. Across the 15 paired image variants,
-character accuracy was 97.1% (2,155 / 2,220), exact-field accuracy was 88.3%
-(437 / 495), and exact trip-row accuracy was 55.6% (50 / 90). Twelve rows
-were auto-post candidates, with no incorrect rows among those 12; this small,
+character accuracy was 96.8% (2,150 / 2,220), exact-field accuracy was 87.3%
+(432 / 495), and exact trip-row accuracy was 52.2% (47 / 90). Thirteen rows
+were auto-post candidates, with no incorrect rows among those 13; this small,
 controlled sample does not establish a safe error rate.
 
 | Capture condition | Character accuracy | Exact trip rows |
 |---|---:|---:|
 | Clean | 97.0% (718 / 740) | 17 / 30 (56.7%) |
-| Rotated | 97.3% (720 / 740) | 17 / 30 (56.7%) |
+| Rotated | 96.6% (715 / 740) | 14 / 30 (46.7%) |
 | Perspective and shadow | 96.9% (717 / 740) | 16 / 30 (53.3%) |
 
 All three invalid controls registered. The reader detected 4 of the 5 expected
@@ -119,102 +129,99 @@ characters are assembled from EMNIST test images, so these results are a small
 synthetic QA check and do not estimate performance on human handwriting.
 They are reported separately from the generated-log and team-filled results.
 Detailed metrics and error files are written under the Git-ignored
-`outputs/synthetic_forms_eval/` directory.
+`outputs/synthetic_forms_preprocessed_eval/` directory. The original fixture
+baseline was 97.1% characters and 50/90 exact rows.
 
-## Synthetic development baseline
+## Synthetic development comparison
 
 To support iteration without using the held-out test characters, a separate
 set of 15 six-row logs was generated from the EMNIST validation split. Five
 logs use each capture condition, and every log has the same deliberate row-5
 mileage fault. Its initial baseline was 96.7% character accuracy
 (2,147 / 2,220), 85.7% exact-field accuracy (424 / 495), and 41.1% exact-row
-accuracy (37 / 90). The current policy routed 3 of 90 rows to auto-post, with
+accuracy (37 / 90). The original policy run routed 3 of 90 rows to auto-post, with
 0 observed errors among those 3.
 
 This is a development score for comparing changes, not held-out performance
 or a business-savings estimate. It does not use the team-filled forms. The
 images, labels, and metrics are reproducible under the Git-ignored
 `outputs/synthetic_dev/` and `outputs/synthetic_dev_eval/` directories using
-the development command in `README.md`.
+the development command in `README.md`. With current preprocessing, the same
+batch scores 96.6% characters (2,145/2,220), 85.3% fields (422/495) and 40.0%
+rows (36/90), with 4 auto-post candidates and no observed errors among those
+4. Current metrics are in `outputs/synthetic_dev_preprocessed_eval/`.
 
 ## Handwritten development forms
 
-Three additional handwritten forms were labeled for development, giving 16
-trip rows and 400 character cells. The fixed model registered all three pages
-and extracted 399 of the 400 expected cells, but recognized only 35 characters
-correctly (8.8%); no field or trip row was exact. The reader also treated 11
-blank rows as filled. This is a small development baseline showing that the
-current EMNIST character model does not transfer well to this handwriting. The
-labels preserve the source writing, including form 2 row 5's `278` miles even
-though its odometer difference is `268`.
+Three additional handwritten forms provide 16 trip rows and 400 character
+labels. The initial fixed-crop baseline scored 35/400 characters (8.8%), no
+exact fields or rows, and 11 invented blank rows. Development inspection
+showed that accepting a page boundary did not align the printed character
+boxes: printing offsets and local box displacement contaminated the crops.
 
-These measurements are for development only. They are not the held-out result
-and do not justify a performance claim. Detailed errors are under the
-Git-ignored `outputs/development_forms_eval/` directory.
+Current preprocessing scores 359/400 characters (89.8%), 58/89 exact fields
+(65.2%) and 2/16 exact rows (12.5%). All 400 expected cells are extracted,
+all three template alignments are verified, and no blank row is treated as
+filled. Fifty-five labeled cells carry border-verification or clipping
+warnings; their predictions are retained for review. All 16 rows require
+review under the image-quality, confidence and business checks. The invented
+dates and employee records also affect business routing, so this result is
+not a standalone calibration of review safety.
 
-An output-layer fine-tuning experiment used the 399 extractable characters
-from these forms. In leave-one-form-out development checks it reached 13.3%
-character accuracy, up from 8.8% for the fixed model. After training on all
-three development forms, the optional checkpoint scored 299 / 1,665 characters
-(18.0%) on the 12 held-out forms, compared with the original 295 / 1,665
-(17.7%). Exact fields fell from 11 / 371 to 7 / 371; exact rows remained 0.
-This mixed, small change is not a reliable improvement, so the default model
-remains unchanged. The experiment can be reproduced with
-`scripts/adapt_handwritten_model.py` and the evaluator's `--model` option.
+These are development measurements only. Labels preserve the source writing,
+including form 2 row 5's `278` miles although its odometer difference is `268`.
+Detailed current errors are in `outputs/development_forms_preprocessed_eval/`.
+
+Before the cropping fix, an output-layer adaptation trial scored 18.0% on
+the 12 held-out forms versus 17.7% originally, while exact fields fell from
+11 to 7. That historical trial was not adopted. Baselines used the old
+preprocessing at revision `61e9e4a`; rerunning adaptation with current crops
+would be a new experiment. The current results use the original checkpoint.
 
 ## Team-filled handwritten forms
 
 The independent set has 12 photographed forms, 67 trip rows, and 1,665
 handwritten characters. Ground truth preserves the six-digit odometers; form
 5's total is `172` with its first box blank, which is scored as a blank cell.
-The fixed model and policy were run without corrections or tuning on this set.
+The frozen preprocessing and original model were run without corrections.
+These 12 forms were not used to tune the preprocessing changes.
 
-| Metric | Result |
-|---|---:|
-| Page transforms accepted by the reader | 12 / 12 |
-| Expected character cells extracted | 1,478 / 1,665 (88.8%) |
-| Character accuracy, all labeled characters | 295 / 1,665 (17.7%) |
-| Character accuracy on extracted cells | 295 / 1,478 (20.0%) |
-| Digit accuracy | 269 / 1,440 (18.7%) |
-| Capital-letter accuracy | 26 / 225 (11.6%) |
-| Exact fields | 11 / 371 (3.0%) |
-| Exact trip rows | 0 / 67 |
+| Metric | Original fixed crops | Current preprocessing |
+|---|---:|---:|
+| Page transforms accepted | 12 / 12 | 12 / 12 |
+| Printed template alignment verified | Not measured | 8 / 12 |
+| Expected character cells extracted | 1,478 / 1,665 (88.8%) | 1,510 / 1,665 (90.7%) |
+| Character accuracy, all labels | 295 / 1,665 (17.7%) | 876 / 1,665 (52.6%) |
+| Character accuracy on extracted cells | 20.0% | 58.0% |
+| Digit accuracy | 18.7% | 771 / 1,440 (53.5%) |
+| Capital-letter accuracy | 11.6% | 105 / 225 (46.7%) |
+| Exact fields | 11 / 371 (3.0%) | 76 / 371 (20.5%) |
+| Exact trip rows | 0 / 67 | 0 / 67 |
+| Unlabeled blank rows treated as active | 36 | 12 |
 
-The reader marked 36 unlabeled blank rows as active, and all 67 labeled rows
-were routed to review under the current confidence and business rules, with
-validation evaluated as of 2026-10-05. Among usable crops, common confusions
-included 0→5 (65) and 0→6 (61). The accepted page transform alone did not
-ensure useful crops. These results show that the
-synthetic character and form metrics do not transfer to this handwriting and
-capture set. The sample meets the adjusted 12-form target, but it represents
-only the team's made-up entries and is too small to calibrate production
-thresholds.
+All 67 labeled rows require review. Four template alignments are unverified,
+155 expected cells are not extracted successfully, and there are 573 crop
+warnings across the detected fields, including extra rows. These issues block
+automatic routing even when a character has high model probability. Common
+usable-cell confusions include 0→6 (62), 0→2 (39) and 9→4 (37). This remains
+a small sample of team handwriting and captures, insufficient for production
+threshold calibration. Detailed current metrics are in
+`outputs/team_filled_preprocessed_eval/`.
 
-The bundled clean scan (`examples/figure1_clean_scan.png`) is a harder
-handwriting-domain example. In a live run, the model read employee ID
-RC5107 as RC6107 and week ending 09/27/26 as 07/27/26. It also misread
-multiple odometer digits, including row 5's end value. All seven rows were
-sent to review even though there were no empty crops. This is the failure the
-demo should show: segmentation succeeded, while recognition and the business
-checks did not support a safe post.
-
-The supplied field-condition phone photo
-(`examples/figure2_phone_photo.jpg`) registers to the page, but the coffee
-ring and uneven shadow cause blank lower rows to look occupied. The run had
-nine cell-extraction failures and no model-output failures; all rows were
-routed to review. This capture is outside the successful synthetic blank-page
-spike conditions and demonstrates why registration success alone does not
-mean a form is readable.
+The supplied figures are synthetic examples too. Use their current raw
+predictions, source crops and review reasons in the demo; coffee rings,
+shadows, crowded writing and uncertain borders remain important failure
+cases. Registration success alone does not establish readable cells.
 
 ## Reproduction and limits
 
+After setup and dataset generation in `README.md`, use the original model:
+
 ```bash
-python scripts/run_spike.py
-python scripts/train_model.py
-python scripts/generate_synthetic_logs.py --count 15 --quality mixed --fault-row 5
-python scripts/evaluate_synthetic_logs.py
-python scripts/evaluate_synthetic_forms.py
-python scripts/evaluate_team_filled_forms.py --as-of 2026-10-05
+.venv/bin/python scripts/evaluate_synthetic_logs.py --data-dir outputs/synthetic_preprocessed_eval
+.venv/bin/python scripts/evaluate_synthetic_forms.py --output-dir outputs/synthetic_forms_preprocessed_eval
+.venv/bin/python scripts/evaluate_team_filled_forms.py --output-dir outputs/team_filled_preprocessed_eval --as-of 2026-10-05
+.venv/bin/python -m unittest discover -s tests
 ```
 
 Generated logs use held-out EMNIST test images rather than train images, but
@@ -223,4 +230,8 @@ is not a phone-photo or handwritten-form accuracy claim. Thresholds are
 prototype settings, and the 0/7 residual result is too small to establish a
 safe error rate. The 12-form handwritten evaluation is a small initial check;
 more writers and capture conditions are needed before calibrating or raising
-the straight-through rate.
+the straight-through rate. The regression suite has 24 passing tests covering
+crop cleanup and preservation, printing offsets, box counts, failed layout
+verification, high-confidence uncertain crops and reviewed corrections. The
+browser warning display and escaping were also checked. The existing model
+SHA-256 is `9da5b69c57476cae69a266553c3b1d39c35cd0ae1306716ed586270a92d3dfa9`.

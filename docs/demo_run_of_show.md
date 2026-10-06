@@ -9,13 +9,14 @@ Therefore the prototype produced no measured whole-log keying savings.
 
 ## Approach — 3 minutes
 
-Show the pipeline in `docs/approach.md`: page registration, the fixed ML-7
-cell map, the shared EMNIST normalization, the trained MLP, field assembly,
+Show the pipeline in `docs/approach.md`: page and printed-template alignment,
+box detection near the ML-7 cell map, ink cleanup, the shared EMNIST
+normalization, the existing MLP, field assembly,
 reference/arithmetic checks, and confidence routing. Defend three choices:
 
 1. Restrict a character by box type and remove lowercase classes.
 2. Keep cell extraction and character recognition failures separate.
-3. Require both business checks and configured confidence before a row can
+3. Require verified crops, business checks and configured confidence before a row can
    become an auto-post candidate.
 
 ## Live run — 3 minutes
@@ -43,9 +44,9 @@ made-up form; the regular image picker is the fallback. The correction panel
 can demonstrate SCRUM-28 and show where its audit record is saved.
 
 For a handwritten file-upload example, choose
-`examples/team_filled_forms/form_04.png`, which had the strongest partial
-field score in the set. Show the raw result first, then use
-`ground_truth.csv` to point out correct reads and errors. The full-set
+`examples/development_forms/form_02.png`. Show the raw result first, then use
+that folder's `ground_truth.csv` to point out correct reads, remaining errors
+and crop warnings. The full-set
 handwriting metrics belong in the results section, not in this single-image
 demo.
 
@@ -66,17 +67,20 @@ review reason. Then, if time allows, run
 looking handwriting sample can still produce confident but wrong reads.
 The field-condition phone sample is another useful failure:
 `.venv/bin/python scripts/demo.py examples/figure2_phone_photo.jpg`. Registration
-works, but the coffee ring and shadows trigger spurious occupied cells and
-the values are routed to review.
+may work while coffee rings and shadows still produce uncertain cells.
+Show its current crops and review reasons.
 
 ## Numbers and limits — 2 minutes
 
 Use `docs/results_summary.md`. Keep isolated EMNIST accuracy (85.07%
-unrestricted, 95.73% field restricted), generated-log accuracy (97.48%
-characters, 60.00% exact rows), the 15-image registration spike, the synthetic
-fixture score, and the team-filled result (17.7% character accuracy, 0/67
-exact rows) separate. The fixture score was 97.1% character accuracy and
-55.6% exact rows across 15 paired images of five underlying forms. State the
+unrestricted, 95.73% field restricted), generated-log accuracy (97.34%
+characters, 57.78% exact rows), the 15-image registration spike, the synthetic
+fixture score, and the team-filled result (52.6% character accuracy, 0/67
+exact rows) separate. The fixture score is 96.8% character accuracy and
+52.2% exact rows across 15 paired images of five underlying forms. The three
+development forms score 89.8% characters; that is a development result, not
+independent performance. Explain that preprocessing improved the handwritten
+baseline from 17.7% using the same model. State the
 set sizes and quality conditions. Emphasize that 0 residual errors among 7
 generated-log auto-post candidates is far too small to establish a safe error
 rate.
