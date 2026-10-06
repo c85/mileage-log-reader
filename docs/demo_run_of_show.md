@@ -75,12 +75,14 @@ Show its current crops and review reasons.
 Use `docs/results_summary.md`. Keep isolated EMNIST accuracy (85.07%
 unrestricted, 95.73% field restricted), generated-log accuracy (97.34%
 characters, 57.78% exact rows), the 15-image registration spike, the synthetic
-fixture score, and the team-filled result (52.6% character accuracy, 0/67
+fixture score, and the team-filled result (54.1% character accuracy, 0/67
 exact rows) separate. The fixture score is 96.8% character accuracy and
 52.2% exact rows across 15 paired images of five underlying forms. The three
-development forms score 89.8% characters; that is a development result, not
+development forms score 91.3% characters; that is a development result, not
 independent performance. Explain that preprocessing improved the handwritten
-baseline from 17.7% using the same model. State the
+baseline from 17.7% using the same model. Explain the
+border-recovery gain separately: 52.6% to 54.1% on team forms, with expanded
+crops still requiring verification. State the
 set sizes and quality conditions. Emphasize that 0 residual errors among 7
 generated-log auto-post candidates is far too small to establish a safe error
 rate.

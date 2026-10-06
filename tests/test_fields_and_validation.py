@@ -5,6 +5,7 @@ from datetime import date
 
 from mlreader.fields import assemble_field
 from mlreader.review import apply_correction
+from mlreader.registration import BORDER_RECOVERY_WARNING
 from mlreader.validation import validate_document
 
 
@@ -161,6 +162,15 @@ class ReimbursementRuleTests(unittest.TestCase):
         document["rows"][0]["fields"]["miles"]["characters"][0]["extraction_status"] = "unreadable"
         document = self.validate(document)
         self.assertEqual(document["rows"][0]["validation"]["route"], "needs_review")
+
+    def test_recovered_border_requires_review_even_at_high_confidence(self):
+        document = valid_document()
+        character = document["rows"][0]["fields"]["miles"]["characters"][0]
+        character["border_recovery"] = {"applied": True, "added_ink_pixels": 25}
+        character["preprocessing_issues"] = [BORDER_RECOVERY_WARNING]
+        document = self.validate(document)
+        self.assertEqual(document["rows"][0]["validation"]["route"], "needs_review")
+        self.assertIn(BORDER_RECOVERY_WARNING, document["rows"][0]["validation"]["confidence_checks"]["miles"]["reason"])
 
     def test_unverified_template_routes_even_when_business_checks_pass(self):
         document = valid_document()

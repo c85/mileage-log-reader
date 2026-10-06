@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from mlreader import CONFIG_DIR, DATA_DIR, OUTPUT_DIR, REPO_ROOT  # noqa: E402
 from mlreader.emnist import CLASSES  # noqa: E402
 from mlreader.pipeline import read_form  # noqa: E402
+from mlreader.registration import PREPROCESSING_VERSION  # noqa: E402
 
 
 GROUND_TRUTH_COLUMNS = {
@@ -241,6 +242,8 @@ def _case_score(case):
         "related_form_group": case["manifest_case"].get("related_form_group", ""),
         "registration_ok": bool(document.get("registration", {}).get("ok")),
         "model_available": bool(document.get("model_available")),
+        "preprocessing_warning_cells": document.get("preprocessing", {}).get("cells_requiring_review", 0),
+        "border_recovered_cells": document.get("preprocessing", {}).get("border_recovered_cells", 0),
         "character_count": char_count,
         "correct_characters": char_correct,
         "character_accuracy": char_correct / char_count if char_count else None,
@@ -292,6 +295,7 @@ def _aggregate(case_scores):
             "capital_letter_count", "correct_capital_letters", "field_count", "exact_fields",
             "trip_rows", "exact_rows", "extra_predicted_rows", "cell_extraction_successes",
             "auto_post_rows", "incorrect_auto_post_rows",
+            "preprocessing_warning_cells", "border_recovered_cells",
         ):
             totals[name] += case[name]
         for label, row in zip(CLASSES, case["character_confusion"]):
@@ -317,6 +321,8 @@ def _aggregate(case_scores):
     trip_rows = totals["trip_rows"]
     return {
         "images": len(case_scores),
+        "preprocessing_warning_cells": totals["preprocessing_warning_cells"],
+        "border_recovered_cells": totals["border_recovered_cells"],
         "registered_images": sum(case["registration_ok"] for case in case_scores),
         "registration_success_rate": (
             sum(case["registration_ok"] for case in case_scores) / len(case_scores)
@@ -488,6 +494,7 @@ def main():
 
     metrics = {
         "dataset": "pre-rendered synthetic ML-7 QA fixtures",
+        "preprocessing_version": PREPROCESSING_VERSION,
         "as_of_date_for_validation": args.as_of.isoformat(),
         "model": str(args.model),
         "references": str(args.references),

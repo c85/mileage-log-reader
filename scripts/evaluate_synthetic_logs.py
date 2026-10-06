@@ -78,6 +78,7 @@ def _summarize(records):
     result = {
         "preprocessing_version": PREPROCESSING_VERSION,
         "preprocessing_warning_cells": sum(record["prediction"].get("preprocessing", {}).get("cells_requiring_review", 0) for record in records),
+        "border_recovered_cells": sum(record["prediction"].get("preprocessing", {}).get("border_recovered_cells", 0) for record in records),
         "logs": len(records),
         "character_accuracy": correct_chars / total_chars if total_chars else None,
         "character_count": total_chars,

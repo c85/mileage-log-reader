@@ -21,6 +21,8 @@ def assemble_field(field_name, predictions):
                 "extraction_status": prediction.get("extraction_status", "ok"),
                 "failure_kind": prediction.get("failure_kind"),
                 "source_rect": prediction.get("source_rect"),
+                "crop_rect": prediction.get("crop_rect"),
+                "border_recovery": prediction.get("border_recovery"),
                 "ink_pixels": prediction.get("ink_pixels"),
                 "preprocessing_issues": prediction.get("preprocessing_issues", []),
             }

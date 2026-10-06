@@ -1,6 +1,6 @@
 """Form registration, fixed-grid cell extraction, and EMNIST normalization."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from functools import lru_cache
 from pathlib import Path
 
@@ -10,7 +10,10 @@ import numpy as np
 from mlreader import REPO_ROOT
 from mlreader.layout import CANVAS_HEIGHT, CANVAS_WIDTH, CELL_MARGIN, FIELDS
 
-PREPROCESSING_VERSION = "ml7-template-grid-cleanup-v1"
+PREPROCESSING_VERSION = "ml7-border-recovery-v2"
+BORDER_RECOVERY_MARGIN = 2
+CROP_BOUNDARY_WARNING = "Writing touches the crop boundary and may be clipped."
+BORDER_RECOVERY_WARNING = "Expanded crop requires verification against the source."
 
 
 @dataclass
@@ -36,6 +39,8 @@ class CellCrop:
     ink_pixels: int
     extraction_reason: str | None = None
     preprocessing_issues: tuple[str, ...] = ()
+    crop_rect: tuple[int, int, int, int] | None = None
+    border_recovery: dict | None = None
 
 
 def load_image(source):
@@ -244,6 +249,86 @@ def normalize_cell(cell):
     return center_ink(ink), "ok", count, None
 
 
+def _recover_border_ink(image, cell):
+    """Recover connected strokes inside a verified box without changing the model.
+
+    Keep the original cleaned ink as a seed. Only new ink connected to that
+    seed can be retained; disconnected frame fragments and neighboring marks
+    cannot create a character. Long printed lines are removed only in the
+    newly exposed margin. Every applied recovery requires human verification.
+    """
+    if cell.extraction_status != "ok" or any(
+        issue != CROP_BOUNDARY_WARNING for issue in cell.preprocessing_issues
+    ):
+        return cell
+    left, top, right, bottom = cell.rect
+    margin = BORDER_RECOVERY_MARGIN
+    crop_rect = (left + margin, top + margin, right - margin, bottom - margin)
+    x0, y0, x1, y1 = crop_rect
+    if not (0 <= x0 < x1 <= image.shape[1] and 0 <= y0 < y1 <= image.shape[0]):
+        return cell
+    crop = image[y0:y1, x0:x1]
+    gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
+    ink = (gray < 165).astype(np.uint8) * 255
+    height, width = ink.shape
+    band = CELL_MARGIN - margin
+    old_gray = cv2.cvtColor(cell.image, cv2.COLOR_BGR2GRAY)
+    if band <= 0 or old_gray.shape != (height - 2 * band, width - 2 * band):
+        return cell
+    horizontal = cv2.morphologyEx(
+        ink, cv2.MORPH_OPEN, np.ones((1, max(20, int(width * 0.8))), np.uint8),
+    )
+    vertical = cv2.morphologyEx(
+        ink, cv2.MORPH_OPEN, np.ones((max(20, int(height * 0.8)), 1), np.uint8),
+    )
+    lines = np.zeros_like(ink)
+    lines[:band] = horizontal[:band]
+    lines[-band:] = horizontal[-band:]
+    lines[:, :band] |= vertical[:, :band]
+    lines[:, -band:] |= vertical[:, -band:]
+    cleaned_gray = gray.copy()
+    cleaned_gray[lines > 0] = 255
+    cleaned = _clean_cell_ink(cleaned_gray)
+    seed = np.zeros_like(cleaned)
+    seed[band:-band, band:-band] = _clean_cell_ink(old_gray)
+    count, labels, _, _ = cv2.connectedComponentsWithStats(
+        (cleaned > 0).astype(np.uint8), connectivity=8,
+    )
+    retained = np.zeros_like(cleaned)
+    for index in range(1, count):
+        component = labels == index
+        if np.any(component & (seed > 0)):
+            retained[component] = 255
+    outside = retained.copy()
+    outside[band:-band, band:-band] = 0
+    added = int(np.count_nonzero(outside))
+    if added < 5:
+        return cell
+    pixels = int(np.count_nonzero(retained))
+    if np.any((seed > 0) & (retained == 0)) or pixels > int(retained.size * 0.55):
+        # Keep the original prediction and flag a recovery that cannot safely
+        # preserve its ink. Model confidence is never used to select a crop.
+        return replace(cell, preprocessing_issues=tuple(dict.fromkeys(
+            cell.preprocessing_issues + ("Border ink could not be recovered reliably.",)
+        )))
+    return replace(
+        cell, image=crop, normalized=center_ink(retained), ink_pixels=pixels,
+        crop_rect=crop_rect,
+        border_recovery={
+            "applied": True,
+            "original_crop_rect": list(cell.crop_rect or (
+                left + CELL_MARGIN, top + CELL_MARGIN,
+                right - CELL_MARGIN, bottom - CELL_MARGIN,
+            )),
+            "added_ink_pixels": added,
+            "removed_frame_pixels": int(np.count_nonzero(lines)),
+        },
+        preprocessing_issues=tuple(dict.fromkeys(
+            cell.preprocessing_issues + (BORDER_RECOVERY_WARNING,)
+        )),
+    )
+
+
 def center_ink(ink):
     """Scale an ink mask into 20x20 and center its mass in a 28x28 frame."""
     ink = np.asarray(ink, dtype=np.uint8)
@@ -383,9 +468,9 @@ def extract_cells(registered_image):
                 edge_pixels = int(np.count_nonzero(cleaned[0]) + np.count_nonzero(cleaned[-1])
                                   + np.count_nonzero(cleaned[:, 0]) + np.count_nonzero(cleaned[:, -1]))
                 if edge_pixels >= max(5, ink_pixels * 0.05):
-                    issues += ("Writing touches the crop boundary and may be clipped.",)
+                    issues += (CROP_BOUNDARY_WARNING,)
             cells.append(
-                CellCrop(
+                _recover_border_ink(registered_image, CellCrop(
                     field=field,
                     position=location.position,
                     allowed=location.allowed,
@@ -397,7 +482,8 @@ def extract_cells(registered_image):
                     ink_pixels=ink_pixels,
                     extraction_reason=reason,
                     preprocessing_issues=issues,
-                )
+                    crop_rect=(left + margin, top + margin, right - margin, bottom - margin),
+                ))
             )
         crops[field] = cells
     return crops

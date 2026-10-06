@@ -64,6 +64,18 @@ is applied to EMNIST train, validation, and test characters. The original model
 weights and ink threshold remain in use. Unverified borders and handwriting
 touching a crop boundary are retained as review warnings with each character.
 
+For a readable cell with verified borders, border recovery tests a smaller
+inset (2 pixels instead of 5), staying inside the same printed box. Long frame
+lines are removed only from the newly exposed margin, and only ink connected
+to the original cleaned character is retained. At least five new ink pixels
+must be recovered; candidates that lose original ink or become too dark are
+rejected. Blank, unreadable and unverified boxes keep their original crops.
+Crop selection uses image pixels, without classifier confidence or ground
+truth. Applied recoveries always carry a review warning. Result JSON retains
+the printed frame (`source_rect`), actual crop bounds (`crop_rect`), original
+crop bounds and recovered-pixel counts (`border_recovery`). Saved crop images
+show the raw expanded source, before line removal and normalization.
+
 **Classification and assembly.** The model is a one-hidden-layer NumPy MLP
 (784 input values, ReLU hidden layer, 36 output classes). It is trained from
 scratch on ByClass digits and capital letters, with lowercase classes

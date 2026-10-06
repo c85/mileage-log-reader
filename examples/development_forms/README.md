@@ -20,7 +20,7 @@ To score this development set, run:
 .venv/bin/python scripts/evaluate_team_filled_forms.py \
   --forms-dir examples/development_forms \
   --ground-truth examples/development_forms/ground_truth.csv \
-  --output-dir outputs/development_forms_preprocessed_eval \
+  --output-dir outputs/development_forms_border_eval \
   --dataset-name "handwritten development forms" \
   --as-of 2026-10-05
 ```
@@ -28,9 +28,13 @@ To score this development set, run:
 The results are development measurements only, not held-out performance.
 Printed-template alignment, local box detection and small-artifact cleanup
 raised character accuracy from 35/400 (8.8%) to 359/400 (89.8%) using the same
-EMNIST checkpoint. Exact fields increased to 58/89; exact trip rows are 2/16.
+EMNIST checkpoint. Border-stroke recovery then raised accuracy to 365/400
+(91.3%), exact fields from 58/89 to 63/89, and exact trip rows from 2/16 to 5/16.
 No blank rows were treated as filled, compared with 11 in the initial baseline.
 All 16 rows still require review under the image-quality and business checks.
+Current preprocessing is `ml7-border-recovery-v2`. It expanded 259 labeled
+cell crops; every applied recovery requires source verification. There are
+280 cells with preprocessing warnings, compared with 55 before recovery.
 
 The earlier output-layer adaptation experiment used the old fixed crops and
 did not reliably improve the held-out result. It is recorded in

@@ -182,6 +182,7 @@ def main():
     form_count = 0
     registration_successes = 0
     verified_alignments = preprocessing_warning_cells = 0
+    border_recovered_cells = 0
     expected_cells = usable_cells = 0
     correct_on_usable_cells = 0
     expected_blank_cells = correctly_empty_cells = 0
@@ -211,6 +212,8 @@ def main():
         verified_alignments += alignment_verified
         warning_cells = document.get("preprocessing", {}).get("cells_requiring_review", 0)
         preprocessing_warning_cells += warning_cells
+        recovered_cells = document.get("preprocessing", {}).get("border_recovered_cells", 0)
+        border_recovered_cells += recovered_cells
         predicted_rows = {item["row_number"]: item for item in document.get("rows", [])}
         extra_rows = len(set(predicted_rows) - set(row_labels))
         extra_predicted_rows += extra_rows
@@ -299,6 +302,7 @@ def main():
                 "registration_ok": registered,
                 "template_alignment_verified": alignment_verified,
                 "preprocessing_warning_cells": warning_cells,
+                "border_recovered_cells": recovered_cells,
                 "expected_rows": len(row_labels),
                 "predicted_rows": len(predicted_rows),
                 "extra_predicted_rows": extra_rows,
@@ -320,6 +324,7 @@ def main():
         "preprocessing_version": PREPROCESSING_VERSION,
         "template_alignment_verified_forms": verified_alignments,
         "preprocessing_warning_cells": preprocessing_warning_cells,
+        "border_recovered_cells": border_recovered_cells,
         "forms": form_count,
         "as_of_date_for_validation": args.as_of.isoformat(),
         "registration_successes": registration_successes,

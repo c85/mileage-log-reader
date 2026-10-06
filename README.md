@@ -105,7 +105,7 @@ handwriting accuracy.
 
 ```bash
 .venv/bin/python scripts/generate_synthetic_logs.py --count 15 --quality mixed --fault-row 5
-.venv/bin/python scripts/evaluate_synthetic_logs.py --data-dir outputs/synthetic_preprocessed_eval
+.venv/bin/python scripts/evaluate_synthetic_logs.py --data-dir outputs/synthetic_border_eval
 ```
 
 By default, the generator draws characters only from the EMNIST ByClass test
@@ -132,7 +132,7 @@ use a different output folder and score it separately:
   --source-split val --output outputs/synthetic_dev
 .venv/bin/python scripts/evaluate_synthetic_logs.py \
   --manifest outputs/synthetic_dev/manifest.json \
-  --data-dir outputs/synthetic_dev_preprocessed_eval --as-of 2026-10-05
+  --data-dir outputs/synthetic_dev_border_eval --as-of 2026-10-05
 ```
 
 This makes 15 new logs, five per capture condition. The evaluator labels this
@@ -148,11 +148,11 @@ seeds, related-form groups, and expected failed checks. See the folder's
 README for case details. Score the pack separately with:
 
 ```bash
-.venv/bin/python scripts/evaluate_synthetic_forms.py --output-dir outputs/synthetic_forms_preprocessed_eval
+.venv/bin/python scripts/evaluate_synthetic_forms.py --output-dir outputs/synthetic_forms_border_eval
 ```
 
 This uses the trained model checkpoint and writes detailed scores under
-`outputs/synthetic_forms_preprocessed_eval/`. The fixtures are separate from the 15
+`outputs/synthetic_forms_border_eval/`. The fixtures are separate from the 15
 command-generated logs scored above. The valid images are three paired views
 of five forms, not 15 independent forms; the score report keeps them separate.
 
@@ -166,7 +166,7 @@ reader changes. Score them separately from the 12 held-out forms with:
 .venv/bin/python scripts/evaluate_team_filled_forms.py \
   --forms-dir examples/development_forms \
   --ground-truth examples/development_forms/ground_truth.csv \
-  --output-dir outputs/development_forms_preprocessed_eval \
+  --output-dir outputs/development_forms_border_eval \
   --dataset-name "handwritten development forms" \
   --as-of 2026-10-05
 ```
@@ -179,12 +179,16 @@ the original EMNIST model weights and confidence thresholds. Unverified form
 alignment, uncertain box borders, clipped writing, failed extraction, low
 confidence, or failed business checks require review. Source crops and the
 reason for review are available in the browser and CLI result JSON.
+Border recovery preserves connected strokes near verified box edges and flags
+every expanded crop for review. On the three development forms, character
+accuracy rose from 89.8% to 91.3%, exact fields from 58/89 to 63/89, and exact
+rows from 2/16 to 5/16. This uses the existing model and unchanged thresholds.
 
 ## Evaluate the team-filled forms
 
 ```bash
 .venv/bin/python scripts/evaluate_team_filled_forms.py \
-  --output-dir outputs/team_filled_preprocessed_eval --as-of 2026-10-05
+  --output-dir outputs/team_filled_border_eval --as-of 2026-10-05
 ```
 
 This scores the 12 hand-filled photos in `examples/team_filled_forms/` against
@@ -192,11 +196,11 @@ This scores the 12 hand-filled photos in `examples/team_filled_forms/` against
 box in the form 5 total is scored as blank. The script does not train or tune
 the model. It writes summary metrics, per-form scores, field errors, and
 character confusion tables under the Git-ignored
-`outputs/team_filled_preprocessed_eval/` directory. The current held-out result
-is 52.6% character accuracy, 76/371 exact fields, and 0/67 exact trip rows;
+`outputs/team_filled_border_eval/` directory. The current held-out result
+is 54.1% character accuracy, 84/371 exact fields, and 0/67 exact trip rows;
 all 67 rows require review. The earlier 17.7% baseline is preserved in the
-results summary. Keep these handwritten results separate
-from the synthetic-log evaluation above.
+results summary, along with the 52.6% score before border recovery. Keep these
+handwritten results separate from the synthetic-log evaluation above.
 
 ## Automated regression suite
 

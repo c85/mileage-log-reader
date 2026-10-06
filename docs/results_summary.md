@@ -2,21 +2,27 @@
 
 ## Executive result
 
-Printed-template alignment, local box detection and small-artifact cleanup
-improved the 12-form handwritten score from 17.7% to 52.6% with the existing
-EMNIST model. Exact fields increased from 11 to 76 out of 371, but no complete
-trip row was read exactly and all 67 rows require review. On the generated
+Printed-template alignment, local box detection, small-artifact cleanup and
+border-stroke recovery improved the 12-form handwritten score from 17.7% to
+54.1% with the existing EMNIST model. Exact fields increased from 11 to 84 out
+of 371, but no complete trip row was read exactly and all 67 rows require
+review. On the generated
 test set, the configured policy auto-posted 7 of 90 rows (7.8%) with no errors
 among those 7; none of the 15 logs had every row eligible for auto-post. Under
 the conservative assumption that AP still keys any log containing a review
 row, the measured gross keying-cost saving is $0/month. This is a useful
 fail-closed result, not a production savings claim.
 
-Current form scores use `ml7-template-grid-cleanup-v1`, with validation as of
+Current form scores use `ml7-border-recovery-v2`, with validation as of
 2026-10-05. Preprocessing was developed on the three new handwritten forms and
 EMNIST-validation synthetic logs, then frozen before the held-out comparison.
 The original model weights and policy thresholds were retained. A model's
 high probability cannot override an unverified layout or a suspect crop.
+
+Border recovery adds a modest gain over v1: 52.6% to 54.1% characters and
+76 to 84 exact fields on the team forms. All applied recoveries require source
+verification. Synthetic development, generated-test and QA fixture scores
+are unchanged from v1; none of their crops triggered recovery.
 
 ## Registration spike
 
@@ -97,7 +103,7 @@ so `recognition_failures: 0` means it returned a class for every usable crop,
 not that every read was correct. The earlier fixed-crop baseline scored
 97.48% characters and 54/90 exact rows; the current changes traded a few
 synthetic reads for substantially better handwritten cropping. The current
-metrics are in `outputs/synthetic_preprocessed_eval/`.
+metrics are in `outputs/synthetic_border_eval/`.
 
 ## Pre-rendered synthetic QA fixtures
 
@@ -129,7 +135,7 @@ characters are assembled from EMNIST test images, so these results are a small
 synthetic QA check and do not estimate performance on human handwriting.
 They are reported separately from the generated-log and team-filled results.
 Detailed metrics and error files are written under the Git-ignored
-`outputs/synthetic_forms_preprocessed_eval/` directory. The original fixture
+`outputs/synthetic_forms_border_eval/` directory. The original fixture
 baseline was 97.1% characters and 50/90 exact rows.
 
 ## Synthetic development comparison
@@ -149,7 +155,8 @@ images, labels, and metrics are reproducible under the Git-ignored
 the development command in `README.md`. With current preprocessing, the same
 batch scores 96.6% characters (2,145/2,220), 85.3% fields (422/495) and 40.0%
 rows (36/90), with 4 auto-post candidates and no observed errors among those
-4. Current metrics are in `outputs/synthetic_dev_preprocessed_eval/`.
+4. Border recovery leaves these scores unchanged, with no recovered crops.
+Current metrics are in `outputs/synthetic_dev_border_eval/`.
 
 ## Handwritten development forms
 
@@ -159,18 +166,38 @@ exact fields or rows, and 11 invented blank rows. Development inspection
 showed that accepting a page boundary did not align the printed character
 boxes: printing offsets and local box displacement contaminated the crops.
 
-Current preprocessing scores 359/400 characters (89.8%), 58/89 exact fields
-(65.2%) and 2/16 exact rows (12.5%). All 400 expected cells are extracted,
-all three template alignments are verified, and no blank row is treated as
-filled. Fifty-five labeled cells carry border-verification or clipping
-warnings; their predictions are retained for review. All 16 rows require
-review under the image-quality, confidence and business checks. The invented
+The v1 cleanup scored 359/400 characters (89.8%), 58/89 exact fields
+(65.2%) and 2/16 exact rows (12.5%). Border recovery now scores 365/400
+characters (91.3%), 63/89 exact fields (70.8%) and 5/16 exact rows (31.3%).
+All 400 expected cells are extracted, all three template alignments are
+verified, and no blank row is treated as
+filled. Recovery expanded 259 labeled crops. The number of cells carrying
+preprocessing warnings increased from 55 to 280; every recovery requires
+source verification. Their predictions are retained for review. All 16 rows
+require review under the image-quality, confidence and business checks. The invented
 dates and employee records also affect business routing, so this result is
 not a standalone calibration of review safety.
 
 These are development measurements only. Labels preserve the source writing,
 including form 2 row 5's `278` miles although its odometer difference is `268`.
-Detailed current errors are in `outputs/development_forms_preprocessed_eval/`.
+Detailed current errors are in `outputs/development_forms_border_eval/`.
+
+The pixel-based recovery rule fixed 13 previously wrong development reads and
+introduced 7 new errors. It expands only inside verified boxes, retains ink
+connected to the original character and never selects crops using labels or
+model confidence. Printing-line removal is limited to the newly exposed
+margin; the original ink must be preserved. This does not recover a stroke
+outside its own printed frame, completely disconnected writing or a fully
+missing character. Those cases still need review.
+
+Before freezing v2, nine derived views of the three development forms checked
+capture sensitivity: a 1-degree rotation, a JPEG quality-70 round trip, and
+intensity ×0.85 +15, separately applied to each original PNG. Across these
+repeated views, v1 scored 1,078/1,200 characters (89.8%), 176/267 exact fields
+and 5/48 exact rows. V2 scored 1,117/1,200 characters (93.1%), 204/267 fields
+and 18/48 rows. Both produced three extra blank rows. These are repeated
+handwriting samples, not independent forms. Metrics are in
+`outputs/border_capture_development/{v1,v2}/`.
 
 Before the cropping fix, an output-layer adaptation trial scored 18.0% on
 the 12 held-out forms versus 17.7% originally, while exact fields fell from
@@ -186,27 +213,30 @@ handwritten characters. Ground truth preserves the six-digit odometers; form
 The frozen preprocessing and original model were run without corrections.
 These 12 forms were not used to tune the preprocessing changes.
 
-| Metric | Original fixed crops | Current preprocessing |
-|---|---:|---:|
-| Page transforms accepted | 12 / 12 | 12 / 12 |
-| Printed template alignment verified | Not measured | 8 / 12 |
-| Expected character cells extracted | 1,478 / 1,665 (88.8%) | 1,510 / 1,665 (90.7%) |
-| Character accuracy, all labels | 295 / 1,665 (17.7%) | 876 / 1,665 (52.6%) |
-| Character accuracy on extracted cells | 20.0% | 58.0% |
-| Digit accuracy | 18.7% | 771 / 1,440 (53.5%) |
-| Capital-letter accuracy | 11.6% | 105 / 225 (46.7%) |
-| Exact fields | 11 / 371 (3.0%) | 76 / 371 (20.5%) |
-| Exact trip rows | 0 / 67 | 0 / 67 |
-| Unlabeled blank rows treated as active | 36 | 12 |
+| Metric | Original fixed crops | v1 cleanup | v2 border recovery |
+|---|---:|---:|---:|
+| Page transforms accepted | 12 / 12 | 12 / 12 | 12 / 12 |
+| Printed template alignment verified | Not measured | 8 / 12 | 8 / 12 |
+| Expected character cells extracted | 1,478 / 1,665 (88.8%) | 1,510 / 1,665 (90.7%) | 1,510 / 1,665 (90.7%) |
+| Character accuracy, all labels | 295 / 1,665 (17.7%) | 876 / 1,665 (52.6%) | 901 / 1,665 (54.1%) |
+| Character accuracy on extracted cells | 20.0% | 58.0% | 59.7% |
+| Digit accuracy | 18.7% | 771 / 1,440 (53.5%) | 787 / 1,440 (54.7%) |
+| Capital-letter accuracy | 11.6% | 105 / 225 (46.7%) | 114 / 225 (50.7%) |
+| Exact fields | 11 / 371 (3.0%) | 76 / 371 (20.5%) | 84 / 371 (22.6%) |
+| Exact trip rows | 0 / 67 | 0 / 67 | 0 / 67 |
+| Unlabeled blank rows treated as active | 36 | 12 | 12 |
 
 All 67 labeled rows require review. Four template alignments are unverified,
-155 expected cells are not extracted successfully, and there are 573 crop
+155 expected cells are not extracted successfully, and there are 868 crop
 warnings across the detected fields, including extra rows. These issues block
-automatic routing even when a character has high model probability. Common
-usable-cell confusions include 0→6 (62), 0→2 (39) and 9→4 (37). This remains
+automatic routing even when a character has high model probability.
+Recovery expanded 364 detected cells, and warnings increased from 573 to 868.
+Usable-cell confusions include 0→6 (73), 9→4 (37) and 0→2 (31). This remains
 a small sample of team handwriting and captures, insufficient for production
 threshold calibration. Detailed current metrics are in
-`outputs/team_filled_preprocessed_eval/`.
+`outputs/team_filled_border_eval/`. V1 metrics remain in
+`outputs/team_filled_preprocessed_eval/`. The final comparison was run after
+freezing the recovery rule; no further tuning used these held-out errors.
 
 The supplied figures are synthetic examples too. Use their current raw
 predictions, source crops and review reasons in the demo; coffee rings,
@@ -218,9 +248,9 @@ cases. Registration success alone does not establish readable cells.
 After setup and dataset generation in `README.md`, use the original model:
 
 ```bash
-.venv/bin/python scripts/evaluate_synthetic_logs.py --data-dir outputs/synthetic_preprocessed_eval
-.venv/bin/python scripts/evaluate_synthetic_forms.py --output-dir outputs/synthetic_forms_preprocessed_eval
-.venv/bin/python scripts/evaluate_team_filled_forms.py --output-dir outputs/team_filled_preprocessed_eval --as-of 2026-10-05
+.venv/bin/python scripts/evaluate_synthetic_logs.py --data-dir outputs/synthetic_border_eval
+.venv/bin/python scripts/evaluate_synthetic_forms.py --output-dir outputs/synthetic_forms_border_eval
+.venv/bin/python scripts/evaluate_team_filled_forms.py --output-dir outputs/team_filled_border_eval --as-of 2026-10-05
 .venv/bin/python -m unittest discover -s tests
 ```
 
@@ -230,8 +260,10 @@ is not a phone-photo or handwritten-form accuracy claim. Thresholds are
 prototype settings, and the 0/7 residual result is too small to establish a
 safe error rate. The 12-form handwritten evaluation is a small initial check;
 more writers and capture conditions are needed before calibrating or raising
-the straight-through rate. The regression suite has 24 passing tests covering
+the straight-through rate. The regression suite has 32 passing tests covering
 crop cleanup and preservation, printing offsets, box counts, failed layout
-verification, high-confidence uncertain crops and reviewed corrections. The
-browser warning display and escaping were also checked. The existing model
+verification, border-stroke recovery, connected frame lines, exclusion of
+neighboring ink, dark recovery rejection, high-confidence uncertain crops
+and reviewed corrections. The browser warning display and escaping were
+also checked. The existing model
 SHA-256 is `9da5b69c57476cae69a266553c3b1d39c35cd0ae1306716ed586270a92d3dfa9`.

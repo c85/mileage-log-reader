@@ -150,11 +150,17 @@ development set with 16 labeled trip rows. Their made-up records and manual
 transcriptions are in that folder; one row preserves a written mileage value
 that differs from its odometer change. Use them to inspect recognition errors
 and guide changes, but do not treat their scores as held-out performance.
-They guided printed-template alignment and local box cleanup while keeping the
-original model weights. Preprocessing was settled before the 12-form evaluation
+They guided printed-template alignment, local box cleanup and border-stroke
+recovery while keeping the original model weights. Preprocessing was settled before the 12-form evaluation
 was rerun. Versioned scores are in `docs/results_summary.md`; current detailed
-outputs use `outputs/development_forms_preprocessed_eval/` and
-`outputs/team_filled_preprocessed_eval/`.
+outputs use `outputs/development_forms_border_eval/` and
+`outputs/team_filled_border_eval/`. The earlier v1 comparisons remain under
+the corresponding `*_preprocessed_eval/` directories. Nine derived views
+(1-degree rotation, JPEG quality 70 and intensity ×0.85 +15, each applied to
+the three original development PNGs) checked capture sensitivity before
+freezing border recovery. These are repeated views of the same handwriting,
+not additional independent forms; their metrics are in
+`outputs/border_capture_development/{v1,v2}/`.
 
 The 12 team-filled photos in `examples/team_filled_forms/` have made-up values
 and hand-labeled fields in `ground_truth.csv` (67 trip rows). They are scored

@@ -24,6 +24,8 @@ def _load_json(source, default_path):
 def _predict_cell(cell, model):
     evidence = {
         "source_rect": list(cell.rect),
+        "crop_rect": list(cell.crop_rect) if cell.crop_rect else None,
+        "border_recovery": cell.border_recovery,
         "ink_pixels": cell.ink_pixels,
         "preprocessing_issues": list(cell.preprocessing_issues),
     }
@@ -163,6 +165,10 @@ def read_form(
             "version": PREPROCESSING_VERSION,
             "cells_requiring_review": sum(
                 bool(cell.preprocessing_issues) for field_name in expected_fields for cell in crops[field_name]
+            ),
+            "border_recovered_cells": sum(
+                bool(cell.border_recovery and cell.border_recovery.get("applied"))
+                for field_name in expected_fields for cell in crops[field_name]
             ),
             "review_reasons": (
                 [] if registration.template_alignment and registration.template_alignment.get("verified")
