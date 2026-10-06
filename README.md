@@ -8,7 +8,8 @@
 This repository contains a from-scratch prototype for reading the supplied
 synthetic Sabal Coast Form ML-7. It accepts an image path at demo time,
 aligns the printed template, locates the actual box borders, cleans small ink
-artifacts, classifies uppercase letters and
+artifacts, recovers border strokes and adjusts supported lighting problems,
+classifies uppercase letters and
 digits with an EMNIST-trained NumPy MLP, checks the assembled fields, and
 routes each row to auto-post or clerk review. It does not send reimbursements
 or connect to an ERP.
@@ -26,8 +27,21 @@ python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 .venv/bin/python scripts/download_emnist.py
 .venv/bin/python scripts/audit_emnist.py
+```
+
+For the frozen baseline, restore the saved `data/models/emnist_mlp.npz`
+checkpoint and confirm its SHA-256 against [version_freeze.md](docs/version_freeze.md).
+The checkpoint is Git-ignored and must be retained separately. A clean clone
+without that saved file cannot reproduce the frozen scores exactly.
+
+The training command creates a new checkpoint at that same path:
+
+```bash
 .venv/bin/python scripts/train_model.py
 ```
+
+Preserve the frozen checkpoint before an explicitly authorized new training
+experiment. Training is not required when the recorded checkpoint is available.
 
 The data download is about 0.5 GB. It is kept under `data/`, which is ignored
 by Git. The checksum file in `configs/` pins the five ByClass files used by the
@@ -137,7 +151,8 @@ use a different output folder and score it separately:
 
 This makes 15 new logs, five per capture condition. The evaluator labels this
 run as development data and omits the business-savings scenario. Use these
-scores to compare reader changes; do not report them as held-out test results.
+scores to compare explicitly authorized future reader versions; do not report
+them as held-out test results. The current v3 reader is frozen.
 
 ## Pre-rendered synthetic QA forms
 
@@ -180,8 +195,10 @@ reader changes. Score them separately from the 12 held-out forms with:
 
 See that folder's README for the labels and a note about a mileage discrepancy
 written on form 2. These development results are for iteration only. Do not
-change the held-out `examples/team_filled_forms/` or tune against it; rerun its
-evaluation after development changes are settled. Current preprocessing keeps
+change `examples/team_filled_forms/` or tune against its labels. Those 12 forms
+have been evaluated across several versions and now serve as a comparison
+benchmark. A fresh generalization check needs new forms, labeled before
+inspecting predictions and read with the frozen version. Current preprocessing keeps
 the original EMNIST model weights and confidence thresholds. Unverified form
 alignment, uncertain box borders, clipped writing, failed extraction, low
 confidence, or failed business checks require review. Source crops and the
@@ -189,7 +206,7 @@ reason for review are available in the browser and CLI result JSON.
 Border recovery preserves connected strokes near verified box edges and flags
 every expanded crop for review. On the three development forms, character
 accuracy rose from 89.8% to 91.3%, exact fields from 58/89 to 63/89, and exact
-rows from 2/16 to 5/16. This uses the existing model and unchanged thresholds.
+rows from 2/16 to 5/16. This uses the existing model and unchanged confidence thresholds.
 Targeted cell lighting correction then raises character accuracy to 92.3%
 (369/400) and exact fields to 65/89; exact rows remain 5/16. Adjusted ink also
 requires review, with its measurements retained in the result JSON. The model

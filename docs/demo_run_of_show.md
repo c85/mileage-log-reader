@@ -4,13 +4,14 @@
 
 Recommend using this build as a review-triage prototype, not as a payment
 poster. It auto-posted 3 of 90 synthetic rows but cleared no complete log;
-the independent team-filled evaluation also had 0 exact rows out of 67.
+the repeated team-filled benchmark also had 0 exact rows out of 67.
 Therefore the prototype produced no measured whole-log keying savings.
 
 ## Approach — 3 minutes
 
 Show the pipeline in `docs/approach.md`: page and printed-template alignment,
-box detection near the ML-7 cell map, ink cleanup, the shared EMNIST
+box detection near the ML-7 cell map, border recovery, lighting correction,
+ink cleanup, the shared EMNIST
 normalization, the existing MLP, field assembly,
 reference/arithmetic checks, and confidence routing. Defend three choices:
 
@@ -32,8 +33,11 @@ expand row 5 to show the cell crops, confidence, odometer mismatch, and review
 route:
 
 ~~~bash
-.venv/bin/python scripts/generate_synthetic_logs.py --count 1 --quality clean --fault-row 5
+.venv/bin/python scripts/generate_synthetic_logs.py --count 1 --quality clean --fault-row 5 --source-split val --output outputs/demo_synthetic
 ~~~
+
+Select `outputs/demo_synthetic/log_001_clean.jpg`. The demo uses validation
+characters and a separate output folder to preserve the recorded test batch.
 
 On a phone connected to the laptop's trusted Wi-Fi, start the server with
 ~~~bash
@@ -55,8 +59,8 @@ If the browser is unavailable, use the CLI fallback:
 Generate the known failing input and run it:
 
 ```bash
-.venv/bin/python scripts/generate_synthetic_logs.py --count 1 --quality clean --fault-row 5
-.venv/bin/python scripts/demo.py outputs/synthetic_logs/log_001_clean.jpg
+.venv/bin/python scripts/generate_synthetic_logs.py --count 1 --quality clean --fault-row 5 --source-split val --output outputs/demo_synthetic
+.venv/bin/python scripts/demo.py outputs/demo_synthetic/log_001_clean.jpg
 ```
 
 Point out rows that pass and rows sent to review. The generator deliberately
@@ -87,16 +91,18 @@ score to 69.5%, while generated synthetic accuracy slipped from 97.34% to
 97.25%. Adjusted ink requires review too. State the
 set sizes and quality conditions. Emphasize that 0 residual errors among 3
 generated-log auto-post candidates is far too small to establish a safe error
-rate.
+rate. State that the team set was evaluated repeatedly; 69.5% is a benchmark
+score, and a fresh check needs new writers. Show `docs/version_freeze.md`
+to identify the frozen v3 code and checkpoint.
 
 ## Four-week next step — 1 minute
 
-1. Expand the handwritten set with more writers and lighting, angle, and focus
-   conditions; label every field.
-2. Improve occupied-row detection and cell extraction, then measure character,
-   field, and row error on a separate evaluation set.
-3. Calibrate confidence by field and odometer position on development data;
-   keep the held-out forms out of tuning.
+1. Evaluate the frozen v3 reader on new writers and capture conditions; label
+   every field before inspecting predictions and report raw results separately.
+2. If a further version is explicitly authorized, use development examples to
+   improve occupied-row detection or extraction and preserve v3 for comparison.
+3. For that future version, calibrate confidence by field and odometer position
+   on development data and reserve a separate unseen evaluation batch.
 4. Compare residual cost with clerk review and retain source crops and
    correction history.
 

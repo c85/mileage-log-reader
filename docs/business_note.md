@@ -22,6 +22,10 @@ client details, dates within the stated week, and matching odometer readings,
 written miles and weekly totals. Digits that could cause large payment errors
 need stricter checks. Keep the original image and check results for review.
 The current settings still need testing on more handwriting.
+The v3 reader is frozen. The 12 team forms were evaluated repeatedly, so a
+fresh check should use new writers with the current settings kept fixed.
+The benchmark gain is preliminary evidence and does not establish a safe
+payment error rate.
 
 ## Monthly cost frame
 
@@ -58,10 +62,19 @@ create correction work: if 2% of the 70,000 monthly rows were underpaid and
 each caused one $28 correction ticket, that work would cost **$39,200**.
 These examples show potential costs; they are not measured losses.
 
+`scripts/reimbursement_impact.py` provides a separate sensitivity calculation
+at the same $0.62 rate. Its simulation assumes digit changes of 1–9 and uses
+a hypothetical $100 maximum-exposure cutoff. It does not use measured OCR
+error frequencies, failed-check detection or staff review costs. Its review
+labels are illustrative; operational prototype routing uses
+`configs/reader_policy.json` and the validation checks. Recognition improvements
+do not change the dollar effect of a given odometer error.
+
 ## Decision after the prototype
 
-Improve handwriting accuracy, test forms from more people and different
-phone photos, and have another person verify the correct answers. Measure
+First evaluate the frozen reader on forms from more people and different
+phone photos, and have another person verify the correct answers. Use a new
+development/evaluation split if a future reader version is authorized. Measure
 how long AP staff take with and without the tool. Use those results to decide
 whether it saves time after checking and correction costs. The Product Lead
 should review and approve any proposal to expand automatic processing.

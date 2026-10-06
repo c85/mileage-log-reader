@@ -1,8 +1,9 @@
 # Data record: EMNIST character data (SCRUM-10, SCRUM-11)
 
 What data the model is trained and tested on, exactly how it is prepared, and
-how to reproduce it. Each item names the one file that is the source of truth;
-values are not copied elsewhere, so they cannot drift apart.
+how to reproduce it. Configuration and code files own the implementation
+settings; recorded measurements are summarized in `docs/results_summary.md`
+and pinned to the frozen version in `docs/version_freeze.md`.
 
 ## Reproduce
 
@@ -40,12 +41,16 @@ Applied in `load_split()` in `mlreader/emnist.py`, in this order:
 3. **Transpose each 28x28 image**: EMNIST is stored with rows and columns
    swapped. `check_orientation()` asserts the result is upright on every load
    (evidence: `orientation_before_after.png`, attached to SCRUM-10).
-4. For model training, apply the same threshold, 20x20 fit, and center-of-mass
-   normalization used on extracted form cells (`normalize_emnist()` in
-   `mlreader/registration.py`). Divide by 255 before the MLP forward pass.
+4. For model training, `normalize_emnist()` in `mlreader/registration.py`
+   retains source intensities at least 90, fits ink within 20x20 and centers
+   its mass in a 28x28 frame. Divide by 255 before the MLP forward pass.
 
 Output from the loader is 28x28 `uint8`, white ink on black. Model training
-and inference both apply the further normalization above.
+and inference share the 20x20 fit and 28x28 centering. Captured cells use the
+default dark-ink threshold below 165; v3 can first correct paper illumination
+and use a relative threshold of 185 for faint ink. These capture adjustments
+leave the training transform and model weights unchanged, and carry review
+warnings when applied. Details are in `docs/approach.md`.
 
 ## Splits
 
@@ -143,14 +148,14 @@ elsewhere in the project.
   synthetic test logs or final test metrics. The generator records every
   source test index it used.
 
-## Handwritten development and held-out evaluation sets
+## Handwritten development and evaluation benchmark
 
 The three newly hand-filled forms in `examples/development_forms/` are a small
 development set with 16 labeled trip rows. Their made-up records and manual
 transcriptions are in that folder; one row preserves a written mileage value
 that differs from its odometer change. Use them to inspect recognition errors
 and guide changes, but do not treat their scores as held-out performance.
-They guided printed-template alignment, local box cleanup and border-stroke
+They guided printed-template alignment, local box cleanup, border-stroke
 recovery and cell lighting correction while keeping the original model weights.
 Preprocessing was settled before the 12-form evaluation
 was rerun. Versioned scores are in `docs/results_summary.md`; current detailed
@@ -176,4 +181,10 @@ separately from EMNIST and the generated-log test set with
 `scripts/evaluate_team_filled_forms.py`. Fixed-width odometer and mileage
 labels retain written leading zeroes; a blank leading box remains blank. The
 sample is an initial check of this team's handwriting and phone captures, not
-a representative population for threshold calibration.
+a representative population for threshold calibration. They have been
+evaluated repeatedly across versions and now provide a comparison benchmark.
+The frozen v3 score is 1,157/1,665 characters and 158/371 exact fields, with
+0/67 exact trip rows. Repeated evaluation can influence future choices even
+without fitting model weights. A fresh generalization check requires new
+forms from different writers, labeled before predictions are inspected.
+Keep the current version fixed for that check; see `docs/version_freeze.md`.

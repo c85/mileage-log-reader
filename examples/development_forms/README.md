@@ -10,9 +10,10 @@ Form 2 row 5 is recorded as written: 278 miles, although the odometer change is
 268 miles. This discrepancy is in the source form, not a transcription change.
 
 Use this small set to inspect errors and guide reader changes. Keep it separate
-from `../team_filled_forms/`, which remains the held-out evaluation set; do not
-tune against those 12 forms. After development changes are settled, evaluate the
-held-out set separately for a final comparison.
+from `../team_filled_forms/`; do not tune against those 12 forms. They have
+already been evaluated across versions and now serve as a comparison benchmark.
+The current v3 reader is frozen. Use new forms from different writers for a
+fresh evaluation, following `docs/version_freeze.md`.
 
 To score this development set, run:
 

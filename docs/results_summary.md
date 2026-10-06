@@ -254,11 +254,13 @@ would be a new experiment. The current results use the original checkpoint.
 
 ## Team-filled handwritten forms
 
-The independent set has 12 photographed forms, 67 trip rows, and 1,665
+The separate evaluation benchmark has 12 photographed forms, 67 trip rows, and 1,665
 handwritten characters. Ground truth preserves the six-digit odometers; form
 5's total is `172` with its first box blank, which is scored as a blank cell.
 The frozen preprocessing and original model were run without corrections.
-These 12 forms were not used to tune the preprocessing changes.
+The latest preprocessing rule was settled on development data before this
+evaluation. The same twelve forms have been evaluated across versions, so
+their results are a repeated benchmark rather than a fresh final test.
 
 | Metric | Original fixed crops | v1 cleanup | v2 border recovery | v3 lighting |
 |---|---:|---:|---:|---:|
@@ -295,7 +297,8 @@ cases. Registration success alone does not establish readable cells.
 
 ## Reproduction and limits
 
-After setup and dataset generation in `README.md`, use the original model:
+After setup and dataset generation in `README.md`, use the checkpoint matching
+`docs/version_freeze.md`, the recorded policy and reference records:
 
 ```bash
 .venv/bin/python scripts/evaluate_synthetic_logs.py --data-dir outputs/synthetic_lighting_eval
@@ -313,8 +316,30 @@ more writers and capture conditions are needed before calibrating or raising
 the straight-through rate. The regression suite has 41 passing tests covering
 crop cleanup and preservation, printing offsets, box counts, failed layout
 verification, border-stroke recovery, connected frame lines, exclusion of
-neighboring ink, dark recovery rejection, high-confidence uncertain crops
+neighboring ink, dark recovery rejection, high-confidence uncertain crops,
 faint strokes, smooth shadows, blank cells, pale specks, raw source evidence,
 lighting warnings and reviewed corrections. The browser warning display and escaping were
 also checked. The existing model
 SHA-256 is `9da5b69c57476cae69a266553c3b1d39c35cd0ae1306716ed586270a92d3dfa9`.
+
+### Generalization and overfitting
+
+Keeping model weights fixed does not prevent overfitting in preprocessing.
+Border geometry, lighting thresholds and noise filters were selected using
+only three development forms. The improvement on the twelve team forms is
+encouraging, but repeated access to that benchmark can influence later
+decisions. The recorded 69.5% score is preliminary evidence for this team's
+forms and captures.
+
+The 1,665 labeled characters share twelve pages, handwriting styles and
+capture conditions; they do not represent 1,665 independent handwriting
+examples. Derived capture variants reuse the same source writing. These
+counts support accuracy reporting but do not justify a population confidence
+interval that treats characters or variants as independent samples.
+
+Keep v3 fixed and evaluate new forms from different writers, labeling source
+images before inspecting predictions. Report the new results separately.
+If that batch informs improvements, use it as development data for a new
+version and reserve another unseen batch for evaluation. Human review remains
+necessary: the current benchmark contains no exact trip rows, and the
+synthetic samples are too small to establish a safe accepted-row error rate.

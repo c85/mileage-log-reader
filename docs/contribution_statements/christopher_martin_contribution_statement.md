@@ -22,6 +22,15 @@ results instead of presenting synthetic accuracy as production performance.
 I can explain the path from page registration through normalized cell crops,
 character predictions, field assembly, and validation-based routing.
 
+The final implementation record includes printed-template alignment,
+verified-box border recovery and targeted lighting correction using the
+existing EMNIST model. Frozen v3 reads 1,157/1,665 team-form characters and
+158/371 fields exactly, with 0/67 exact trip rows. Expanded or lighting-adjusted
+crops retain source evidence and require review. The three development forms
+guided these changes; the repeatedly evaluated team forms remain a benchmark,
+and a fresh generalization check needs new writers. The version and artifact
+hashes are recorded in `docs/version_freeze.md`.
+
 Codex assisted with code scaffolding, implementation edits, and draft
 documentation, as disclosed in `docs/ai_assistance.md`. My follow-up work
 included checking the evaluator and ground-truth handling, including blank
