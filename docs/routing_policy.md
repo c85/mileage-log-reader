@@ -2,18 +2,17 @@
 
 ## Purpose
 
-The routing policy determines whether a mileage-log row can be automatically posted for reimbursement or must be sent for human review. The goal is to prevent uncertain or financially significant OCR errors from flowing directly into accounting.
+The routing policy determines whether a mileage-log row qualifies as an **AUTO-POST candidate** or must be sent for human review. These are prototype routing labels; the reader does not issue payments or connect to accounting. The goal is to identify uncertain reads and failed reimbursement checks for review.
 
 ## Decision Rules
 
-A row is eligible for **AUTO-POST** only when:
+A row is eligible as an **AUTO-POST candidate** only when:
 
 - The form layout and registration are verified.
 - All required fields are successfully extracted.
-- OCR confidence meets the approved threshold.
+- OCR confidence meets the configured prototype thresholds, including the stricter threshold for the three highest-place odometer digits.
 - All business and arithmetic validation checks pass.
 - No preprocessing or image-quality warning requires verification.
-- The estimated reimbursement exposure is below the review threshold.
 
 A row is routed to **NEEDS REVIEW** when any of these conditions fail.
 
@@ -25,11 +24,15 @@ The reimbursement impact analysis is implemented in:
 
 `scripts/reimbursement_impact.py`
 
-The analysis demonstrates why high-impact or uncertain cases should require human review rather than being automatically posted.
+The analysis illustrates potential reimbursement errors by digit position at the assignment's $0.62-per-mile rate. For example, a 1,000-mile odometer error could change reimbursement by $620 if it goes undetected.
+
+The script's $100 maximum-exposure cutoff is a hypothetical sensitivity scenario. It is not a limit specified on Form ML-7, an approved business rule, or a threshold enforced by the reader. The reader does not estimate dollar exposure for each row or use this cutoff for routing.
 
 ## Current Policy
 
-The system follows a conservative, fail-closed approach. A high model-confidence score alone cannot override failed business checks, uncertain image preprocessing, or significant reimbursement exposure.
+The system follows a conservative, fail-closed approach. A high model-confidence score alone cannot override failed business checks, uncertain image preprocessing, or unverified layout and registration.
+
+Operational prototype routing uses `configs/reader_policy.json` and the validation checks. The configured minimum character confidence is 0.82, with a stricter minimum of 0.92 for the three highest-place digits in each odometer field. These confidence controls reflect the greater potential impact of place-value errors; they do not calculate financial exposure or enforce a dollar cutoff. This documentation clarification leaves the frozen v3 reader and its settings unchanged.
 
 Thresholds should be calibrated using held-out validation data before production use. Until sufficient evidence exists, uncertain cases remain routed to human review.
 
