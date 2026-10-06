@@ -33,7 +33,7 @@ def build_log_truth(references=None, week_ending=date(2026, 9, 27), rows=6, seed
 
         references = json.loads((CONFIG_DIR / "reference_data.json").read_text())
     rng = np.random.default_rng(seed)
-    employee = str(rng.choice(references["employees"]))
+    employee = str(rng.choice(references.get("synthetic_employees", references["employees"])))
     schedule = references["visit_schedule"][employee]
     days = [week_ending - timedelta(days=n) for n in range(6, -1, -1)]
     available = [day for day in days if day.isoformat() in schedule]
