@@ -145,5 +145,5 @@ It uses made-up reference data only. No real mileage logs, employee records,
 expense forms, client codes, or patient information belong in this project.
 See `docs/approach.md`, `docs/results_summary.md`, and `docs/business_note.md`
 for the design and business interpretation. `docs/demo_run_of_show.md` has
-the demo pacing and `docs/contribution_statement_template.md` is a private
-personal-statement template to complete in your own words.
+the demo pacing. The private contribution-statement template and Christopher
+Martin's draft are in `docs/contribution_statements/`.
