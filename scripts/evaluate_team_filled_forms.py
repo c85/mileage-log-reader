@@ -178,6 +178,7 @@ def main():
     registration_successes = 0
     expected_cells = usable_cells = 0
     correct_on_usable_cells = 0
+    expected_blank_cells = correctly_empty_cells = 0
     correct_characters = exact_fields = total_fields = 0
     correct_digits = total_digits = correct_letters = total_letters = 0
     exact_rows = total_rows = wrong_auto_post_rows = 0
@@ -213,15 +214,10 @@ def main():
             field_matches = []
             for name, expected in truth_values.items():
                 key = f"rows.{row_number}.{name}"
-                field_matches.append((key, expected))
-            row_exact = True
-            for key, expected in field_matches:
-                actual_field = _read_field(document, key)
-                actual = actual_field.get("raw_value") if actual_field else None
-                actual = str(actual) if actual is not None else ""
-                predicted = actual.ljust(len(expected), "?")[: len(expected)]
-                matched = predicted == expected
-                row_exact &= matched
+                field_matches.append(
+                    _field_matches(_read_field(document, key), expected)
+                )
+            row_exact = all(field_matches)
             row_exact_by_number[row_number] = row_exact
             total_rows += 1
             exact_rows += row_exact
@@ -234,10 +230,8 @@ def main():
 
         for key, expected in labels:
             actual_field = _read_field(document, key)
-            actual_value = actual_field.get("raw_value") if actual_field else None
-            actual = str(actual_value) if actual_value is not None else ""
-            predicted = actual.ljust(len(expected), "?")[: len(expected)]
-            matched = predicted == expected
+            predicted, statuses = _prediction_cells(actual_field, len(expected))
+            matched = _field_matches(actual_field, expected)
             total_fields += 1
             form_total_fields += 1
             exact_fields += matched
@@ -256,13 +250,20 @@ def main():
                         "form_id": form_id,
                         "row_number": row_number,
                         "field": key.split(".")[-1],
-                        "truth": expected,
-                        "prediction": predicted,
+                        "truth": _display_cells(expected),
+                        "prediction": "".join(predicted),
                     }
                 )
 
-            characters = actual_field.get("characters", []) if actual_field else []
-            for position, (truth_char, predicted_char) in enumerate(zip(expected, predicted)):
+            for position, truth_char in enumerate(expected):
+                status = statuses[position]
+                predicted_char = predicted[position]
+                if truth_char is None:
+                    expected_blank_cells += 1
+                    correctly_empty_cells += status == "empty"
+                    continue
+                if status != "ok":
+                    predicted_char = "?"
                 is_correct = truth_char == predicted_char
                 correct_characters += is_correct
                 if truth_char.isdigit():
@@ -275,11 +276,6 @@ def main():
                 confusion[class_index[truth_char], predicted_index] += 1
 
                 expected_cells += 1
-                status = (
-                    characters[position].get("extraction_status", "unknown")
-                    if position < len(characters)
-                    else "not_read"
-                )
                 usable_cells += status == "ok"
                 if status == "ok":
                     correct_on_usable_cells += is_correct
