@@ -2,70 +2,58 @@
 
 ## Recommended policy
 
-Keep clerk approval for reimbursements. Use the prototype to flag cases for
-review while testing whether it reduces clerk handling time. 
-Do not post a row just because its characters look confident. Make a row an
-auto-post candidate only when the image is registered, every required
-character has confidence above the configured threshold, the employee and
-date-specific client exist in reference data, the trip falls within the
-stated week, odometers move forward, written miles equal the odometer
-difference, and the weekly total reconciles. Require a stricter threshold for
-the first three digits of either six-digit odometer. Route every failed or
-unsupported case to AP and preserve the original crop and checks.
+Keep a person checking and approving every reimbursement. The prototype can
+read mileage forms and flag problems, but it is not ready to approve payments
+automatically. In the team's test of 12 handwritten forms, it read **17.7% of
+characters correctly** and did not read any complete trip row correctly
+(**0 of 67 rows**). Every trip row needed review.
 
-The committed thresholds are prototype settings in
-`configs/reader_policy.json`, not approved production cutoffs. An initial
-12-form labeled set has now been scored, but no rows qualified for auto-post,
-so it provides no residual false-post estimate and is too small to calibrate
-thresholds. The model remains a sorting aid and a clerk remains responsible
-for reimbursement approval. Thresholds need a larger, more varied labeled
-set and a comparison of residual error against review cost.
+Before a row could qualify for automatic processing, the system would need
+a properly aligned image, reliable character readings, valid employee and
+client details, dates within the stated week, and matching odometer readings,
+written miles and weekly totals. Digits that could cause large payment errors
+need stricter checks. Keep the original image and check results for review.
+The current settings still need testing on more handwriting.
 
 ## Monthly cost frame
 
-At 10,000 logs per month and $3.40 of keying per log, today's direct keying
-cost is about **$34,000 per month** or **$408,000 per year**. The brief's
-70,000 monthly rows mean each one percentage point of row error is about 700
-wrong rows. If each underpayment creates a $28 correction ticket, a 2% error
-rate across all rows could mean about $39,200 of ticket work per month before
-any clinician-retention effect. Overpayments need a separate calculation:
-the same wrong odometer digit may change mileage by 100,000, 10,000, 1,000,
-100, 10, or 1 mile depending on position, or $62,000, $6,200, $620, $62,
-$6.20, or $0.62 at the reimbursement rate. A project-level error rate must
-not be converted to dollars without the position and direction of each error.
+The assignment estimates **10,000 logs per month at $3.40 each** for manual
+entry: **$34,000 per month**, or **$408,000 per year**.
 
-Let `q` be the measured share of logs for which **every** row passes policy.
-If any row needs review and AP still keys the full log, the rough handling
-cost is:
+The examples below assume staff still enter the entire log whenever any row
+needs review, at the same $3.40 cost per log.
 
-| Fully auto-posted log share `q` | Logs still keyed | Monthly Keying cost | Gross keying cost avoided |
+| Logs needing no manual entry | Logs still keyed | Monthly manual-entry cost| Possible savings before other costs |
 |---:|---:|---:|---:|
 | 0% | 10,000 | $34,000 | $0 |
 | 50% | 5,000 | $17,000 | $17,000 |
 | 80% | 2,000 | $6,800 | $27,200 |
 
-These are scenarios, not measured savings. They assume the remaining logs
-still cost $3.40 each to key. Software, monitoring, review, audit and error
-costs have not been measured; additional costs reduce the gross opportunity.
-Partial-row assistance needs its own measured handling cost.
+**These are examples, not achieved savings.** Software, staff checking and
+error-correction costs must also be measured and included.
 
-In the current 15-log synthetic evaluation, **0 of 15 logs** passed every
-row, so the conservative gross keying cost avoided is $0 per month. Seven of
-90 individual rows met the row policy (7.8%), with 0 observed errors among
-those 7. That small controlled sample cannot establish a safe false-post
-rate. It does show that a promising row-level character score may still
-produce no fully automatic logs when every row must pass. If AP can review
-only individual rows, an actual per-row handling cost is needed before
-estimating savings. These figures refer to the command-generated logs, not the
+In a separate test of 15 computer-generated logs, seven of 90 rows passed
+the checks, but no complete log passed. Every log deliberately included a
+mileage mistake, so this test does not predict how many normal AP logs could
+be processed automatically. No labor savings have been demonstrated.
+These figures refer to the command-generated logs, not the
 separate pre-rendered fixtures in `examples/synthetic_forms/`. Those fixtures
 have a separate QA score in `docs/results_summary.md`; their small, paired set
 does not change the generated-log auto-post share or savings estimate.
 
+## Why errors matter
+
+Incorrect mileage can cause overpayments or underpayments. For example,
+misreading one odometer value by 1,000 miles could change reimbursement by
+**$620** at $0.62 per mile if the mistake goes undetected. Underpayments also
+create correction work: if 2% of the 70,000 monthly rows were underpaid and
+each caused one $28 correction ticket, that work would cost **$39,200**.
+These examples show potential costs; they are not measured losses.
+
 ## Decision after the prototype
 
-Compare manual review cost with the cost-weighted false-post rate at several
-configured confidence thresholds. Prefer a low straight-through rate with
-measured near-zero residual errors over a high rate whose errors cannot be
-reproduced. Expand automation only after phone-photo tests, additional
-team-filled handwriting, and independent review establish that the thresholds work for
-the forms AP will actually receive.
+Improve handwriting accuracy, test forms from more people and different
+phone photos, and have another person verify the correct answers. Measure
+how long AP staff take with and without the tool. Use those results to decide
+whether it saves time after checking and correction costs. The Product Lead
+should review and approve any proposal to expand automatic processing.
