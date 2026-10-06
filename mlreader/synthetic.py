@@ -84,14 +84,18 @@ def build_log_truth(references=None, week_ending=date(2026, 9, 27), rows=6, seed
     }
 
 
-def draw_test_characters(truth, test_images, test_labels, rng, source_indices=None):
-    """Render held-out EMNIST test images into the blank printed boxes."""
+def draw_split_characters(
+    truth, source_images, source_labels, rng, source_split, source_indices=None
+):
+    """Render characters from one EMNIST split into the blank printed boxes."""
     from mlreader.emnist import CLASSES
 
+    if source_split not in {"test", "val"}:
+        raise ValueError("source_split must be 'test' or 'val'")
     image = load_template()
-    choices = {label: np.flatnonzero(test_labels == label) for label in range(len(CLASSES))}
+    choices = {label: np.flatnonzero(source_labels == label) for label in range(len(CLASSES))}
     if any(not len(indices) for indices in choices.values()):
-        raise ValueError("Held-out EMNIST test split must contain all 36 classes.")
+        raise ValueError(f"EMNIST {source_split} split must contain all 36 classes.")
     sources = []
     for field, value in truth["fields"].items():
         cells = FIELDS[field]
@@ -100,7 +104,7 @@ def draw_test_characters(truth, test_images, test_labels, rng, source_indices=No
         for char, location in zip(value, cells):
             label = CLASSES.index(char)
             source_index = int(rng.choice(choices[label]))
-            source = test_images[source_index]
+            source = source_images[source_index]
             ys, xs = np.where(source > 12)
             if not len(xs):
                 continue
@@ -117,15 +121,18 @@ def draw_test_characters(truth, test_images, test_labels, rng, source_indices=No
             region = image[y : y + new_size[1], x : x + new_size[0]].astype(np.float32)
             rendered = region * (1.0 - 0.88 * strength[:, :, None]) + 12.0 * (0.88 * strength[:, :, None])
             image[y : y + new_size[1], x : x + new_size[0]] = np.clip(rendered, 0, 255).astype(np.uint8)
-            sources.append(
-                {
-                    "field": field,
-                    "position": location.position,
-                    "label": char,
-                    "source_split": "EMNIST ByClass test",
-                    "test_image_index": int(source_indices[source_index]) if source_indices is not None else source_index,
-                }
+            source = {
+                "field": field,
+                "position": location.position,
+                "label": char,
+                "source_split": f"EMNIST ByClass {source_split}",
+            }
+            image_index = (
+                int(source_indices[source_index])
+                if source_indices is not None else source_index
             )
+            source[f"{source_split}_image_index"] = image_index
+            sources.append(source)
     return image, sources
 
 

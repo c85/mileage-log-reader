@@ -1,4 +1,4 @@
-"""Generate made-up logs using leak-free EMNIST ByClass test characters."""
+"""Generate made-up logs from EMNIST validation or leak-free test characters."""
 
 import argparse
 import json
@@ -11,12 +11,12 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from mlreader import OUTPUT_DIR  # noqa: E402
+from mlreader.emnist import load_split  # noqa: E402
 from mlreader.synthetic import (  # noqa: E402
     build_log_truth,
     capture_page,
-    draw_test_characters,
+    draw_split_characters,
     load_leak_free_test_split,
-    load_template,
 )
 
 
@@ -29,11 +29,22 @@ def main():
     parser.add_argument("--fault-row", type=int, help="Insert an intentional row-mile discrepancy in each log")
     parser.add_argument("--fault-total", action="store_true", help="Make the written weekly total differ by one mile")
     parser.add_argument("--quality", choices=("clean", "rotated", "perspective_shadow", "mixed"), default="mixed")
+    parser.add_argument(
+        "--source-split", choices=("test", "val"), default="test",
+        help="Use test images for evaluation (default) or validation images for development",
+    )
     parser.add_argument("--output", type=Path, default=OUTPUT_DIR / "synthetic_logs")
     args = parser.parse_args()
     week_ending = date.fromisoformat(args.week_ending)
-    test_images, test_labels, source_indices, excluded_count = load_leak_free_test_split()
-    template = load_template()
+    if args.source_split == "test":
+        source_images, source_labels, source_indices, excluded_count = load_leak_free_test_split()
+        intended_use = "held_out_test"
+    else:
+        source_images, source_labels = load_split("val")
+        source_indices = np.arange(len(source_labels), dtype=np.int64)
+        excluded_count = 0
+        intended_use = "development"
+    source_name = f"EMNIST ByClass {args.source_split}"
     rng = np.random.default_rng(args.seed)
     args.output.mkdir(parents=True, exist_ok=True)
     manifest = []
@@ -47,7 +58,14 @@ def main():
             discrepancy_row=args.fault_row,
             total_offset=1 if args.fault_total else 0,
         )
-        page, sources = draw_test_characters(truth, test_images, test_labels, rng, source_indices)
+        page, sources = draw_split_characters(
+            truth,
+            source_images,
+            source_labels,
+            rng,
+            source_split=args.source_split,
+            source_indices=source_indices,
+        )
         captured, _ = capture_page(page, condition, seed=args.seed + index)
         stem = f"log_{index + 1:03d}_{condition}"
         image_path = args.output / f"{stem}.jpg"
@@ -59,13 +77,26 @@ def main():
             "truth_file": truth_path.name,
             "truth": truth,
             "character_sources": sources,
-            "excluded_test_images_shared_with_train_or_validation": excluded_count,
-            "split": "EMNIST ByClass test only",
+            "excluded_exact_source_duplicates": excluded_count,
+            "source_split": source_name,
+            "intended_use": intended_use,
         }
         truth_path.write_text(json.dumps(record, indent=2) + "\n")
-        manifest.append({"image": image_path.name, "condition": condition, "truth_file": truth_path.name})
+        manifest.append(
+            {
+                "image": image_path.name,
+                "condition": condition,
+                "truth_file": truth_path.name,
+                "source_split": source_name,
+                "intended_use": intended_use,
+            }
+        )
     (args.output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
-    print(f"Wrote {len(manifest)} synthetic logs to {args.output} (test images shared with train/val excluded: {excluded_count}).")
+    print(
+        f"Wrote {len(manifest)} synthetic logs to {args.output} "
+        f"from {source_name} (intended use: {intended_use}; "
+        f"exact source duplicates excluded: {excluded_count})."
+    )
 
 
 if __name__ == "__main__":

@@ -121,6 +121,22 @@ They are reported separately from the generated-log and team-filled results.
 Detailed metrics and error files are written under the Git-ignored
 `outputs/synthetic_forms_eval/` directory.
 
+## Synthetic development baseline
+
+To support iteration without using the held-out test characters, a separate
+set of 15 six-row logs was generated from the EMNIST validation split. Five
+logs use each capture condition, and every log has the same deliberate row-5
+mileage fault. Its initial baseline was 96.7% character accuracy
+(2,147 / 2,220), 85.7% exact-field accuracy (424 / 495), and 41.1% exact-row
+accuracy (37 / 90). The current policy routed 3 of 90 rows to auto-post, with
+0 observed errors among those 3.
+
+This is a development score for comparing changes, not held-out performance
+or a business-savings estimate. It does not use the team-filled forms. The
+images, labels, and metrics are reproducible under the Git-ignored
+`outputs/synthetic_dev/` and `outputs/synthetic_dev_eval/` directories using
+the development command in `README.md`.
+
 ## Team-filled handwritten forms
 
 The independent set has 12 photographed forms, 67 trip rows, and 1,665

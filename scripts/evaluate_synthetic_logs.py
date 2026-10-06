@@ -142,31 +142,54 @@ def main():
     args = parser.parse_args()
     manifest = json.loads(args.manifest.read_text())
     records = []
+    evaluation_roles = set()
     for item in manifest:
         image_path = args.manifest.parent / item["image"]
         truth_record = json.loads((args.manifest.parent / item["truth_file"]).read_text())
+        role = truth_record.get(
+            "intended_use", item.get("intended_use", "held_out_test")
+        )
+        if item.get("intended_use", role) != role:
+            raise SystemExit(f"Conflicting intended-use metadata for {item['image']}")
+        evaluation_roles.add(role)
         prediction = read_form(image_path, today=args.as_of)
         if not prediction.get("model_available"):
             raise SystemExit("No trained classifier is available. Run scripts/train_model.py before reporting synthetic-log accuracy.")
-        records.append({"condition": item["condition"], "truth": truth_record["truth"], "prediction": prediction})
+        records.append(
+            {
+                "condition": item["condition"],
+                "truth": truth_record["truth"],
+                "prediction": prediction,
+            }
+        )
+    if len(evaluation_roles) > 1:
+        raise SystemExit("Do not mix development and held-out evaluation forms in one score run.")
+    evaluation_role = evaluation_roles.pop() if evaluation_roles else "held_out_test"
     metrics = _summarize(records)
     confusion = metrics.pop("character_confusion")
-    monthly_logs = 10000
-    clerk_cost_per_log = 3.40
-    all_auto_share = sum(
-        bool(record["prediction"].get("rows"))
-        and all(row.get("validation", {}).get("route") == "auto_post" for row in record["prediction"]["rows"])
-        for record in records
-    ) / max(len(records), 1)
-    metrics["business_scenario"] = {
-        "assumption": "A log costs $3.40 in AP handling if any row needs review; only a fully auto-posted log avoids that full per-log cost. Model, platform, QA and exception-management cost are not included.",
-        "monthly_logs": monthly_logs,
-        "current_monthly_keying_cost_usd": round(monthly_logs * clerk_cost_per_log, 2),
-        "measured_fully_auto_log_share": all_auto_share,
-        "scenario_monthly_gross_clerk_cost_avoided_usd": round(monthly_logs * clerk_cost_per_log * all_auto_share, 2),
-        "scenario_remaining_manual_handling_usd": round(monthly_logs * clerk_cost_per_log * (1 - all_auto_share), 2),
-        "monthly_rows_at_brief_volume": 70000,
-    }
+    metrics["evaluation_role"] = evaluation_role
+    if evaluation_role == "development":
+        metrics["note"] = (
+            "Development-set scores are for iteration only. Do not report them as "
+            "independent held-out performance or use them to estimate business savings."
+        )
+    else:
+        monthly_logs = 10000
+        clerk_cost_per_log = 3.40
+        all_auto_share = sum(
+            bool(record["prediction"].get("rows"))
+            and all(row.get("validation", {}).get("route") == "auto_post" for row in record["prediction"]["rows"])
+            for record in records
+        ) / max(len(records), 1)
+        metrics["business_scenario"] = {
+            "assumption": "A log costs $3.40 in AP handling if any row needs review; only a fully auto-posted log avoids that full per-log cost. Model, platform, QA and exception-management cost are not included.",
+            "monthly_logs": monthly_logs,
+            "current_monthly_keying_cost_usd": round(monthly_logs * clerk_cost_per_log, 2),
+            "measured_fully_auto_log_share": all_auto_share,
+            "scenario_monthly_gross_clerk_cost_avoided_usd": round(monthly_logs * clerk_cost_per_log * all_auto_share, 2),
+            "scenario_remaining_manual_handling_usd": round(monthly_logs * clerk_cost_per_log * (1 - all_auto_share), 2),
+            "monthly_rows_at_brief_volume": 70000,
+        }
     args.data_dir.mkdir(parents=True, exist_ok=True)
     (args.data_dir / "metrics.json").write_text(json.dumps(metrics, indent=2) + "\n")
     with (args.data_dir / "character_confusion.csv").open("w", newline="") as stream:

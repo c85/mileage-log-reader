@@ -104,10 +104,13 @@ field's digit-versus-letter restriction raised it to 95.73%. Digits were
 97.44% and capital letters 92.56% under that restriction. These values are
 isolated-character metrics, not form-reading accuracy.
 
-`scripts/generate_synthetic_logs.py` creates made-up trip fields, renders
-characters from leak-free EMNIST test images into the blank Form ML-7 asset,
-and saves the field strings and source indices beside each image. Those
-characters are not used for training or model selection.
+`scripts/generate_synthetic_logs.py` creates made-up trip fields and renders
+characters into the blank Form ML-7 asset. By default it draws from leak-free
+EMNIST test images and saves field strings and source indices beside each
+image. For development runs, `--source-split val` draws from the train-derived
+validation split and labels the output as development data. Keep development
+and test generated logs in separate output folders; only test-split generated
+logs are held-out evaluations.
 
 ### Pre-rendered synthetic QA forms
 

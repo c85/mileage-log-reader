@@ -107,11 +107,12 @@ handwriting accuracy.
 .venv/bin/python scripts/evaluate_synthetic_logs.py
 ```
 
-The generator draws characters only from the EMNIST ByClass test split and
-excludes exact duplicates shared with the train or validation split. It saves
-ground truth and source-image indices beside each generated log. Evaluation
-reports raw character, field, and row accuracy, extraction and recognition
-failures separately, and auto-post residual error by capture condition.
+By default, the generator draws characters only from the EMNIST ByClass test
+split and excludes exact duplicates shared with the train or validation split.
+It saves ground truth and source-image indices beside each generated log.
+Evaluation reports raw character, field, and row accuracy, extraction and
+recognition failures separately, and auto-post residual error by capture
+condition.
 
 The `--fault-row 5` option deliberately makes the written mileage in row 5
 disagree with its odometers while keeping the weekly total aligned with the
@@ -120,6 +121,22 @@ written-mile column. To inspect one of those failures in the demo, run:
 ```bash
 .venv/bin/python scripts/demo.py outputs/synthetic_logs/log_001_clean.jpg
 ```
+
+To create separate **development** examples from the EMNIST validation split,
+use a different output folder and score it separately:
+
+```bash
+.venv/bin/python scripts/generate_synthetic_logs.py \
+  --count 15 --quality mixed --fault-row 5 --seed 7621 \
+  --source-split val --output outputs/synthetic_dev
+.venv/bin/python scripts/evaluate_synthetic_logs.py \
+  --manifest outputs/synthetic_dev/manifest.json \
+  --data-dir outputs/synthetic_dev_eval --as-of 2026-10-05
+```
+
+This makes 15 new logs, five per capture condition. The evaluator labels this
+run as development data and omits the business-savings scenario. Use these
+scores to compare reader changes; do not report them as held-out test results.
 
 ## Pre-rendered synthetic QA forms
 
