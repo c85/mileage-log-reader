@@ -152,6 +152,16 @@ These measurements are for development only. They are not the held-out result
 and do not justify a performance claim. Detailed errors are under the
 Git-ignored `outputs/development_forms_eval/` directory.
 
+An output-layer fine-tuning experiment used the 399 extractable characters
+from these forms. In leave-one-form-out development checks it reached 13.3%
+character accuracy, up from 8.8% for the fixed model. After training on all
+three development forms, the optional checkpoint scored 299 / 1,665 characters
+(18.0%) on the 12 held-out forms, compared with the original 295 / 1,665
+(17.7%). Exact fields fell from 11 / 371 to 7 / 371; exact rows remained 0.
+This mixed, small change is not a reliable improvement, so the default model
+remains unchanged. The experiment can be reproduced with
+`scripts/adapt_handwritten_model.py` and the evaluator's `--model` option.
+
 ## Team-filled handwritten forms
 
 The independent set has 12 photographed forms, 67 trip rows, and 1,665

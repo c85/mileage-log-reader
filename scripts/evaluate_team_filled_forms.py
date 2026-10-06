@@ -147,6 +147,10 @@ def main():
     parser.add_argument(
         "--output-dir", type=Path, default=OUTPUT_DIR / "team_filled_eval"
     )
+    parser.add_argument("--model", type=Path, help="Override the default reader checkpoint")
+    parser.add_argument(
+        "--dataset-name", default="team-filled handwritten ML-7 forms"
+    )
     parser.add_argument("--as-of", type=date.fromisoformat, default=date(2026, 10, 5))
     args = parser.parse_args()
 
@@ -195,7 +199,7 @@ def main():
             raise SystemExit(f"{form_id} row labels must be unique and contiguous from 1.")
 
         labels, row_labels = _label_fields(form_id, rows)
-        document = read_form(image_path, today=args.as_of)
+        document = read_form(image_path, model_path=args.model, today=args.as_of)
         if document.get("registration", {}).get("ok") and not document.get("model_available"):
             raise SystemExit("No trained classifier is available. Run scripts/train_model.py first.")
         form_count += 1
@@ -303,7 +307,8 @@ def main():
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     metrics = {
-        "dataset": "team-filled handwritten ML-7 forms",
+        "dataset": args.dataset_name,
+        "model": str(args.model or DATA_DIR / "models/emnist_mlp.npz"),
         "forms": form_count,
         "as_of_date_for_validation": args.as_of.isoformat(),
         "registration_successes": registration_successes,

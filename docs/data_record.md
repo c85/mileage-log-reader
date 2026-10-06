@@ -143,7 +143,7 @@ elsewhere in the project.
   synthetic test logs or final test metrics. The generator records every
   source test index it used.
 
-## Independent handwritten evaluation set
+## Handwritten development and held-out evaluation sets
 
 The three newly hand-filled forms in `examples/development_forms/` are a small
 development set with 16 labeled trip rows. Their made-up records and manual

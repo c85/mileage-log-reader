@@ -21,7 +21,16 @@ To score this development set, run:
   --forms-dir examples/development_forms \
   --ground-truth examples/development_forms/ground_truth.csv \
   --output-dir outputs/development_forms_eval \
+  --dataset-name "handwritten development forms" \
   --as-of 2026-10-05
 ```
 
 The results are development measurements only, not held-out performance.
+
+An experimental output-layer adaptation can be trained from these labels with
+`.venv/bin/python scripts/adapt_handwritten_model.py`. It writes a separate
+checkpoint under the ignored `data/models/` folder and leaves the default model
+unchanged. To score that checkpoint on the held-out set, pass
+`--model data/models/emnist_mlp_handwritten.npz` and a separate
+`--output-dir` to the evaluator. The first adaptation trial did not show a
+reliable improvement on the 12 held-out forms; see `docs/results_summary.md`.

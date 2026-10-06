@@ -166,13 +166,16 @@ reader changes. Score them separately from the 12 held-out forms with:
   --forms-dir examples/development_forms \
   --ground-truth examples/development_forms/ground_truth.csv \
   --output-dir outputs/development_forms_eval \
+  --dataset-name "handwritten development forms" \
   --as-of 2026-10-05
 ```
 
 See that folder's README for the labels and a note about a mileage discrepancy
 written on form 2. These development results are for iteration only. Do not
 change the held-out `examples/team_filled_forms/` or tune against it; rerun its
-evaluation after development changes are settled.
+evaluation after development changes are settled. The folder README also
+documents an optional handwriting adaptation experiment; it saves a separate
+checkpoint and does not replace the default model.
 
 ## Evaluate the team-filled forms
 
