@@ -41,6 +41,10 @@ def _confidence_check(field, minimum, critical_minimum=None, critical_positions=
     for character in characters:
         confidence = character.get("confidence")
         position = character.get("position")
+        if character.get("extraction_status", "ok") != "ok":
+            return False, f"character {position + 1} was not reliably extracted"
+        if character.get("preprocessing_issues"):
+            return False, f"character {position + 1}: " + "; ".join(character["preprocessing_issues"])
         threshold = critical_minimum if position in critical_positions and critical_minimum is not None else minimum
         if confidence is None:
             return False, f"character {position + 1} has no model confidence"
@@ -80,6 +84,8 @@ def validate_document(document, references, policy, today=None):
         week_field["normalized_value"] = None
 
     global_issues = [name for name, passed in header_checks.items() if not passed]
+    preprocessing_issues = document.get("preprocessing", {}).get("review_reasons", [])
+    global_issues.extend(preprocessing_issues)
     minimum = float(policy.get("min_character_confidence", 1.01))
     critical_minimum = float(policy.get("critical_odometer_digit_min_confidence", minimum))
     critical_positions = set(policy.get("critical_odometer_positions", [0, 1, 2]))
@@ -141,6 +147,7 @@ def validate_document(document, references, policy, today=None):
             confidence[name] = {"passed": ok, "reason": reason}
 
         issues = [name for name, passed in checks.items() if not passed]
+        issues.extend(preprocessing_issues)
         if policy.get("route_log_when_header_invalid", True):
             issues.extend(f"header_{name}" for name, passed in header_checks.items() if not passed)
             issues.extend(name for name, result in header_confidence.items() if not result["passed"])

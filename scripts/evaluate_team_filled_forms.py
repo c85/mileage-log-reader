@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from mlreader import DATA_DIR, OUTPUT_DIR, REPO_ROOT  # noqa: E402
 from mlreader.emnist import CLASSES  # noqa: E402
 from mlreader.pipeline import read_form  # noqa: E402
+from mlreader.registration import PREPROCESSING_VERSION  # noqa: E402
 
 
 def _single_value(rows, column, form_id):
@@ -168,7 +169,7 @@ def main():
 
     if not grouped:
         raise SystemExit("No labeled forms were found.")
-    model_path = DATA_DIR / "models" / "emnist_mlp.npz"
+    model_path = args.model or DATA_DIR / "models" / "emnist_mlp.npz"
     if not model_path.is_file():
         raise SystemExit("No trained classifier is available. Run scripts/train_model.py first.")
 
@@ -180,6 +181,7 @@ def main():
     form_results = []
     form_count = 0
     registration_successes = 0
+    verified_alignments = preprocessing_warning_cells = 0
     expected_cells = usable_cells = 0
     correct_on_usable_cells = 0
     expected_blank_cells = correctly_empty_cells = 0
@@ -205,6 +207,10 @@ def main():
         form_count += 1
         registered = bool(document.get("registration", {}).get("ok"))
         registration_successes += registered
+        alignment_verified = bool(document.get("registration", {}).get("template_alignment", {}).get("verified"))
+        verified_alignments += alignment_verified
+        warning_cells = document.get("preprocessing", {}).get("cells_requiring_review", 0)
+        preprocessing_warning_cells += warning_cells
         predicted_rows = {item["row_number"]: item for item in document.get("rows", [])}
         extra_rows = len(set(predicted_rows) - set(row_labels))
         extra_predicted_rows += extra_rows
@@ -291,6 +297,8 @@ def main():
             {
                 "form_id": form_id,
                 "registration_ok": registered,
+                "template_alignment_verified": alignment_verified,
+                "preprocessing_warning_cells": warning_cells,
                 "expected_rows": len(row_labels),
                 "predicted_rows": len(predicted_rows),
                 "extra_predicted_rows": extra_rows,
@@ -309,6 +317,9 @@ def main():
     metrics = {
         "dataset": args.dataset_name,
         "model": str(args.model or DATA_DIR / "models/emnist_mlp.npz"),
+        "preprocessing_version": PREPROCESSING_VERSION,
+        "template_alignment_verified_forms": verified_alignments,
+        "preprocessing_warning_cells": preprocessing_warning_cells,
         "forms": form_count,
         "as_of_date_for_validation": args.as_of.isoformat(),
         "registration_successes": registration_successes,

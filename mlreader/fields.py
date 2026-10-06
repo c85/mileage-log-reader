@@ -20,6 +20,9 @@ def assemble_field(field_name, predictions):
                 "top_alternatives": prediction.get("top_alternatives", []),
                 "extraction_status": prediction.get("extraction_status", "ok"),
                 "failure_kind": prediction.get("failure_kind"),
+                "source_rect": prediction.get("source_rect"),
+                "ink_pixels": prediction.get("ink_pixels"),
+                "preprocessing_issues": prediction.get("preprocessing_issues", []),
             }
         )
     raw = "".join(character["character"] for character in characters)

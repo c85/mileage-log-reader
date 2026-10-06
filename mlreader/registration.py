@@ -1,12 +1,16 @@
 """Form registration, fixed-grid cell extraction, and EMNIST normalization."""
 
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path
 
 import cv2
 import numpy as np
 
+from mlreader import REPO_ROOT
 from mlreader.layout import CANVAS_HEIGHT, CANVAS_WIDTH, CELL_MARGIN, FIELDS
+
+PREPROCESSING_VERSION = "ml7-template-grid-cleanup-v1"
 
 
 @dataclass
@@ -16,6 +20,7 @@ class RegistrationResult:
     method: str
     corners: list[list[float]] | None
     reason: str | None = None
+    template_alignment: dict | None = None
 
 
 @dataclass
@@ -30,6 +35,7 @@ class CellCrop:
     extraction_status: str
     ink_pixels: int
     extraction_reason: str | None = None
+    preprocessing_issues: tuple[str, ...] = ()
 
 
 def load_image(source):
@@ -91,9 +97,81 @@ def _page_quad(gray):
     return None
 
 
+@lru_cache(maxsize=1)
+def _template_features():
+    template = cv2.imread(str(REPO_ROOT / "assets/form_ml7_blank.png"), cv2.IMREAD_GRAYSCALE)
+    if template is None:
+        return (), None
+    keypoints, descriptors = cv2.ORB_create(nfeatures=6000).detectAndCompute(template, None)
+    return keypoints, descriptors
+
+
+def _align_template(image):
+    """Align the printed ML-7 features, independently of the handwritten answers."""
+    template_points, template_descriptors = _template_features()
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    points, descriptors = cv2.ORB_create(nfeatures=6000).detectAndCompute(gray, None)
+    details = {"verified": False, "applied": False, "matches": 0, "inliers": 0}
+    if template_descriptors is None or descriptors is None:
+        details["reason"] = "Printed form features could not be matched to the ML-7 template."
+        return image, details
+    pairs = cv2.BFMatcher(cv2.NORM_HAMMING).knnMatch(template_descriptors, descriptors, k=2)
+    matches = [pair[0] for pair in pairs if len(pair) == 2 and pair[0].distance < 0.7 * pair[1].distance]
+    details["matches"] = len(matches)
+    if len(matches) < 25:
+        details["reason"] = "Too few printed form features matched the ML-7 template."
+        return image, details
+    source = np.float32([points[match.trainIdx].pt for match in matches])
+    target = np.float32([template_points[match.queryIdx].pt for match in matches])
+    transform, mask = cv2.findHomography(source, target, cv2.RANSAC, 3.0)
+    if transform is None or mask is None or not np.isfinite(transform).all():
+        details["reason"] = "Printed form alignment could not be estimated reliably."
+        return image, details
+    accepted = mask.ravel().astype(bool)
+    details["inliers"] = int(accepted.sum())
+    coverage = cv2.contourArea(cv2.convexHull(target[accepted])) / (CANVAS_WIDTH * CANVAS_HEIGHT)
+    corners = np.float32([[0, 0], [CANVAS_WIDTH - 1, 0], [CANVAS_WIDTH - 1, CANVAS_HEIGHT - 1], [0, CANVAS_HEIGHT - 1]])
+    aligned_corners = cv2.perspectiveTransform(corners[None], transform)[0]
+    displacement = float(np.linalg.norm(aligned_corners - corners, axis=1).max())
+    details["maximum_corner_displacement"] = displacement
+    details["matched_template_area_share"] = float(coverage)
+    spans = np.ptp(target[accepted], axis=0)
+    if (
+        details["inliers"] < 25
+        or accepted.mean() < 0.45
+        or coverage < 0.05
+        or spans[0] < CANVAS_WIDTH * 0.45
+        or spans[1] < CANVAS_HEIGHT * 0.1
+        or not np.isfinite(aligned_corners).all()
+        or displacement > CANVAS_WIDTH * 0.1
+        or np.linalg.det(transform[:2, :2]) <= 0
+        or not cv2.isContourConvex(aligned_corners)
+    ):
+        details["reason"] = "Printed form alignment failed the coverage or geometry checks."
+        return image, details
+    details.update(verified=True, reason=None, transform=transform.tolist())
+    # Preserve an already aligned scan rather than resampling its characters.
+    if displacement <= 1.0:
+        return image, details
+    details["applied"] = True
+    aligned = cv2.warpPerspective(
+        image, transform, (CANVAS_WIDTH, CANVAS_HEIGHT),
+        flags=cv2.INTER_CUBIC, borderValue=(255, 255, 255),
+    )
+    return aligned, details
+
+
+def _registered_result(image, method, corners):
+    image, alignment = _align_template(image)
+    if alignment["applied"]:
+        method += "+printed-template"
+    return RegistrationResult(True, image, method, corners, template_alignment=alignment)
+
+
 def register_page(source):
     """Find a paper boundary and warp it to the supplied ML-7 template size.
 
+    Printed template features then correct offsets caused by printing margins.
     An aspect-ratio fallback supports flatbed scans that have already been
     cropped to the page. Phone images without a recoverable page boundary are
     rejected so they can be reviewed instead of silently mis-cropped.
@@ -114,14 +192,14 @@ def register_page(source):
             flags=cv2.INTER_CUBIC,
             borderMode=cv2.BORDER_REPLICATE,
         )
-        return RegistrationResult(True, warped, "paper-boundary-perspective", quad.tolist())
+        return _registered_result(warped, "paper-boundary-perspective", quad.tolist())
 
     input_ratio = width / max(height, 1)
     target_ratio = CANVAS_WIDTH / CANVAS_HEIGHT
     if abs(input_ratio - target_ratio) <= 0.035:
         resized = cv2.resize(image, (CANVAS_WIDTH, CANVAS_HEIGHT), interpolation=cv2.INTER_AREA)
         corners = [[0.0, 0.0], [width - 1.0, 0.0], [width - 1.0, height - 1.0], [0.0, height - 1.0]]
-        return RegistrationResult(True, resized, "aspect-ratio-flat-scan", corners)
+        return _registered_result(resized, "aspect-ratio-flat-scan", corners)
 
     return RegistrationResult(
         False,
@@ -132,17 +210,31 @@ def register_page(source):
     )
 
 
+def _clean_cell_ink(gray):
+    """Keep handwriting while removing isolated specks and tiny frame fragments."""
+    binary = (gray < 165).astype(np.uint8)
+    count, labels, stats, _ = cv2.connectedComponentsWithStats(binary, connectivity=8)
+    ink = np.zeros_like(binary)
+    height, width = binary.shape
+    for index in range(1, count):
+        x, y, component_width, component_height, area = stats[index]
+        touches_edge = x == 0 or y == 0 or x + component_width == width or y + component_height == height
+        if area < 3 or (touches_edge and area < 30 and min(component_width, component_height) <= 2):
+            continue
+        ink[labels == index] = 255
+    return ink
+
+
 def normalize_cell(cell):
     """Convert a dark-ink cell crop into centered, white-on-black 28x28 data."""
     if cell is None or cell.size == 0:
-        return None, "empty", 0, "Cell crop has no image pixels."
+        return None, "unreadable", 0, "Cell crop has no image pixels."
     if cell.ndim == 3:
         gray = cv2.cvtColor(cell, cv2.COLOR_BGR2GRAY)
     else:
         gray = cell
-    # Coordinates are inset from the printed grid, so the remaining dark
-    # pixels should be handwriting. Fixed thresholding is repeatable at inference.
-    ink = (gray < 165).astype(np.uint8) * 255
+    # Retain the ink threshold and 28x28 transform used by the existing model.
+    ink = _clean_cell_ink(gray)
     ys, xs = np.where(ink > 0)
     count = int(len(xs))
     if count < 5:
@@ -198,6 +290,67 @@ def normalize_emnist(images):
     return output
 
 
+def _printed_grid(gray):
+    # Local thresholding recovers pale box lines even under uneven illumination.
+    binary = cv2.adaptiveThreshold(
+        gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 31, 10,
+    )
+    joined = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, np.ones((1, 5), dtype=np.uint8))
+    horizontal = cv2.morphologyEx(joined, cv2.MORPH_OPEN, np.ones((1, 40), dtype=np.uint8))
+    vertical = cv2.morphologyEx(binary, cv2.MORPH_OPEN, np.ones((40, 1), dtype=np.uint8))
+    contours, _ = cv2.findContours(horizontal, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    return [cv2.boundingRect(contour) for contour in contours], vertical
+
+
+def _refine_group(locations, segments, vertical):
+    """Locate a printed group of equally spaced boxes near its template location."""
+    left, top, _, bottom = locations[0].rect
+    right = locations[-1].rect[2]
+    count = len(locations)
+    center_x, center_y = (left + right) / 2, (top + bottom) / 2
+    nearby = [
+        (x, y, width, height) for x, y, width, height in segments
+        if height <= 12 and count * 62 * 0.45 <= width <= count * 67
+        and abs(x + width / 2 - center_x) < 110
+        and abs(y + height / 2 - center_y) < 85
+    ]
+    candidates = []
+    for upper in nearby:
+        for lower in nearby:
+            ux, uy, uw, uh = upper
+            lx, ly, lw, lh = lower
+            upper_y, lower_y = uy + uh / 2, ly + lh / 2
+            if not 57 <= lower_y - upper_y <= 68:
+                continue
+            full_x, _, full_width, _ = upper if uw >= lw else lower
+            if full_width < count * 57 or abs(full_x + full_width / 2 - center_x) > 55:
+                continue
+            overlap = max(0, min(ux + uw, lx + lw) - max(ux, lx))
+            if overlap < min(uw, lw) * 0.85 or abs((upper_y + lower_y) / 2 - center_y) > 45:
+                continue
+            y0, y1 = int(round(upper_y)), int(round(lower_y))
+            x1 = full_x + full_width - 1
+            cost = (
+                abs((full_x + x1) / 2 - center_x) + abs((y0 + y1) / 2 - center_y)
+                + abs(x1 - full_x - count * 62) + 2 * abs(y1 - y0 - 62)
+            )
+            candidates.append((cost, full_x, y0, x1, y1))
+    if not candidates:
+        return [location.rect for location in locations], ("Printed field frame could not be located.",)
+    _, x0, y0, x1, y1 = min(candidates)
+    edges = np.rint(np.linspace(x0, x1, count + 1)).astype(int)
+    rects = [(int(edges[i]), y0, int(edges[i + 1]), y1) for i in range(count)]
+    support = [
+        float((vertical[y0 + 3:y1 - 3, max(0, x - 3):x + 4] > 0).sum(axis=0).max()) / max(y1 - y0 - 6, 1)
+        for x in edges
+    ]
+    issues = () if min(support) >= 0.4 and np.mean(support) >= 0.6 else ("Printed cell borders could not all be verified.",)
+    nominal = [location.rect for location in locations]
+    if np.max(np.abs(np.asarray(rects) - np.asarray(nominal))) <= 2:
+        rects = nominal
+    return rects, issues
+
+
 def extract_cells(registered_image):
     """Crop all known character boxes from the canonical ML-7 canvas."""
     if registered_image.shape[1] != CANVAS_WIDTH or registered_image.shape[0] != CANVAS_HEIGHT:
@@ -205,26 +358,45 @@ def extract_cells(registered_image):
             f"Expected registered canvas {CANVAS_WIDTH}x{CANVAS_HEIGHT}; got "
             f"{registered_image.shape[1]}x{registered_image.shape[0]}."
         )
+    gray = cv2.cvtColor(registered_image, cv2.COLOR_BGR2GRAY)
+    segments, vertical = _printed_grid(gray)
     crops = {}
     for field, locations in FIELDS.items():
         cells = []
+        groups = []
         for location in locations:
-            left, top, right, bottom = location.rect
+            if groups and groups[-1][-1].rect[2] == location.rect[0]:
+                groups[-1].append(location)
+            else:
+                groups.append([location])
+        refined = []
+        for group in groups:
+            rects, issues = _refine_group(group, segments, vertical)
+            refined.extend((location, rect, issues) for location, rect in zip(group, rects))
+        for location, rect, issues in refined:
+            left, top, right, bottom = rect
             margin = CELL_MARGIN
             crop = registered_image[top + margin : bottom - margin, left + margin : right - margin]
             normalized, status, ink_pixels, reason = normalize_cell(crop)
+            if status == "ok":
+                cleaned = _clean_cell_ink(cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY))
+                edge_pixels = int(np.count_nonzero(cleaned[0]) + np.count_nonzero(cleaned[-1])
+                                  + np.count_nonzero(cleaned[:, 0]) + np.count_nonzero(cleaned[:, -1]))
+                if edge_pixels >= max(5, ink_pixels * 0.05):
+                    issues += ("Writing touches the crop boundary and may be clipped.",)
             cells.append(
                 CellCrop(
                     field=field,
                     position=location.position,
                     allowed=location.allowed,
                     row_number=location.row_number,
-                    rect=location.rect,
+                    rect=rect,
                     image=crop,
                     normalized=normalized,
                     extraction_status=status,
                     ink_pixels=ink_pixels,
                     extraction_reason=reason,
+                    preprocessing_issues=issues,
                 )
             )
         crops[field] = cells

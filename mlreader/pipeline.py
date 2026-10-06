@@ -9,7 +9,7 @@ from mlreader import CONFIG_DIR, DATA_DIR
 from mlreader.classifier import EMNISTMLP, ModelNotAvailable
 from mlreader.fields import assemble_field
 from mlreader.layout import FIELDS, MAX_ROWS
-from mlreader.registration import extract_cells, register_page
+from mlreader.registration import PREPROCESSING_VERSION, extract_cells, register_page
 from mlreader.validation import validate_document
 
 
@@ -22,8 +22,14 @@ def _load_json(source, default_path):
 
 
 def _predict_cell(cell, model):
+    evidence = {
+        "source_rect": list(cell.rect),
+        "ink_pixels": cell.ink_pixels,
+        "preprocessing_issues": list(cell.preprocessing_issues),
+    }
     if cell.extraction_status != "ok":
         return {
+            **evidence,
             "character": None,
             "confidence": None,
             "class_probabilities": {},
@@ -33,6 +39,7 @@ def _predict_cell(cell, model):
         }
     if model is None:
         return {
+            **evidence,
             "character": None,
             "confidence": None,
             "class_probabilities": {},
@@ -41,6 +48,7 @@ def _predict_cell(cell, model):
             "failure_kind": "recognition_model_unavailable",
         }
     prediction = model.predict(cell.normalized, cell.allowed)
+    prediction.update(evidence)
     prediction["extraction_status"] = "ok"
     prediction["failure_kind"] = None if prediction.get("character") else "recognition_failure"
     return prediction
@@ -149,6 +157,17 @@ def read_form(
             "method": registration.method,
             "corners": registration.corners,
             "reason": None,
+            "template_alignment": registration.template_alignment,
+        },
+        "preprocessing": {
+            "version": PREPROCESSING_VERSION,
+            "cells_requiring_review": sum(
+                bool(cell.preprocessing_issues) for field_name in expected_fields for cell in crops[field_name]
+            ),
+            "review_reasons": (
+                [] if registration.template_alignment and registration.template_alignment.get("verified")
+                else ["Printed form alignment could not be verified."]
+            ),
         },
         "model_available": model is not None,
         "model_path": str(model_path),

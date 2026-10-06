@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from mlreader import CONFIG_DIR, OUTPUT_DIR  # noqa: E402
 from mlreader.emnist import CLASSES  # noqa: E402
 from mlreader.pipeline import read_form  # noqa: E402
+from mlreader.registration import PREPROCESSING_VERSION  # noqa: E402
 
 
 def _field_read(document, key):
@@ -75,6 +76,8 @@ def _summarize(records):
                 auto_rows += 1
                 wrong_auto_rows += not is_correct
     result = {
+        "preprocessing_version": PREPROCESSING_VERSION,
+        "preprocessing_warning_cells": sum(record["prediction"].get("preprocessing", {}).get("cells_requiring_review", 0) for record in records),
         "logs": len(records),
         "character_accuracy": correct_chars / total_chars if total_chars else None,
         "character_count": total_chars,
