@@ -12,8 +12,9 @@ kept separately in `../team_filled_forms/`.
   using the same column names as the handwritten examples' answer file.
 - **`manifest.json`:** image filenames, case details, random seeds, image
   conditions, related-form groups and expected business-check failures.
-- **`reference_data.json`:** the fictional employees and visit schedules for
-  these examples.
+- **`reference_data.json`:** the fictional employee records and visit
+  schedules used by all valid forms in this pack. The invalid schedule case
+  deliberately uses the unscheduled client `XYZ`.
 
 In the answer CSV, `FORM_ID` is the image filename without `.png`. Each form has
 six filled rows; rows 7-9 are blank. Employee ID, week ending and total miles
@@ -37,7 +38,14 @@ These invalid cases share `form_01_clean.png` as their valid control.
 
 Use this folder's reference records and a fixed evaluation date of
 **2026-10-05**. The forms' week-ending date is **2026-09-27**. This keeps the
-expected date checks consistent when testing later.
+expected date checks consistent when testing later. For example, to inspect a
+fixture with the reader, run:
+
+```bash
+.venv/bin/python scripts/demo.py examples/synthetic_forms/form_01_clean.png \
+  --references examples/synthetic_forms/reference_data.json \
+  --as-of 2026-10-05
+```
 
 Compare the reader's output with `ground_truth.csv`; use `manifest.json` for
 expected business-check failures. Valid written values do not guarantee

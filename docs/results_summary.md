@@ -50,6 +50,14 @@ Detailed results are in `outputs/model_eval/metrics.json` and
 
 ## Synthetic end-to-end logs
 
+The results in this section come from the command-generated set in
+`outputs/synthetic_logs` (15 six-row logs, five per capture condition, with a
+deliberate row-mile fault). They do not include the separate
+`examples/synthetic_forms/` fixture pack, which has 15 image variants from
+five valid underlying forms and three invalid controls. The fixture pack has
+not contributed metrics to this report; its repeated image conditions should
+not be counted as independent forms.
+
 Fifteen six-row forms were rendered from leak-free EMNIST test characters,
 with five logs per capture condition. Every log deliberately has row 5 miles
 five miles away from its odometer difference; the total still matches the

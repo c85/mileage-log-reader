@@ -109,6 +109,26 @@ characters from leak-free EMNIST test images into the blank Form ML-7 asset,
 and saves the field strings and source indices beside each image. Those
 characters are not used for training or model selection.
 
+### Pre-rendered synthetic QA forms
+
+`examples/synthetic_forms/` is a separate fixture pack: 15 valid image
+variants represent five underlying forms (clean, rotated, and
+perspective/shadow), and three more images show invalid date, schedule, and
+odometer cases. The accompanying CSV contains 108 labeled rows; the manifest
+records seeds, related-form groups, image conditions, and expected failed
+checks. It identifies the characters as coming from the EMNIST ByClass test
+subset. These fixtures are not included in the generated-log metrics in
+`docs/results_summary.md`; count the valid data as five underlying forms, not
+15 independent examples, and keep each group's variants together.
+
+The folder's `reference_data.json` contains the two fictional employees and
+their visit schedules used by all five valid form groups. The valid
+ground-truth employee/date/client combinations match these schedules. The
+invalid-date, invalid-schedule, and invalid-odometer controls deliberately
+exercise their documented validation failures. The broader
+`configs/reference_data.json` also contains unrelated fictional records used
+elsewhere in the project.
+
 ## Leakage check
 
 - `duplicate_indices()` finds images whose pixels exactly match across

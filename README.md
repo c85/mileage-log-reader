@@ -121,6 +121,16 @@ written-mile column. To inspect one of those failures in the demo, run:
 .venv/bin/python scripts/demo.py outputs/synthetic_logs/log_001_clean.jpg
 ```
 
+## Pre-rendered synthetic QA forms
+
+The separate `examples/synthetic_forms/` pack contains 15 valid image
+variants from five underlying forms, plus three deliberately invalid images.
+Its CSV has 108 labeled trip rows, and its manifest records image conditions,
+seeds, related-form groups, and expected failed checks. See the folder's
+README for case details. These fixtures are not the 15 command-generated logs
+scored above; keep each related image group together if using the pack in a
+later evaluation.
+
 ## Evaluate the team-filled forms
 
 ```bash

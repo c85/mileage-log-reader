@@ -95,6 +95,13 @@ phone-photo dataset, so synthetic test logs place held-out EMNIST test
 characters into the boxes and vary capture quality. Exact image duplicates
 shared with train or validation are excluded from generated logs.
 
+A separate pre-rendered QA pack in `examples/synthetic_forms/` contains five
+underlying valid forms with three image conditions each, plus three
+deliberately invalid controls. Its ground truth and expected failed checks
+support fixture and demo use; it is not the 15-log generated set used for the
+reported metrics. Keep each form's image variants grouped in any later
+evaluation.
+
 The first model is intentionally a small, explainable baseline: 784 inputs,
 192 ReLU hidden units, 36 logits, cross-entropy, Adam-style updates, learning
 rate 0.001, batch size 256, ten epochs by default. The training command
