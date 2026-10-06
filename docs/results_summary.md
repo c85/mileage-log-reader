@@ -55,8 +55,8 @@ The results in this section come from the command-generated set in
 deliberate row-mile fault). They do not include the separate
 `examples/synthetic_forms/` fixture pack, which has 15 image variants from
 five valid underlying forms and three invalid controls. The fixture pack has
-not contributed metrics to this report; its repeated image conditions should
-not be counted as independent forms.
+its own score in the next section; its repeated image conditions should not be
+counted as independent forms or folded into the generated-log metrics below.
 
 Fifteen six-row forms were rendered from leak-free EMNIST test characters,
 with five logs per capture condition. Every log deliberately has row 5 miles
@@ -88,6 +88,38 @@ crop with no usable ink is counted separately from a classifier read; these
 generated boxes had no crop failures. The classifier still made wrong reads,
 so `recognition_failures: 0` means it returned a class for every usable crop,
 not that every read was correct.
+
+## Pre-rendered synthetic QA fixtures
+
+`scripts/evaluate_synthetic_forms.py` scored the separate 18-image fixture
+pack using the existing model, policy, fixture reference records, and
+2026-10-05 validation date. All 15 valid images registered and all 2,220
+expected character cells were extracted. Across the 15 paired image variants,
+character accuracy was 97.1% (2,155 / 2,220), exact-field accuracy was 88.3%
+(437 / 495), and exact trip-row accuracy was 55.6% (50 / 90). Twelve rows
+were auto-post candidates, with no incorrect rows among those 12; this small,
+controlled sample does not establish a safe error rate.
+
+| Capture condition | Character accuracy | Exact trip rows |
+|---|---:|---:|
+| Clean | 97.0% (718 / 740) | 17 / 30 (56.7%) |
+| Rotated | 97.3% (720 / 740) | 17 / 30 (56.7%) |
+| Perspective and shadow | 96.9% (717 / 740) | 16 / 30 (53.3%) |
+
+All three invalid controls registered. The reader detected 4 of the 5 expected
+failed checks, with all expected failures found in 2 of the 3 controls. In the
+invalid-odometer image it detected the mileage mismatch but missed the
+ending-odometer-order failure: the starting value `068253` was read as
+`062253`, making the predicted ending value appear larger. This shows the
+limits of relying on arithmetic checks when recognition is wrong.
+
+These are five underlying valid forms, each shown in three image conditions;
+the 15 images are paired robustness views, not 15 independent forms. The
+characters are assembled from EMNIST test images, so these results are a small
+synthetic QA check and do not estimate performance on human handwriting.
+They are reported separately from the generated-log and team-filled results.
+Detailed metrics and error files are written under the Git-ignored
+`outputs/synthetic_forms_eval/` directory.
 
 ## Team-filled handwritten forms
 
@@ -140,6 +172,7 @@ python scripts/run_spike.py
 python scripts/train_model.py
 python scripts/generate_synthetic_logs.py --count 15 --quality mixed --fault-row 5
 python scripts/evaluate_synthetic_logs.py
+python scripts/evaluate_synthetic_forms.py
 python scripts/evaluate_team_filled_forms.py --as-of 2026-10-05
 ```
 

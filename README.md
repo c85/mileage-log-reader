@@ -127,9 +127,16 @@ The separate `examples/synthetic_forms/` pack contains 15 valid image
 variants from five underlying forms, plus three deliberately invalid images.
 Its CSV has 108 labeled trip rows, and its manifest records image conditions,
 seeds, related-form groups, and expected failed checks. See the folder's
-README for case details. These fixtures are not the 15 command-generated logs
-scored above; keep each related image group together if using the pack in a
-later evaluation.
+README for case details. Score the pack separately with:
+
+```bash
+.venv/bin/python scripts/evaluate_synthetic_forms.py
+```
+
+This uses the trained model checkpoint and writes detailed scores under
+`outputs/synthetic_forms_eval/`. The fixtures are separate from the 15
+command-generated logs scored above. The valid images are three paired views
+of five forms, not 15 independent forms; the score report keeps them separate.
 
 ## Evaluate the team-filled forms
 

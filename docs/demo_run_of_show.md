@@ -72,11 +72,14 @@ the values are routed to review.
 ## Numbers and limits — 2 minutes
 
 Use `docs/results_summary.md`. Keep isolated EMNIST accuracy (85.07%
-unrestricted, 95.73% field restricted), generated-form accuracy (97.48%
-characters, 60.00% exact rows), the 15-image registration spike, and the
-team-filled result (17.7% character accuracy, 0/67 exact rows) separate. State
-the set sizes and quality conditions. Emphasize that 0 residual errors among
-7 auto-post candidates is far too small to establish a safe error rate.
+unrestricted, 95.73% field restricted), generated-log accuracy (97.48%
+characters, 60.00% exact rows), the 15-image registration spike, the synthetic
+fixture score, and the team-filled result (17.7% character accuracy, 0/67
+exact rows) separate. The fixture score was 97.1% character accuracy and
+55.6% exact rows across 15 paired images of five underlying forms. State the
+set sizes and quality conditions. Emphasize that 0 residual errors among 7
+generated-log auto-post candidates is far too small to establish a safe error
+rate.
 
 ## Four-week next step — 1 minute
 

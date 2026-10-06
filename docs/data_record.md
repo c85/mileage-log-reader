@@ -118,8 +118,9 @@ odometer cases. The accompanying CSV contains 108 labeled rows; the manifest
 records seeds, related-form groups, image conditions, and expected failed
 checks. It identifies the characters as coming from the EMNIST ByClass test
 subset. These fixtures are not included in the generated-log metrics in
-`docs/results_summary.md`; count the valid data as five underlying forms, not
-15 independent examples, and keep each group's variants together.
+`docs/results_summary.md`; they have a separate fixture score there. Count the
+valid data as five underlying forms, not 15 independent examples, and keep
+each group's variants together.
 
 The folder's `reference_data.json` contains the two fictional employees and
 their visit schedules used by all five valid form groups. The valid

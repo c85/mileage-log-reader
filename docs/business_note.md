@@ -58,9 +58,9 @@ rate. It does show that a promising row-level character score may still
 produce no fully automatic logs when every row must pass. If AP can review
 only individual rows, an actual per-row handling cost is needed before
 estimating savings. These figures refer to the command-generated logs, not the
-separate pre-rendered fixtures in `examples/synthetic_forms/`; that pack must
-be scored separately before it changes the measured auto-post share or any
-savings estimate.
+separate pre-rendered fixtures in `examples/synthetic_forms/`. Those fixtures
+have a separate QA score in `docs/results_summary.md`; their small, paired set
+does not change the generated-log auto-post share or savings estimate.
 
 ## Decision after the prototype
 
