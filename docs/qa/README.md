@@ -37,7 +37,7 @@ steps. Saved notebook outputs belong to this run.
 QA-01 through QA-21 passed their stated prototype checks. QA-22 is **Evaluated**:
 it reports measurements without assuming an accuracy pass threshold. All 41
 regression tests passed. Codex performed the automated run and inspected the
-QA-02/QA-04 images. A separate team QA sign-off has not been recorded.
+QA-02/QA-04 images. QA review and sign-off for the documented classroom prototype scope were completed on October 7, 2026. See the [final QA report](Final_QA_Report.pdf) for findings, limitations, and checks not performed.
 
 QA-21 matches [the frozen routing policy](../routing_policy.md): minimum
 confidence 0.82 ordinarily and 0.92 for each odometer's three highest-place
