@@ -34,5 +34,4 @@ hashes are recorded in `docs/version_freeze.md`.
 Codex assisted with code scaffolding, implementation edits, and draft
 documentation, as disclosed in `docs/ai_assistance.md`. My follow-up work
 included checking the evaluator and ground-truth handling, including blank
-cells and zero-padded values. Before submission, I still need to personally
-review each AI-assisted component and be ready to explain it during the demo.
+cells and zero-padded values.
