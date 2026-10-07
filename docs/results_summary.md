@@ -3,8 +3,7 @@
 We recommend human review of every reimbursement. Frozen `ml7-cell-lighting-v3`
 reads 69.49% of characters on 12 photographed forms, with 0/67 exact trip rows;
 all require review. Generated logs yield three candidates out of 90 rows and
-no fully automatic log. With whole-log handling at $3.40 per log, measured
-gross keying savings are $0/month. All business records are fictional.
+no fully automatic log. Under the whole-log keying assumption, this test implies $0/month in gross keying savings. Actual staff time and savings have not been measured. All business records are fictional.
 
 The reader was frozen on October 6, 2026. All routing comparisons below use
 the October 5, 2026 validation date, the unchanged EMNIST checkpoint and the
