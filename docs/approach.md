@@ -8,13 +8,7 @@ human review? Our prototype reads the supplied ML-7 mileage form, checks the ext
 
 Sabal Coast processes about 10,000 logs and 70,000 trip rows each month.
 At $3.40 per log, current keying is about $34,000 per month ($408,000 per
-year). A 2% row error rate would leave about 1,400 wrong rows a month. A
-wrong odometer digit can change the reimbursement by very different amounts:
-one place in a six-digit odometer represents $62,000, $6,200, $620, $62,
-$6.20, or $0.62 per mile-value change. The brief's example of a thousands
-place error is $620. Underpayment may generate a roughly $28 correction
-ticket, while an incorrect employee or client code creates a traceability and
-audit problem. Raw character accuracy alone is therefore not an approval
+year). A 2% row error rate would leave about 1,400 wrong rows a month. A one-unit error in an odometer digit changes mileage according to its position. At $0.62 per mile, a thousands-place error changes reimbursement by $620; a ones-place error changes it by $0.62. Underpayment may generate a roughly $28 correction ticket, while an incorrect employee or client code creates a traceability and audit problem. Raw character accuracy alone is therefore not an approval
 rule.
 
 The system retains recognized values and checks them rather than silently
