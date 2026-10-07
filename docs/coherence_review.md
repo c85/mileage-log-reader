@@ -5,6 +5,12 @@ fetching origin. The checkout matched the remote branch and initially had no
 tracked changes. This review also includes the authorized frozen-v3 QA refresh
 made in the working tree.
 
+## QA review update - October 7, 2026
+
+QA review and sign-off for the documented classroom prototype scope are complete. The [final QA report](qa/Final_QA_Report.pdf) records the results, limitations, and checks not performed.
+
+The pending QA review and sign-off references below describe the status before this update.
+
 ## Assessment
 
 The implementation and main business recommendation are coherent. The latest
