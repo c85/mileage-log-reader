@@ -46,19 +46,27 @@ python3 -m venv .venv
 .venv/bin/python scripts/audit_emnist.py
 ```
 
-For the frozen baseline, restore the saved `data/models/emnist_mlp.npz`
-checkpoint and confirm its SHA-256 against [version_freeze.md](docs/version_freeze.md).
-The checkpoint is Git-ignored and must be retained separately. A clean clone
-without that saved file cannot reproduce the frozen scores exactly.
+The reader needs a model checkpoint before either demo command will run. The
+checkpoint is Git-ignored, so a clean clone does not contain it. Choose one of
+these paths after installing the dependencies and downloading EMNIST:
 
-The training command creates a new checkpoint at that same path:
+**Use the frozen baseline:** restore the saved
+`data/models/emnist_mlp.npz` checkpoint from its separate retained copy, then
+confirm its SHA-256 against [version_freeze.md](docs/version_freeze.md). This is
+required to reproduce the recorded scores.
+
+**Train a checkpoint for a clean-clone demo:** if the frozen copy is not
+available, run:
 
 ```bash
 .venv/bin/python scripts/train_model.py
 ```
 
-Preserve the frozen checkpoint before an explicitly authorized new training
-experiment. Training is not required when the recorded checkpoint is available.
+This downloads no additional data; it trains from the EMNIST files fetched
+above and writes `data/models/emnist_mlp.npz`. The demo will run with this
+checkpoint, but its results will not be the frozen baseline scores. Training
+overwrites a checkpoint at that path, so preserve the frozen copy before
+training if you need it later.
 
 The data download is about 0.5 GB. It is kept under `data/`, which is ignored
 by Git. The checksum file in `configs/` pins the five ByClass files used by the
@@ -67,7 +75,8 @@ go under `outputs/model_eval/`.
 
 ## Run the browser demo
 
-After the setup above, start the presentation interface with:
+After completing the setup and one of the model-checkpoint steps above, start
+the presentation interface with:
 
 ~~~bash
 .venv/bin/python scripts/web_demo.py
@@ -94,7 +103,8 @@ Git-ignored outputs/web_demo/ directory.
 
 ## Terminal fallback
 
-After the setup above, this is the one command to try a new image:
+After completing the setup and one of the model-checkpoint steps above, this is
+the one command to try a new image:
 
 ```bash
 .venv/bin/python scripts/demo.py /path/to/form_ml7_photo.jpg
