@@ -1,0 +1,7 @@
+[
+  {
+    "image": "log_001_clean.jpg",
+    "condition": "clean",
+    "truth_file": "log_001_clean.truth.json"
+  }
+]

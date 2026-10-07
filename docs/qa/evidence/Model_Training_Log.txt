@@ -1,0 +1,15 @@
+Training on 90,000 images from 36 classes.
+epoch 01/10: weighted loss 1.1001
+epoch 02/10: weighted loss 0.6481
+epoch 03/10: weighted loss 0.5265
+epoch 04/10: weighted loss 0.4506
+epoch 05/10: weighted loss 0.3966
+epoch 06/10: weighted loss 0.3586
+epoch 07/10: weighted loss 0.3262
+epoch 08/10: weighted loss 0.3007
+epoch 09/10: weighted loss 0.2809
+epoch 10/10: weighted loss 0.2623
+Leak-free held-out accuracy (all 36 classes): 85.061%
+Leak-free held-out accuracy (field restricted): 95.651%
+Model: /workspace/scratch/6805ef4d87c8/analysis/qa_refresh/python_full_run/sessions/qa_btt19t17/mileage-log-reader/data/models/emnist_mlp.npz
+Metrics: /workspace/scratch/6805ef4d87c8/analysis/qa_refresh/python_full_run/sessions/qa_btt19t17/mileage-log-reader/outputs/model_eval/metrics.json

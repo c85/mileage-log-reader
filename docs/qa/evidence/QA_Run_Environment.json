@@ -1,0 +1,14 @@
+{
+  "code_commit": "ff674684e8834c1de4b0a105c773444605336d9d",
+  "recorded_utc": "2026-10-06T04:03:46.062635+00:00",
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "opencv": "4.13.0",
+  "matplotlib": "3.11.2",
+  "scope": "Synthetic QA checks; photographed team forms not evaluated here.",
+  "manual_review_required": [
+    "QA-02 orientation image",
+    "QA-04 character crops"
+  ],
+  "remaining_policy_check": "QA-21 / SCRUM-22"
+}

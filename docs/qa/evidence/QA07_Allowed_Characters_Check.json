@@ -1,0 +1,287 @@
+{
+  "test_ids": [
+    "QA-07"
+  ],
+  "run_time_utc": "2026-10-06T03:57:31.452909+00:00",
+  "code_commit": "ff674684e8834c1de4b0a105c773444605336d9d",
+  "scope": "Controlled test of EMNISTMLP.predict character restrictions. Scores are supplied by the test; no trained model is evaluated.",
+  "implementation_note": "The image is a placeholder because score generation is replaced for this test. Returned confidence is renormalized over allowed characters and is not measured recognition accuracy.",
+  "results": [
+    {
+      "test_id": "QA-07",
+      "allowed_type": "digit",
+      "status": "Passed",
+      "supplied_scores": {
+        "0": 0.4,
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0,
+        "6": 0.0,
+        "7": 0.0,
+        "8": 0.0,
+        "9": 0.0,
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0,
+        "F": 0.0,
+        "G": 0.0,
+        "H": 0.0,
+        "I": 0.0,
+        "J": 0.0,
+        "K": 0.0,
+        "L": 0.0,
+        "M": 0.0,
+        "N": 0.0,
+        "O": 0.6,
+        "P": 0.0,
+        "Q": 0.0,
+        "R": 0.0,
+        "S": 0.0,
+        "T": 0.0,
+        "U": 0.0,
+        "V": 0.0,
+        "W": 0.0,
+        "X": 0.0,
+        "Y": 0.0,
+        "Z": 0.0
+      },
+      "expected_character": "0",
+      "unrestricted_output": {
+        "character": "O",
+        "confidence": 0.6,
+        "class_probabilities": {
+          "0": 0.4,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0,
+          "7": 0.0,
+          "8": 0.0,
+          "9": 0.0,
+          "A": 0.0,
+          "B": 0.0,
+          "C": 0.0,
+          "D": 0.0,
+          "E": 0.0,
+          "F": 0.0,
+          "G": 0.0,
+          "H": 0.0,
+          "I": 0.0,
+          "J": 0.0,
+          "K": 0.0,
+          "L": 0.0,
+          "M": 0.0,
+          "N": 0.0,
+          "O": 0.6,
+          "P": 0.0,
+          "Q": 0.0,
+          "R": 0.0,
+          "S": 0.0,
+          "T": 0.0,
+          "U": 0.0,
+          "V": 0.0,
+          "W": 0.0,
+          "X": 0.0,
+          "Y": 0.0,
+          "Z": 0.0
+        },
+        "top_alternatives": [
+          {
+            "character": "O",
+            "confidence": 0.6
+          },
+          {
+            "character": "0",
+            "confidence": 0.4
+          },
+          {
+            "character": "Z",
+            "confidence": 0.0
+          }
+        ]
+      },
+      "restricted_output": {
+        "character": "0",
+        "confidence": 1.0,
+        "class_probabilities": {
+          "0": 1.0,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0,
+          "7": 0.0,
+          "8": 0.0,
+          "9": 0.0
+        },
+        "top_alternatives": [
+          {
+            "character": "0",
+            "confidence": 1.0
+          },
+          {
+            "character": "9",
+            "confidence": 0.0
+          },
+          {
+            "character": "8",
+            "confidence": 0.0
+          }
+        ]
+      }
+    },
+    {
+      "test_id": "QA-07",
+      "allowed_type": "letter",
+      "status": "Passed",
+      "supplied_scores": {
+        "0": 0.6,
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0,
+        "6": 0.0,
+        "7": 0.0,
+        "8": 0.0,
+        "9": 0.0,
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.0,
+        "D": 0.0,
+        "E": 0.0,
+        "F": 0.0,
+        "G": 0.0,
+        "H": 0.0,
+        "I": 0.0,
+        "J": 0.0,
+        "K": 0.0,
+        "L": 0.0,
+        "M": 0.0,
+        "N": 0.0,
+        "O": 0.4,
+        "P": 0.0,
+        "Q": 0.0,
+        "R": 0.0,
+        "S": 0.0,
+        "T": 0.0,
+        "U": 0.0,
+        "V": 0.0,
+        "W": 0.0,
+        "X": 0.0,
+        "Y": 0.0,
+        "Z": 0.0
+      },
+      "expected_character": "O",
+      "unrestricted_output": {
+        "character": "0",
+        "confidence": 0.6,
+        "class_probabilities": {
+          "0": 0.6,
+          "1": 0.0,
+          "2": 0.0,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0,
+          "7": 0.0,
+          "8": 0.0,
+          "9": 0.0,
+          "A": 0.0,
+          "B": 0.0,
+          "C": 0.0,
+          "D": 0.0,
+          "E": 0.0,
+          "F": 0.0,
+          "G": 0.0,
+          "H": 0.0,
+          "I": 0.0,
+          "J": 0.0,
+          "K": 0.0,
+          "L": 0.0,
+          "M": 0.0,
+          "N": 0.0,
+          "O": 0.4,
+          "P": 0.0,
+          "Q": 0.0,
+          "R": 0.0,
+          "S": 0.0,
+          "T": 0.0,
+          "U": 0.0,
+          "V": 0.0,
+          "W": 0.0,
+          "X": 0.0,
+          "Y": 0.0,
+          "Z": 0.0
+        },
+        "top_alternatives": [
+          {
+            "character": "0",
+            "confidence": 0.6
+          },
+          {
+            "character": "O",
+            "confidence": 0.4
+          },
+          {
+            "character": "Z",
+            "confidence": 0.0
+          }
+        ]
+      },
+      "restricted_output": {
+        "character": "O",
+        "confidence": 1.0,
+        "class_probabilities": {
+          "A": 0.0,
+          "B": 0.0,
+          "C": 0.0,
+          "D": 0.0,
+          "E": 0.0,
+          "F": 0.0,
+          "G": 0.0,
+          "H": 0.0,
+          "I": 0.0,
+          "J": 0.0,
+          "K": 0.0,
+          "L": 0.0,
+          "M": 0.0,
+          "N": 0.0,
+          "O": 1.0,
+          "P": 0.0,
+          "Q": 0.0,
+          "R": 0.0,
+          "S": 0.0,
+          "T": 0.0,
+          "U": 0.0,
+          "V": 0.0,
+          "W": 0.0,
+          "X": 0.0,
+          "Y": 0.0,
+          "Z": 0.0
+        },
+        "top_alternatives": [
+          {
+            "character": "O",
+            "confidence": 1.0
+          },
+          {
+            "character": "Z",
+            "confidence": 0.0
+          },
+          {
+            "character": "X",
+            "confidence": 0.0
+          }
+        ]
+      }
+    }
+  ]
+}

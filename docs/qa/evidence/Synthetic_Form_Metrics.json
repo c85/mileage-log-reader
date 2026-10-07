@@ -1,0 +1,765 @@
+{
+  "test_id": "QA-22",
+  "status": "Evaluated",
+  "code_commit": "ff674684e8834c1de4b0a105c773444605336d9d",
+  "model_sha256": "a8fd14989fdb0040b2f476675c6e8e2de92ffda181a8174b852ef59518a67510",
+  "model_training_code_commit": "ff674684e8834c1de4b0a105c773444605336d9d",
+  "started_utc": "2026-10-06T04:03:42.733847+00:00",
+  "finished_utc": "2026-10-06T04:03:45.911702+00:00",
+  "evaluation_date": "2026-10-05",
+  "dataset": "examples/synthetic_forms",
+  "design": "15 paired valid images plus 3 deliberately invalid images; all 18 saved files read directly.",
+  "scope": "Synthetic images only. No photographed team forms; SCRUM-18 remains separate. No accuracy cutoff is assumed.",
+  "metric_notes": {
+    "row_exact_accuracy": "All five trip-row fields match the written answers; excludes header/footer accuracy.",
+    "cell_extraction_failures": "Reader-reported extraction failures; registration failures and expected unread cells are also counted separately.",
+    "recognition_failures": "Reader-reported missing predictions, not all incorrect characters; also inspect recognition_mismatches_on_usable_cells.",
+    "auto_post_residual_error_rate": "Transcription errors in auto-posted trip rows in this sample; not a complete payment-error audit.",
+    "paired_conditions": "Compare the three conditions in valid_images for an equal five-form comparison. The three extra invalid images are clean.",
+    "known_values_vs_images": "Expected business-rule failures assume a correct read. An image misread can introduce different validation failures."
+  },
+  "metrics": {
+    "logs": 18,
+    "character_accuracy": 0.9725975975975976,
+    "character_count": 2664,
+    "digit_accuracy": 0.9752604166666666,
+    "digit_count": 2304,
+    "capital_letter_accuracy": 0.9555555555555556,
+    "capital_letter_count": 360,
+    "field_exact_accuracy": 0.8872053872053872,
+    "field_count": 594,
+    "row_exact_accuracy": 0.5740740740740741,
+    "row_count": 108,
+    "cell_extraction_failures": 0,
+    "recognition_failures": 0,
+    "auto_post_row_share": 0.10185185185185185,
+    "auto_post_rows": 11,
+    "auto_post_residual_error_rate": 0.0,
+    "incorrect_auto_post_rows": 0,
+    "field_types_with_errors": {
+      "odometer_start": 18,
+      "client": 13,
+      "odometer_end": 9,
+      "date": 15,
+      "miles": 6,
+      "employee_id": 1,
+      "week_ending": 5
+    },
+    "by_condition": {
+      "clean": {
+        "logs": 8,
+        "character_accuracy": 0.9797297297297297,
+        "row_exact_accuracy": 0.6875,
+        "auto_post_row_share": 0.10416666666666667,
+        "auto_post_residual_error_rate": 0.0,
+        "character_count": 1184,
+        "correct_characters": 1160,
+        "row_count": 48,
+        "field_count": 264,
+        "field_exact_accuracy": 0.9166666666666666,
+        "cell_extraction_failures": 0,
+        "registration_failures": 0
+      },
+      "rotated": {
+        "logs": 5,
+        "character_accuracy": 0.9662162162162162,
+        "row_exact_accuracy": 0.5,
+        "auto_post_row_share": 0.1,
+        "auto_post_residual_error_rate": 0.0,
+        "character_count": 740,
+        "correct_characters": 715,
+        "row_count": 30,
+        "field_count": 165,
+        "field_exact_accuracy": 0.8606060606060606,
+        "cell_extraction_failures": 0,
+        "registration_failures": 0
+      },
+      "perspective_shadow": {
+        "logs": 5,
+        "character_accuracy": 0.9675675675675676,
+        "row_exact_accuracy": 0.4666666666666667,
+        "auto_post_row_share": 0.1,
+        "auto_post_residual_error_rate": 0.0,
+        "character_count": 740,
+        "correct_characters": 716,
+        "row_count": 30,
+        "field_count": 165,
+        "field_exact_accuracy": 0.8666666666666667,
+        "cell_extraction_failures": 0,
+        "registration_failures": 0
+      }
+    },
+    "correct_characters": 2591,
+    "character_mismatches": 73,
+    "registration_failures": 0,
+    "expected_cells_missing_or_not_extracted": 0,
+    "usable_expected_cells": 2664,
+    "recognition_mismatches_on_usable_cells": 73
+  },
+  "valid_images": {
+    "logs": 15,
+    "character_accuracy": 0.9689189189189189,
+    "character_count": 2220,
+    "digit_accuracy": 0.971875,
+    "digit_count": 1920,
+    "capital_letter_accuracy": 0.95,
+    "capital_letter_count": 300,
+    "field_exact_accuracy": 0.8727272727272727,
+    "field_count": 495,
+    "row_exact_accuracy": 0.5222222222222223,
+    "row_count": 90,
+    "cell_extraction_failures": 0,
+    "recognition_failures": 0,
+    "auto_post_row_share": 0.08888888888888889,
+    "auto_post_rows": 8,
+    "auto_post_residual_error_rate": 0.0,
+    "incorrect_auto_post_rows": 0,
+    "field_types_with_errors": {
+      "odometer_start": 15,
+      "client": 12,
+      "odometer_end": 9,
+      "date": 15,
+      "miles": 6,
+      "employee_id": 1,
+      "week_ending": 5
+    },
+    "by_condition": {
+      "clean": {
+        "logs": 5,
+        "character_accuracy": 0.972972972972973,
+        "row_exact_accuracy": 0.6,
+        "auto_post_row_share": 0.06666666666666667,
+        "auto_post_residual_error_rate": 0.0,
+        "character_count": 740,
+        "correct_characters": 720,
+        "row_count": 30,
+        "field_count": 165,
+        "field_exact_accuracy": 0.8909090909090909,
+        "cell_extraction_failures": 0,
+        "registration_failures": 0
+      },
+      "rotated": {
+        "logs": 5,
+        "character_accuracy": 0.9662162162162162,
+        "row_exact_accuracy": 0.5,
+        "auto_post_row_share": 0.1,
+        "auto_post_residual_error_rate": 0.0,
+        "character_count": 740,
+        "correct_characters": 715,
+        "row_count": 30,
+        "field_count": 165,
+        "field_exact_accuracy": 0.8606060606060606,
+        "cell_extraction_failures": 0,
+        "registration_failures": 0
+      },
+      "perspective_shadow": {
+        "logs": 5,
+        "character_accuracy": 0.9675675675675676,
+        "row_exact_accuracy": 0.4666666666666667,
+        "auto_post_row_share": 0.1,
+        "auto_post_residual_error_rate": 0.0,
+        "character_count": 740,
+        "correct_characters": 716,
+        "row_count": 30,
+        "field_count": 165,
+        "field_exact_accuracy": 0.8666666666666667,
+        "cell_extraction_failures": 0,
+        "registration_failures": 0
+      }
+    },
+    "correct_characters": 2151,
+    "character_mismatches": 69,
+    "registration_failures": 0,
+    "expected_cells_missing_or_not_extracted": 0,
+    "usable_expected_cells": 2220,
+    "recognition_mismatches_on_usable_cells": 69
+  },
+  "invalid_images": {
+    "logs": 3,
+    "character_accuracy": 0.990990990990991,
+    "character_count": 444,
+    "digit_accuracy": 0.9921875,
+    "digit_count": 384,
+    "capital_letter_accuracy": 0.9833333333333333,
+    "capital_letter_count": 60,
+    "field_exact_accuracy": 0.9595959595959596,
+    "field_count": 99,
+    "row_exact_accuracy": 0.8333333333333334,
+    "row_count": 18,
+    "cell_extraction_failures": 0,
+    "recognition_failures": 0,
+    "auto_post_row_share": 0.16666666666666666,
+    "auto_post_rows": 3,
+    "auto_post_residual_error_rate": 0.0,
+    "incorrect_auto_post_rows": 0,
+    "field_types_with_errors": {
+      "odometer_start": 3,
+      "client": 1
+    },
+    "by_condition": {
+      "clean": {
+        "logs": 3,
+        "character_accuracy": 0.990990990990991,
+        "row_exact_accuracy": 0.8333333333333334,
+        "auto_post_row_share": 0.16666666666666666,
+        "auto_post_residual_error_rate": 0.0,
+        "character_count": 444,
+        "correct_characters": 440,
+        "row_count": 18,
+        "field_count": 99,
+        "field_exact_accuracy": 0.9595959595959596,
+        "cell_extraction_failures": 0,
+        "registration_failures": 0
+      }
+    },
+    "correct_characters": 440,
+    "character_mismatches": 4,
+    "registration_failures": 0,
+    "expected_cells_missing_or_not_extracted": 0,
+    "usable_expected_cells": 444,
+    "recognition_mismatches_on_usable_cells": 4
+  },
+  "invalid_source_rows_auto_posted": 0,
+  "extra_predicted_rows": 0,
+  "extra_auto_post_rows": 0,
+  "case_outcomes": [
+    {
+      "form_id": "form_01_clean",
+      "case_type": "valid",
+      "condition": "clean",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "rows.1.miles_equals_odometer_difference"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "needs_review",
+        "5": "needs_review",
+        "6": "auto_post"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "form_01_rotated",
+      "case_type": "valid",
+      "condition": "rotated",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.client_on_visit_schedule"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "auto_post",
+        "5": "needs_review",
+        "6": "auto_post"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "form_01_perspective_shadow",
+      "case_type": "valid",
+      "condition": "perspective_shadow",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "auto_post",
+        "5": "needs_review",
+        "6": "auto_post"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "form_02_clean",
+      "case_type": "valid",
+      "condition": "clean",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "footer.weekly_total_matches",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.miles_equals_odometer_difference",
+        "rows.2.odometer_end_after_start",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.3.miles_equals_odometer_difference",
+        "rows.3.odometer_end_after_start",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.miles_equals_odometer_difference",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.trip_date_format_and_in_week",
+        "rows.6.miles_equals_odometer_difference",
+        "rows.6.odometer_continuity"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "needs_review",
+        "5": "needs_review",
+        "6": "needs_review"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "form_02_rotated",
+      "case_type": "valid",
+      "condition": "rotated",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "footer.weekly_total_matches",
+        "header.employee_exists",
+        "rows.1.client_on_visit_schedule",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.miles_equals_odometer_difference",
+        "rows.2.odometer_end_after_start",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.3.client_on_visit_schedule",
+        "rows.3.miles_equals_odometer_difference",
+        "rows.3.odometer_end_after_start",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.miles_equals_odometer_difference",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.trip_date_format_and_in_week",
+        "rows.6.client_on_visit_schedule",
+        "rows.6.miles_equals_odometer_difference",
+        "rows.6.odometer_continuity"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "needs_review",
+        "5": "needs_review",
+        "6": "needs_review"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "form_02_perspective_shadow",
+      "case_type": "valid",
+      "condition": "perspective_shadow",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "footer.weekly_total_matches",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.miles_equals_odometer_difference",
+        "rows.2.odometer_end_after_start",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.3.miles_equals_odometer_difference",
+        "rows.3.odometer_end_after_start",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.miles_equals_odometer_difference",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.trip_date_format_and_in_week",
+        "rows.6.miles_equals_odometer_difference",
+        "rows.6.odometer_continuity"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "needs_review",
+        "5": "needs_review",
+        "6": "needs_review"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "form_03_clean",
+      "case_type": "valid",
+      "condition": "clean",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "header.week_ending_is_sunday",
+        "rows.1.client_on_visit_schedule",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.odometer_continuity",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.3.client_on_visit_schedule",
+        "rows.3.trip_date_format_and_in_week",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.trip_date_format_and_in_week",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start",
+        "rows.5.trip_date_format_and_in_week",
+        "rows.6.client_on_visit_schedule",
+        "rows.6.trip_date_format_and_in_week"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "needs_review",
+        "5": "needs_review",
+        "6": "needs_review"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "form_03_rotated",
+      "case_type": "valid",
+      "condition": "rotated",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "header.week_ending_is_sunday",
+        "rows.1.client_on_visit_schedule",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.odometer_continuity",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.3.client_on_visit_schedule",
+        "rows.3.trip_date_format_and_in_week",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.trip_date_format_and_in_week",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start",
+        "rows.5.trip_date_format_and_in_week",
+        "rows.6.client_on_visit_schedule",
+        "rows.6.trip_date_format_and_in_week"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "needs_review",
+        "5": "needs_review",
+        "6": "needs_review"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "form_03_perspective_shadow",
+      "case_type": "valid",
+      "condition": "perspective_shadow",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "rows.1.client_on_visit_schedule",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.odometer_continuity",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.trip_date_format_and_in_week",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "needs_review",
+        "5": "needs_review",
+        "6": "needs_review"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "form_04_clean",
+      "case_type": "valid",
+      "condition": "clean",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "footer.weekly_total_matches",
+        "header.week_ending_is_sunday",
+        "rows.2.miles_equals_odometer_difference",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.trip_date_format_and_in_week",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.trip_date_format_and_in_week",
+        "rows.6.client_on_visit_schedule",
+        "rows.6.trip_date_format_and_in_week"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "needs_review",
+        "5": "needs_review",
+        "6": "needs_review"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "form_04_rotated",
+      "case_type": "valid",
+      "condition": "rotated",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "footer.weekly_total_matches",
+        "header.week_ending_is_sunday",
+        "rows.2.miles_equals_odometer_difference",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.trip_date_format_and_in_week",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.trip_date_format_and_in_week",
+        "rows.6.client_on_visit_schedule",
+        "rows.6.trip_date_format_and_in_week"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "needs_review",
+        "5": "needs_review",
+        "6": "needs_review"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "form_04_perspective_shadow",
+      "case_type": "valid",
+      "condition": "perspective_shadow",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "footer.weekly_total_matches",
+        "header.week_ending_is_sunday",
+        "rows.2.miles_equals_odometer_difference",
+        "rows.3.miles_equals_odometer_difference",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.trip_date_format_and_in_week",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.trip_date_format_and_in_week",
+        "rows.6.client_on_visit_schedule",
+        "rows.6.trip_date_format_and_in_week"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "needs_review",
+        "5": "needs_review",
+        "6": "needs_review"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "form_05_clean",
+      "case_type": "valid",
+      "condition": "clean",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "rows.5.client_on_visit_schedule",
+        "rows.5.trip_date_format_and_in_week"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "auto_post",
+        "5": "needs_review",
+        "6": "needs_review"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "form_05_rotated",
+      "case_type": "valid",
+      "condition": "rotated",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.client_on_visit_schedule",
+        "rows.6.miles_equals_odometer_difference",
+        "rows.6.odometer_continuity"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "auto_post",
+        "3": "needs_review",
+        "4": "needs_review",
+        "5": "needs_review",
+        "6": "needs_review"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "form_05_perspective_shadow",
+      "case_type": "valid",
+      "condition": "perspective_shadow",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [],
+      "observed_failed_checks_from_image": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.trip_date_format_and_in_week"
+      ],
+      "expected_failures_identified_from_image": null,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "auto_post",
+        "5": "needs_review",
+        "6": "needs_review"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "invalid_date",
+      "case_type": "invalid",
+      "condition": "clean",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [
+        "rows.1.client_on_visit_schedule",
+        "rows.1.trip_date_format_and_in_week"
+      ],
+      "observed_failed_checks_from_image": [
+        "rows.1.client_on_visit_schedule",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.1.trip_date_format_and_in_week"
+      ],
+      "expected_failures_identified_from_image": true,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "needs_review",
+        "5": "needs_review",
+        "6": "auto_post"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "invalid_schedule",
+      "case_type": "invalid",
+      "condition": "clean",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [
+        "rows.1.client_on_visit_schedule"
+      ],
+      "observed_failed_checks_from_image": [
+        "rows.1.client_on_visit_schedule",
+        "rows.1.miles_equals_odometer_difference"
+      ],
+      "expected_failures_identified_from_image": true,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "needs_review",
+        "5": "needs_review",
+        "6": "auto_post"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    },
+    {
+      "form_id": "invalid_odometer",
+      "case_type": "invalid",
+      "condition": "clean",
+      "registration_ok": true,
+      "expected_failed_checks_if_read_correctly": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.1.odometer_end_after_start"
+      ],
+      "observed_failed_checks_from_image": [
+        "rows.1.miles_equals_odometer_difference"
+      ],
+      "expected_failures_identified_from_image": false,
+      "row_routes": {
+        "1": "needs_review",
+        "2": "needs_review",
+        "3": "needs_review",
+        "4": "needs_review",
+        "5": "needs_review",
+        "6": "auto_post"
+      },
+      "invalid_source_rows_auto_posted": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": [],
+      "document_status": "needs_review"
+    }
+  ],
+  "execution_errors": []
+}

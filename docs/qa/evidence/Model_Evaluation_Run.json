@@ -1,0 +1,29 @@
+{
+  "task": "Model preparation for the synthetic QA run",
+  "code_commit": "ff674684e8834c1de4b0a105c773444605336d9d",
+  "started_utc": "2026-10-06T03:57:33.444116+00:00",
+  "finished_utc": "2026-10-06T04:03:42.685415+00:00",
+  "command": [
+    "/workspace/scratch/6805ef4d87c8/analysis/qa_refresh/.venv/bin/python",
+    "-u",
+    "scripts/train_model.py",
+    "--max-train-images",
+    "90000",
+    "--epochs",
+    "10",
+    "--batch-size",
+    "256",
+    "--hidden-size",
+    "192",
+    "--learning-rate",
+    "0.001",
+    "--seed",
+    "6642"
+  ],
+  "numerical_library_threads": 2,
+  "model_file": "emnist_mlp.npz",
+  "model_sha256": "a8fd14989fdb0040b2f476675c6e8e2de92ffda181a8174b852ef59518a67510",
+  "metrics_file": "metrics.json",
+  "test_sample_count": 89262,
+  "scope": "Isolated-character measurements from the model used for QA. These results do not complete the separate SCRUM-18 evaluation."
+}

@@ -1,0 +1,226 @@
+{
+  "dataset": "Synthetic mileage-log examples",
+  "dataset_date": "2026-10-05",
+  "evaluation_date": "2026-10-05",
+  "week_ending": "2026-09-27",
+  "image_count": 18,
+  "valid_images": 15,
+  "distinct_valid_forms": 5,
+  "invalid_images": 3,
+  "filled_rows_per_form": 6,
+  "ground_truth_file": "ground_truth.csv",
+  "ground_truth_match": "Match form_id to FORM_ID in ground_truth.csv.",
+  "reference_data_file": "reference_data.json",
+  "character_dataset": "EMNIST ByClass, upright, digit and uppercase-letter test subset only",
+  "data_scope": "All business records are fictional. Public handwriting characters are assembled into computer-generated forms; these are not photographed human-completed forms.",
+  "expected_checks_scope": "Business-check expectations assume the written values are read correctly; these are not observed reader-test results.",
+  "reproduction_package": "SCRUM9_Synthetic_Data.zip attached to SCRUM-9; original case_id and seed values are retained.",
+  "cases": [
+    {
+      "form_id": "form_01_clean",
+      "case_id": "valid_form_01_clean",
+      "image": "form_01_clean.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "clean",
+      "seed": 6642,
+      "related_form_group": "form_01",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "form_01_rotated",
+      "case_id": "valid_form_01_rotated",
+      "image": "form_01_rotated.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "rotated",
+      "seed": 6642,
+      "related_form_group": "form_01",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "form_01_perspective_shadow",
+      "case_id": "valid_form_01_perspective_shadow",
+      "image": "form_01_perspective_shadow.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "perspective_shadow",
+      "seed": 6642,
+      "related_form_group": "form_01",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "form_02_clean",
+      "case_id": "valid_form_02_clean",
+      "image": "form_02_clean.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "clean",
+      "seed": 6643,
+      "related_form_group": "form_02",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "form_02_rotated",
+      "case_id": "valid_form_02_rotated",
+      "image": "form_02_rotated.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "rotated",
+      "seed": 6643,
+      "related_form_group": "form_02",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "form_02_perspective_shadow",
+      "case_id": "valid_form_02_perspective_shadow",
+      "image": "form_02_perspective_shadow.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "perspective_shadow",
+      "seed": 6643,
+      "related_form_group": "form_02",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "form_03_clean",
+      "case_id": "valid_form_03_clean",
+      "image": "form_03_clean.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "clean",
+      "seed": 6644,
+      "related_form_group": "form_03",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "form_03_rotated",
+      "case_id": "valid_form_03_rotated",
+      "image": "form_03_rotated.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "rotated",
+      "seed": 6644,
+      "related_form_group": "form_03",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "form_03_perspective_shadow",
+      "case_id": "valid_form_03_perspective_shadow",
+      "image": "form_03_perspective_shadow.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "perspective_shadow",
+      "seed": 6644,
+      "related_form_group": "form_03",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "form_04_clean",
+      "case_id": "valid_form_04_clean",
+      "image": "form_04_clean.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "clean",
+      "seed": 6645,
+      "related_form_group": "form_04",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "form_04_rotated",
+      "case_id": "valid_form_04_rotated",
+      "image": "form_04_rotated.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "rotated",
+      "seed": 6645,
+      "related_form_group": "form_04",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "form_04_perspective_shadow",
+      "case_id": "valid_form_04_perspective_shadow",
+      "image": "form_04_perspective_shadow.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "perspective_shadow",
+      "seed": 6645,
+      "related_form_group": "form_04",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "form_05_clean",
+      "case_id": "valid_form_05_clean",
+      "image": "form_05_clean.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "clean",
+      "seed": 6646,
+      "related_form_group": "form_05",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "form_05_rotated",
+      "case_id": "valid_form_05_rotated",
+      "image": "form_05_rotated.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "rotated",
+      "seed": 6646,
+      "related_form_group": "form_05",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "form_05_perspective_shadow",
+      "case_id": "valid_form_05_perspective_shadow",
+      "image": "form_05_perspective_shadow.png",
+      "case_type": "valid",
+      "description": "Made-up valid mileage log; exact same written values and characters across its three image conditions.",
+      "condition": "perspective_shadow",
+      "seed": 6646,
+      "related_form_group": "form_05",
+      "expected_failed_checks": []
+    },
+    {
+      "form_id": "invalid_date",
+      "case_id": "invalid_date",
+      "image": "invalid_date.png",
+      "case_type": "invalid",
+      "description": "September 31 is impossible. The date check fails; a schedule lookup also cannot succeed without a valid trip date.",
+      "condition": "clean",
+      "seed": 7743,
+      "related_form_group": "form_01",
+      "expected_failed_checks": [
+        "rows.1.client_on_visit_schedule",
+        "rows.1.trip_date_format_and_in_week"
+      ]
+    },
+    {
+      "form_id": "invalid_schedule",
+      "case_id": "invalid_schedule",
+      "image": "invalid_schedule.png",
+      "case_type": "invalid",
+      "description": "XYZ is not a scheduled client for employee LM2984 on September 22, 2026.",
+      "condition": "clean",
+      "seed": 7744,
+      "related_form_group": "form_01",
+      "expected_failed_checks": [
+        "rows.1.client_on_visit_schedule"
+      ]
+    },
+    {
+      "form_id": "invalid_odometer",
+      "case_id": "invalid_odometer",
+      "image": "invalid_odometer.png",
+      "case_type": "invalid",
+      "description": "The ending odometer 068252 is below the starting value 068253. The written 037 miles also disagrees with the resulting difference of -1.",
+      "condition": "clean",
+      "seed": 7745,
+      "related_form_group": "form_01",
+      "expected_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.1.odometer_end_after_start"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "policy_name": "prototype-conservative",
+  "auto_post_enabled": true,
+  "min_character_confidence": 0.82,
+  "critical_odometer_digit_min_confidence": 0.92,
+  "critical_odometer_positions": [0, 1, 2],
+  "reimbursement_rate": 0.62,
+  "route_log_when_header_invalid": true,
+  "route_rows_when_total_mismatch": true,
+  "note": "Demonstration settings only. Calibrate and approve thresholds on independent, manually labeled handwriting before any production use."
+}
