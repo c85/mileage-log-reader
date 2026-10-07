@@ -2,9 +2,7 @@
 
 This prototype asks a narrow CFO question: which rows can be read and
 reconciled with enough evidence to avoid a clerk, and which rows must wait for
-human review? The project does not attempt to replace AP or post a payment.
-The current code is a research demonstration over the supplied synthetic
-Form ML-7 and made-up reference records.
+human review? Our prototype reads the supplied ML-7 mileage form, checks the extracted information and identifies rows that need a clerk. Our recommendation is to keep human approval for reimbursements. The team's recorded handwriting test read no complete trip row correctly, so the project demonstrates a working pipeline and its limits rather than a system ready to issue payments.
 
 ## Problem framing
 
