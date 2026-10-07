@@ -108,6 +108,10 @@ to identify the frozen v3 code and checkpoint.
 
 ## Backup and Q&A
 
+Christopher's approximately four-minute **How it works / Live demo** segment
+from SCRUM-31 has a separate [recording script](backup_demo_script_christopher.md),
+with timed narration, exact browser actions and checked rehearsal inputs.
+
 Capture a separate rehearsal on a team laptop as the backup recording; this
 repository contains the reproducible commands and the synthetic inputs but
 not a narrated video. Be ready to explain the 784–192–36 network, ten epochs,
