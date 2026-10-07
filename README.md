@@ -7,6 +7,21 @@
 - [Frozen v3 QA package](docs/qa/README.md), with the current execution log,
   notebook, 36-image fixture results, and archived historical evidence.
 
+## Document deliverables
+
+The overview specifies page limits and does not require a particular file format.
+The submission PDFs have verified layouts and page counts:
+
+- [Approach document](output/pdf/approach.pdf): 4 pages.
+- [Results summary](output/pdf/results_summary.pdf): 2 pages.
+- [Business note](output/pdf/business_note.pdf): 1 page.
+
+Their editable content is in `docs/approach.md`, `docs/results_summary.md`
+and `docs/business_note.md`. The longer analysis is retained in
+[the supporting results record](docs/results_detail.md).
+
+## Prototype
+
 This repository contains a from-scratch prototype for reading the supplied
 synthetic Sabal Coast Form ML-7. It accepts an image path at demo time,
 aligns the printed template, locates the actual box borders, cleans small ink

@@ -2,17 +2,18 @@
 
 ## Recommended policy
 
-Keep a person checking and approving every reimbursement. The prototype can
-read mileage forms and flag problems, but it is not ready to approve payments
-automatically. After improving cell preprocessing, the team's test of 12
-handwritten forms read **69.5% of characters correctly** and did not read any
-complete trip row correctly
-(**0 of 67 rows**). Every trip row needed review. This improved the earlier
-17.7% character baseline using the existing model, but still requires human
-checking of every reimbursement.
-Better alignment, cropping and lighting correction produced the improvement; the trained model stayed the same.
+Keep a person checking and approving every reimbursement. On 12 photographed
+handwritten forms, the prototype read **69.5% of characters correctly**, with
+**0 of 67 complete trip rows correct**; every row required review. Alignment,
+cropping and lighting changes improved the earlier 17.7% baseline while
+keeping the trained model unchanged. The reader is not ready to approve payments.
 
-Before a row could qualify for automatic processing, the system would need a properly aligned image, reliable character readings, valid employee and client details, dates within the stated week, and matching odometer readings, written miles and weekly totals. Digits that could cause large payment errors need stricter checks. Keep the original image and check results for review. Adjusted or uncertain crops also require review. The current settings need testing on new handwriting; the 12 forms are a repeated comparison set.
+An auto-post candidate must have verified alignment and crops, reliable
+readings, valid employee/client references and dates, and matching odometers,
+miles and total. The frozen minimum confidence is 0.82 ordinarily and 0.92
+for each odometer's three highest-place digits. Failed checks or crop warnings
+require review regardless of confidence. Retain images and check results.
+These thresholds need calibration on new writers; the 12 forms are a repeated benchmark.
 
 
 ## Monthly cost frame
@@ -23,7 +24,7 @@ entry: **$34,000 per month**, or **$408,000 per year**.
 The examples below assume staff still enter the entire log whenever any row
 needs review, at the same $3.40 cost per log.
 
-| Logs needing no manual entry | Logs still keyed | Monthly manual-entry cost| Possible savings before other costs |
+| Fully automatic logs | Logs still keyed | Monthly keying cost | Gross savings before other costs |
 |---:|---:|---:|---:|
 | 0% | 10,000 | $34,000 | $0 |
 | 50% | 5,000 | $17,000 | $17,000 |
@@ -32,10 +33,9 @@ needs review, at the same $3.40 cost per log.
 **These are examples, not achieved savings.** Software, staff checking and
 error-correction costs must also be measured and included.
 
-In a separate test of 15 computer-generated logs, three of 90 rows passed
-the checks, but no complete log passed. Every log deliberately included a
-mileage mistake, so this test does not predict how many normal accounts payable logs could
-be processed automatically. No labor savings have been demonstrated.
+In 15 generated logs, three of 90 rows qualified but no complete log did.
+Every log deliberately contained a mileage fault, so this sample cannot
+predict normal AP automation. No labor savings have been demonstrated.
 
 
 ## Why errors matter
@@ -50,9 +50,8 @@ These examples show potential costs; they are not measured losses.
 
 ## Decision after the prototype
 
-First evaluate the frozen reader on forms from more people and different
-phone photos, and have another person verify the correct answers. Use a new
-development/evaluation split if a future reader version is authorized. Measure
-how long AP staff take with and without the tool. Use those results to decide
-whether it saves time after checking and correction costs. The Product Lead
-should review and approve any proposal to expand automatic processing.
+Evaluate frozen v3 on new writers and phone conditions, with independently
+checked answers prepared before inspecting predictions. Reserve a fresh test
+batch if those results guide a later version. Compare AP time with and without
+the tool, including review and correction costs. The Product Lead should
+approve any proposed expansion of automatic processing.
