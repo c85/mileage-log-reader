@@ -1,11 +1,41 @@
 {
-  "started_utc": "2026-10-06T03:55:59.227705+00:00",
-  "execution": "Python QA run",
-  "engine": "Python execution of the notebook cells in their original order",
-  "display_adapters": "Colab browser-download calls save files locally; plotted figures are embedded in notebook outputs. Computation unchanged.",
+  "started_utc": "2026-10-07T14:49:42.688526+00:00",
+  "code_commit": "208a29981c65ce8121302a5fc05ee9e326aa2f44",
+  "frozen_reader_commit": "5e95a2cbdbe7d86d32d3aa9d88d3db77d7a9db2c",
+  "model_sha256": "9da5b69c57476cae69a266553c3b1d39c35cd0ae1306716ed586270a92d3dfa9",
+  "training_performed": false,
+  "reader_source_sha256": {
+    "assets/form_ml7_blank.png": "58b4a6e40a67ad4103b565fd33e44c51f4dcc897ddaa48325a8d259d68acf8b2",
+    "configs/emnist_sha256.json": "4cb376fbbb988b7789b45be306e4a47e992c96b340a0e51a09755b4e7bde980a",
+    "configs/reader_policy.json": "fd167744a3bddd1e606f011e129e93ea4b6164926fd9d7f581c6437bf2f5fcb2",
+    "configs/reference_data.json": "f3e2ceae1b546310a403ada70128c62979fbff75378b9711f45578e096399928",
+    "mlreader/__init__.py": "a26d0ba83eab3df17772866ea39044fb2cc94d7782bf22993381aa38e4a60e99",
+    "mlreader/classifier.py": "252d741438e8d419f6f67de66c0d290a2dfb12eb2ff9541b16632e38d05a6527",
+    "mlreader/emnist.py": "fc84515319a5707d44bb2692a52820a5146e0091889f3210648602d0d99c7eb0",
+    "mlreader/fields.py": "343491711a242996a04cd6e79e3ab0aa1016239a637340c67a1f44c942e38f43",
+    "mlreader/layout.py": "72238018399195fc6b1aa86b2d0fb8e2a55353f7efd0cd23734e7752da49a4c3",
+    "mlreader/pipeline.py": "f5873cf2ddf4e69dd4a209d0c21a52c3e53b5558c7c7c0374e460cb959ab26de",
+    "mlreader/registration.py": "d9511a0fbd8a092f5c44f45ab6a26fc77a1ba5010d4e2f8d6d5449c9fbde477f",
+    "mlreader/review.py": "c28159a4d1a7c3b6646af449de1248418456386fa1c9cd5ff8aac5e4655733e3",
+    "mlreader/synthetic.py": "c58f872a1b89ce6eea09d3fa28b2ee1fe01b6697dc4e4cf85b0988e3d6dc6ce0",
+    "mlreader/validation.py": "681031ee1c86582e605ee42c2b9af2af965a9fc414a70e598f8e5b0372a91e11"
+  },
+  "emnist_sha256": {
+    "emnist-byclass-train-images-idx3-ubyte.gz": "9e21987f03a6eb8b870187e785883ddad96947299587908f1a7ec2ca0f4be5f0",
+    "emnist-byclass-train-labels-idx1-ubyte.gz": "f7ef403d48dc18a89dae0d83d11ee69cecb6e1c12c3a961d03712e495c02a8fa",
+    "emnist-byclass-test-images-idx3-ubyte.gz": "5ec835bd5d5b1a66378a132e727fef20fe994b3cc666899befcca5ac766f50cd",
+    "emnist-byclass-test-labels-idx1-ubyte.gz": "501e305eeeacb093b162592d80e8a2632040872360fa6d85cfcb2200d91ca92a",
+    "emnist-byclass-mapping.txt": "68fa9091ed325830418b5a8d732f32316e54a480b9f8994a161abb4eddd0d078"
+  },
+  "execution": "Local Python execution of notebook QA cells in original order",
+  "skipped_cells": [
+    "Step 1 Colab clone",
+    "Step 2 Colab install/download/upload",
+    "Step 23 Colab archive download"
+  ],
+  "setup": "Local dependencies and verified frozen checkpoint; tracked source files copied into an isolated temporary project.",
+  "as_of_date": "2026-10-05",
   "completed_steps": [
-    "# Step 1: Get a fresh project copy and select the version to test.",
-    "# Step 2: Prepare the packages and handwriting data.",
     "# Step 3: QA-01 \u2014 Verify label mapping and allowed categories.",
     "# Step 4: QA-02 \u2014 Visually check handwriting orientation.",
     "# Step 5: QA-03, Part A \u2014 Check training/validation membership.",
@@ -22,16 +52,17 @@
     "# Step 16 \u2014 QA-04: Extract six characters from an odometer field",
     "# Step 17 \u2014 QA-05: Missing-character handling",
     "# Step 18 \u2014 Save the original extraction-test inputs",
-    "# Step 19 \u2014 QA-14 and available QA-21 checks",
-    "# Step 20 \u2014 Train the project model and evaluate isolated characters",
+    "# Step 19 \u2014 QA-14 and frozen prototype QA-21 checks",
+    "# Step 20 \u2014 Verify the frozen checkpoint and evaluate isolated characters",
     "# Step 21 \u2014 QA-22: Read all 18 saved synthetic forms and compare with their answers",
-    "# Step 22 \u2014 Save the complete QA evidence package"
+    "# Step 22 \u2014 SCRUM-26: validate and read all 36 frozen-reader QA fixtures"
   ],
   "status": "Completed",
-  "finished_utc": "2026-10-06T04:03:48.427283+00:00",
-  "code_commit": "ff674684e8834c1de4b0a105c773444605336d9d",
-  "model_sha256": "a8fd14989fdb0040b2f476675c6e8e2de92ffda181a8174b852ef59518a67510",
-  "execution_date_timezone": "America/New_York",
-  "fresh_training_completed": true,
-  "visual_review_evidence": "QA_Visual_Review.json"
+  "regression_suite": "41 tests passed",
+  "finished_utc": "2026-10-07T14:50:18.601120+00:00",
+  "visual_review": "QA-02 and QA-04 passed Codex visual inspection",
+  "team_signoff": "Not recorded",
+  "notebook_input_sha256": "f49ca3465bdb9df33070115c18ad9754efd2a854a7f25dc87dfe7b7760d74e4b",
+  "notebook_code_sha256": "d9a692703acd5aa39bf48cbbe2e5f076788bd302120bff5d6550fa9900765b7b",
+  "evidence_format_note": "Confusion CSV line endings normalized to LF after execution; values unchanged."
 }

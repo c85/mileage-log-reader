@@ -1,0 +1,157 @@
+{
+  "test_id": "QA-04",
+  "run_time_utc": "2026-10-06T03:57:32.923795+00:00",
+  "code_commit": "ff674684e8834c1de4b0a105c773444605336d9d",
+  "seed": 6642,
+  "condition": "clean",
+  "field": "rows.1.odometer_start",
+  "expected_value": "048213",
+  "input_image": "QA04_Input.png",
+  "comparison_image": "QA04_Character_Crops.png",
+  "character_sources": [
+    {
+      "field": "rows.1.odometer_start",
+      "position": 0,
+      "label": "0",
+      "source_split": "EMNIST ByClass test",
+      "test_image_index": 68282
+    },
+    {
+      "field": "rows.1.odometer_start",
+      "position": 1,
+      "label": "4",
+      "source_split": "EMNIST ByClass test",
+      "test_image_index": 54674
+    },
+    {
+      "field": "rows.1.odometer_start",
+      "position": 2,
+      "label": "8",
+      "source_split": "EMNIST ByClass test",
+      "test_image_index": 44000
+    },
+    {
+      "field": "rows.1.odometer_start",
+      "position": 3,
+      "label": "2",
+      "source_split": "EMNIST ByClass test",
+      "test_image_index": 38654
+    },
+    {
+      "field": "rows.1.odometer_start",
+      "position": 4,
+      "label": "1",
+      "source_split": "EMNIST ByClass test",
+      "test_image_index": 53418
+    },
+    {
+      "field": "rows.1.odometer_start",
+      "position": 5,
+      "label": "3",
+      "source_split": "EMNIST ByClass test",
+      "test_image_index": 65208
+    }
+  ],
+  "registration_method": "paper-boundary-perspective",
+  "checks": "Passed",
+  "overall_status": "Pending visual review",
+  "scope": "One six-digit field; extraction only, no model recognition.",
+  "cells": [
+    {
+      "position": 0,
+      "expected_character": "0",
+      "rectangle": [
+        760,
+        420,
+        822,
+        482
+      ],
+      "extraction_status": "ok",
+      "ink_pixels": 664,
+      "normalized_shape": [
+        28,
+        28
+      ]
+    },
+    {
+      "position": 1,
+      "expected_character": "4",
+      "rectangle": [
+        822,
+        420,
+        884,
+        482
+      ],
+      "extraction_status": "ok",
+      "ink_pixels": 134,
+      "normalized_shape": [
+        28,
+        28
+      ]
+    },
+    {
+      "position": 2,
+      "expected_character": "8",
+      "rectangle": [
+        884,
+        420,
+        946,
+        482
+      ],
+      "extraction_status": "ok",
+      "ink_pixels": 226,
+      "normalized_shape": [
+        28,
+        28
+      ]
+    },
+    {
+      "position": 3,
+      "expected_character": "2",
+      "rectangle": [
+        946,
+        420,
+        1008,
+        482
+      ],
+      "extraction_status": "ok",
+      "ink_pixels": 381,
+      "normalized_shape": [
+        28,
+        28
+      ]
+    },
+    {
+      "position": 4,
+      "expected_character": "1",
+      "rectangle": [
+        1008,
+        420,
+        1070,
+        482
+      ],
+      "extraction_status": "ok",
+      "ink_pixels": 314,
+      "normalized_shape": [
+        28,
+        28
+      ]
+    },
+    {
+      "position": 5,
+      "expected_character": "3",
+      "rectangle": [
+        1070,
+        420,
+        1132,
+        482
+      ],
+      "extraction_status": "ok",
+      "ink_pixels": 360,
+      "normalized_shape": [
+        28,
+        28
+      ]
+    }
+  ]
+}

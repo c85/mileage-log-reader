@@ -1,82 +1,114 @@
-# SCRUM-24 QA matrix and recorded evidence
+# Frozen v3 QA package
 
-This folder contains the project’s QA test matrix and the supporting evidence
-for its recorded execution log. The matrix defines expected outcomes, evidence
-requirements, dependencies and actual results for QA-01 through QA-22.
+This package records the **2026-10-07** QA run of `ml7-cell-lighting-v3`.
+Reader code, model weights and policy match the frozen baseline. The earlier
+run remains in [archive/ff674684](archive/ff674684/README.md).
 
 ## Start here
 
-- [QA test matrix](QA_Test_Matrix.xlsx): the submitted workbook, including both tabs.
-- [Executed QA notebook](MileageLogReader_QA.ipynb): the matching code and saved output.
-- [Execution record](evidence/QA_Execution_Record.json): tested revision, executed steps and timestamps.
-- [Visual review](evidence/QA_Visual_Review.json): recorded assessments of QA-02 and QA-04.
-- [Synthetic form metrics](evidence/Synthetic_Form_Metrics.json): the 18-image evaluation.
-- [Remaining QA-21 work](evidence/QA21_Status.json): the component and policy limitations.
+- [QA matrix and execution log](QA_Test_Matrix.xlsx).
+- [Executed notebook](MileageLogReader_QA.ipynb).
+- [Execution record, source hashes and data checksums](evidence/QA_Execution_Record.json).
+- [Visual inspection](evidence/QA_Visual_Review.json).
+- [Frozen-checkpoint evaluation](evidence/Model_Evaluation_Run.json).
+- [18-image SCRUM-9 results](evidence/Synthetic_Form_Metrics.json).
+- [36-image SCRUM-26 results](evidence/QA_Fixture_Metrics.json).
+- [36-case known-value validation](evidence/QA_Fixture_Known_Value_Check.json).
+- [QA-21 acceptance scope](evidence/QA21_Status.json).
+- [Regression test log](evidence/Regression_Test_Log.txt).
 
-## Version and scope
+## Version and acceptance scope
 
-Tested reader revision: `ff674684e8834c1de4b0a105c773444605336d9d`.
-
-The evidence records a run starting at 2026-10-06 03:55:59 UTC and ending at
-2026-10-06 04:03:48 UTC. In America/New_York, that crosses midnight from
-October 5 to October 6. The fixed business-validation date is 2026-10-05.
-The matrix dates and saved evidence are preserved as supplied.
-
-These results belong to that revision and its freshly trained model. They
-do not certify a later reader revision or replace the repository's separate
-frozen baseline and results summary. No new QA run was performed when this
-upload package was assembled.
-
-The matrix records 20 Passed cases, QA-21 Pending - component, and QA-22
-Evaluated. Available QA-21 confidence and reimbursement calculations passed;
-high-impact routing integration, calibration and final policy approval remained
-pending under SCRUM-22 at the recorded revision.
-
-QA-22 evaluated all 18 synthetic images and 108 trip rows: 2,591/2,664 correct
-characters, 527/594 exact fields and 62/108 exact rows. Known-value validation
-passed 18/18 cases separately from image recognition. These are sample results,
-with no assumed accuracy pass threshold. Photographed handwritten forms were
-not evaluated in this run. SCRUM-18 model evaluation remains separate.
-
-## Evidence locations
-
-| Original run location | Location in this folder |
+| Item | Recorded identity |
 | --- | --- |
-| `outputs/qa/` | `evidence/` |
-| `outputs/qa/synthetic_form_results/` | `evidence/synthetic_form_results/` |
-| `outputs/qa/qa03_generated_logs/` | `evidence/qa03_generated_logs/` |
-| `outputs/model_eval/` | `evidence/model_eval/` |
-| Policy, public-data checksums and requirements | `evidence/run_configuration/` |
-| Saved form answers, manifest and references | `evidence/fixture_metadata/` |
+| Frozen reader implementation | `5e95a2cbdbe7d86d32d3aa9d88d3db77d7a9db2c` |
+| Source/fixture snapshot | `208a29981c65ce8121302a5fc05ee9e326aa2f44` |
+| Preprocessing | `ml7-cell-lighting-v3` |
+| Model SHA-256 | `9da5b69c57476cae69a266553c3b1d39c35cd0ae1306716ed586270a92d3dfa9` |
+| Business-validation date | `2026-10-05` |
+| Training during QA | None |
 
-Evidence filenames in the workbook resolve under `evidence/`. The 18 individual
-reader responses are under `evidence/synthetic_form_results/`. Configuration
-and fixture metadata are historical snapshots, not replacements for live files.
-Original paths inside JSON and notebook output describe the execution environment.
+The snapshot contains the fixture uploads; its reader, assets and configurations
+match the frozen implementation. The new notebook and runner are QA harness
+changes in the working tree. The execution record preserves the notebook input
+hash, reader source hashes, data checksums, environment, timestamps and executed
+steps. Saved notebook outputs belong to this run.
 
-The 18 synthetic input images already exist in
-[`examples/synthetic_forms`](../../examples/synthetic_forms/). Their bytes were
-checked against the saved QA archive when this package was assembled. The
-small answer/reference snapshots are included here to preserve the run context.
+QA-01 through QA-21 passed their stated prototype checks. QA-22 is **Evaluated**:
+it reports measurements without assuming an accuracy pass threshold. All 41
+regression tests passed. Codex performed the automated run and inspected the
+QA-02/QA-04 images. A separate team QA sign-off has not been recorded.
 
-## Reproduction
+QA-21 matches [the frozen routing policy](../routing_policy.md): minimum
+confidence 0.82 ordinarily and 0.92 for each odometer's three highest-place
+digits. All 21 boundary variants and six standalone cost checks pass.
+The script's $100 exposure example is a sensitivity scenario, not a reader
+routing requirement. Passing these checks does not establish confidence
+calibration or production payment approval.
 
-Open the notebook in Google Colab and run the numbered cells in order in a
-fresh session. Step 1 checks out the exact revision above in a separate working
-folder. Step 20 trains the model; Step 21 evaluates the 18 saved images. Review
-the orientation and character-crop images before accepting those visual checks.
+## Measurements
 
-The notebook already has recorded outputs; rerunning is not needed merely to
-upload or review this evidence. A new run produces new observations. Training
-in a different environment may produce different model weights and results.
+| Dataset | Correct characters | Exact fields | Exact trip rows | Auto-post candidates |
+| --- | ---: | ---: | ---: | ---: |
+| SCRUM-9: 18 images, including 3 invalid controls | 2,590/2,664 (97.22%) | 526/594 | 60/108 | 15 |
+| SCRUM-26: 36 images, including 21 invalid controls | 5,222/5,328 (98.01%) | 1,089/1,188 | 139/216 | 26 |
+| Shared 15 valid images: five forms in three conditions | 2,152/2,220 (96.94%) | 433/495 | 47/90 | 8 |
 
-The model hash used for this recorded run is
-`a8fd14989fdb0040b2f476675c6e8e2de92ffda181a8174b852ef59518a67510`.
-The original `QA_Evidence.zip` preserves that exact model checkpoint and
-the complete run package. Retain it separately. Model weights and downloaded
-datasets are omitted from this GitHub upload, consistent with the repository's
-generated-artifact convention. The training record and environment versions
-are included in `evidence/`.
+Known-value validation passes 18/18 and 36/36 cases respectively. These checks
+supply written answers at confidence 0.99 and do not measure recognition.
+Image reading registered every image with no missing expected cells in these
+packs. The 18-image run has 74 recognition mismatches; the 36-image run has 106.
+An intended source defect can be misread into different checks while the row
+still goes to review; inspect each case outcome.
 
-This upload organizes the SCRUM-24 matrix and its existing evidence. A separate
-SCRUM-27 results report is not included.
+Neither pack auto-posted an invalid-source row or an extra predicted row.
+The 36-image report additionally checks header, week, footer and trip-row
+transcription together: zero errors among 26 accepted candidates. These small
+samples do not establish a safe population error rate.
+
+**Eighteen images overlap between the packs.** Do not sum their sample counts.
+Paired variants and invalid controls repeat the same underlying handwriting.
+The higher expanded-pack score reflects its case mix; the reader did not
+improve. Conditions and valid/invalid subsets are reported separately.
+The shared valid-image scores match [the frozen results summary](../results_summary.md).
+This is a repeated synthetic benchmark, not a fresh handwriting-generalization test.
+
+## Reproduce locally
+
+Follow the repository README setup and restore the exact frozen model. Then run:
+
+```bash
+.venv/bin/python scripts/run_qa.py --output-dir outputs/qa_v3_reproduction
+```
+
+Use a new output directory each time. The runner verifies the model and all
+five EMNIST checksums, checks the reader against the frozen revision, and
+executes notebook Steps 3–22 in an isolated copy. It saves new evidence and an
+executed notebook. It does not train or overwrite the model, repository evidence
+or recorded baseline outputs. Inspect the QA-02/QA-04 images before accepting
+those visual checks. Colab-only setup/upload and archive-download cells are
+skipped locally and identified in the execution record.
+
+For Colab, run the notebook in order in a fresh session. Step 1 checks out the
+recorded source/fixture snapshot; Step 2 installs dependencies, verifies public
+data and asks for the saved checkpoint. Step 20 evaluates it without training.
+Step 22 reads all 36 fixtures using each case's reference file, including the
+special unknown-employee references.
+
+The SCRUM-26 manifest differs from the older evaluator's schema. Use this
+notebook/runner for the 36-image pack; `scripts/evaluate_synthetic_forms.py`
+still targets the 18-image pack.
+
+## Evidence and archived run
+
+Workbook evidence filenames resolve under `evidence/`. Individual results are
+in `evidence/synthetic_form_results/` and `evidence/qa_fixture_results/`.
+Configuration and fixture metadata are snapshots. Temporary paths in saved
+responses identify the execution environment; input images remain in the
+repository's examples folders with hashes recorded in the evidence.
+
+The checkpoint and public data remain Git-ignored. Preserve the checkpoint
+separately; retraining creates a new artifact. The historical run used revision
+`ff674684` and checkpoint hash beginning `a8fd1498`. Its results and pending
+policy statements belong to that run. Its original notebook, workbook and
+evidence remain under `archive/ff674684/`.

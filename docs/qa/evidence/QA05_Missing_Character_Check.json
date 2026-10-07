@@ -3,8 +3,8 @@
   "case": "Missing character",
   "case_status": "Passed",
   "overall_status": "Passed",
-  "run_time_utc": "2026-10-06T03:57:33.345105+00:00",
-  "code_commit": "ff674684e8834c1de4b0a105c773444605336d9d",
+  "run_time_utc": "2026-10-07T14:49:59.449382+00:00",
+  "code_commit": "208a29981c65ce8121302a5fc05ee9e326aa2f44",
   "evaluation_date": "2026-10-05",
   "references": {
     "employees": [
@@ -46,6 +46,22 @@
     "ok"
   ],
   "missing_cell_prediction": {
+    "source_rect": [
+      884,
+      420,
+      946,
+      482
+    ],
+    "crop_rect": [
+      889,
+      425,
+      941,
+      477
+    ],
+    "border_recovery": null,
+    "lighting_adjustment": null,
+    "ink_pixels": 0,
+    "preprocessing_issues": [],
     "character": null,
     "confidence": null,
     "class_probabilities": {},
@@ -71,7 +87,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 1,
@@ -80,7 +102,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 2,
@@ -89,7 +117,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 3,
@@ -98,7 +132,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 4,
@@ -107,7 +147,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 5,
@@ -116,7 +162,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           }
         ],
         "confidence": 0.99,
@@ -139,7 +191,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 1,
@@ -148,7 +206,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 2,
@@ -157,7 +221,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 3,
@@ -166,7 +236,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 4,
@@ -175,7 +251,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 5,
@@ -184,7 +266,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           }
         ],
         "confidence": 0.99,
@@ -212,7 +300,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -221,7 +315,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -230,7 +330,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 3,
@@ -239,7 +345,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -262,7 +374,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -271,7 +389,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -280,7 +404,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -303,7 +433,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -312,7 +448,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -321,7 +463,23 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "empty",
-                "failure_kind": "cell_extraction"
+                "failure_kind": "cell_extraction",
+                "source_rect": [
+                  884,
+                  420,
+                  946,
+                  482
+                ],
+                "crop_rect": [
+                  889,
+                  425,
+                  941,
+                  477
+                ],
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": 0,
+                "preprocessing_issues": []
               },
               {
                 "position": 3,
@@ -330,7 +488,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 4,
@@ -339,7 +503,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 5,
@@ -348,7 +518,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": null,
@@ -371,7 +547,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -380,7 +562,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -389,7 +577,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 3,
@@ -398,7 +592,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 4,
@@ -407,7 +607,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 5,
@@ -416,7 +622,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -439,7 +651,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -448,7 +666,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -457,7 +681,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -485,7 +715,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -494,7 +730,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -503,7 +745,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 3,
@@ -512,7 +760,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -535,7 +789,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -544,7 +804,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -553,7 +819,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -576,7 +848,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -585,7 +863,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -594,7 +878,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 3,
@@ -603,7 +893,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 4,
@@ -612,7 +908,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 5,
@@ -621,7 +923,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -644,7 +952,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -653,7 +967,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -662,7 +982,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 3,
@@ -671,7 +997,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 4,
@@ -680,7 +1012,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 5,
@@ -689,7 +1027,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -712,7 +1056,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -721,7 +1071,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -730,7 +1086,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -757,7 +1119,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 1,
@@ -766,7 +1134,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 2,
@@ -775,7 +1149,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 3,
@@ -784,7 +1164,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           }
         ],
         "confidence": 0.99,
@@ -811,7 +1197,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 1,
@@ -820,7 +1212,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 2,
@@ -829,7 +1227,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 3,
@@ -838,7 +1242,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 4,
@@ -847,7 +1257,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 5,
@@ -856,7 +1272,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           }
         ],
         "confidence": 0.99,
@@ -879,7 +1301,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 1,
@@ -888,7 +1316,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 2,
@@ -897,7 +1331,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 3,
@@ -906,7 +1346,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 4,
@@ -915,7 +1361,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 5,
@@ -924,7 +1376,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           }
         ],
         "confidence": 0.99,
@@ -952,7 +1410,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -961,7 +1425,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -970,7 +1440,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 3,
@@ -979,7 +1455,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -1002,7 +1484,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -1011,7 +1499,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -1020,7 +1514,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -1043,7 +1543,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -1052,7 +1558,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -1061,7 +1573,23 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "empty",
-                "failure_kind": "cell_extraction"
+                "failure_kind": "cell_extraction",
+                "source_rect": [
+                  884,
+                  420,
+                  946,
+                  482
+                ],
+                "crop_rect": [
+                  889,
+                  425,
+                  941,
+                  477
+                ],
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": 0,
+                "preprocessing_issues": []
               },
               {
                 "position": 3,
@@ -1070,7 +1598,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 4,
@@ -1079,7 +1613,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 5,
@@ -1088,7 +1628,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": null,
@@ -1111,7 +1657,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -1120,7 +1672,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -1129,7 +1687,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 3,
@@ -1138,7 +1702,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 4,
@@ -1147,7 +1717,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 5,
@@ -1156,7 +1732,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -1179,7 +1761,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -1188,7 +1776,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -1197,7 +1791,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -1273,7 +1873,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -1282,7 +1888,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -1291,7 +1903,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 3,
@@ -1300,7 +1918,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -1323,7 +1947,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -1332,7 +1962,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -1341,7 +1977,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -1364,7 +2006,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -1373,7 +2021,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -1382,7 +2036,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 3,
@@ -1391,7 +2051,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 4,
@@ -1400,7 +2066,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 5,
@@ -1409,7 +2081,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -1432,7 +2110,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -1441,7 +2125,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -1450,7 +2140,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 3,
@@ -1459,7 +2155,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 4,
@@ -1468,7 +2170,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 5,
@@ -1477,7 +2185,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -1500,7 +2214,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 1,
@@ -1509,7 +2229,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               },
               {
                 "position": 2,
@@ -1518,7 +2244,13 @@
                 "class_probabilities": {},
                 "top_alternatives": [],
                 "extraction_status": "ok",
-                "failure_kind": null
+                "failure_kind": null,
+                "source_rect": null,
+                "crop_rect": null,
+                "border_recovery": null,
+                "lighting_adjustment": null,
+                "ink_pixels": null,
+                "preprocessing_issues": []
               }
             ],
             "confidence": 0.99,
@@ -1583,7 +2315,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 1,
@@ -1592,7 +2330,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 2,
@@ -1601,7 +2345,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           },
           {
             "position": 3,
@@ -1610,7 +2360,13 @@
             "class_probabilities": {},
             "top_alternatives": [],
             "extraction_status": "ok",
-            "failure_kind": null
+            "failure_kind": null,
+            "source_rect": null,
+            "crop_rect": null,
+            "border_recovery": null,
+            "lighting_adjustment": null,
+            "ink_pixels": null,
+            "preprocessing_issues": []
           }
         ],
         "confidence": 0.99,

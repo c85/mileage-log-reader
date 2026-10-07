@@ -1,0 +1,15 @@
+{
+  "test_id": "QA-03 Part C",
+  "run_time_utc": "2026-10-06T03:57:17.968236+00:00",
+  "code_commit": "ff674684e8834c1de4b0a105c773444605336d9d",
+  "original_test_images": 89264,
+  "eligible_test_images": 89262,
+  "excluded_test_indices": [
+    75979,
+    83597
+  ],
+  "generator_pool_verified": true,
+  "images_and_labels_match_test_sources": true,
+  "all_36_categories_present": true,
+  "generated_log_sources_verified": false
+}

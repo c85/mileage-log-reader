@@ -1142,6 +1142,7 @@
       "test_image_index": 54275
     }
   ],
-  "excluded_test_images_shared_with_train_or_validation": 2,
-  "split": "EMNIST ByClass test only"
+  "excluded_exact_source_duplicates": 2,
+  "source_split": "EMNIST ByClass test",
+  "intended_use": "held_out_test"
 }

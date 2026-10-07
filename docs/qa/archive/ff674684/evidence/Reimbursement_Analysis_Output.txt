@@ -1,0 +1,36 @@
+Reimbursement Exposure by Digit Position
+--------------------------------------------------
+Ones                       1 miles  ->  $0.62
+Tens                      10 miles  ->  $6.20
+Hundreds                 100 miles  ->  $62.00
+Thousands              1,000 miles  ->  $620.00
+Ten-thousands         10,000 miles  ->  $6,200.00
+Hundred-thousands    100,000 miles  ->  $62,000.00
+
+Synthetic Digit Error Simulation
+----------------------------------------------------------------------
+Ones                 Avg exposure: $      3.14 | Max exposure: $      5.58
+
+Needs-Review Policy
+Tens                 Avg exposure: $     31.77 | Max exposure: $     55.80
+
+Needs-Review Policy
+Hundreds             Avg exposure: $    313.84 | Max exposure: $    558.00
+
+Needs-Review Policy
+Thousands            Avg exposure: $  3,026.22 | Max exposure: $  5,580.00
+
+Needs-Review Policy
+Ten-thousands        Avg exposure: $ 31,768.80 | Max exposure: $ 55,800.00
+
+Needs-Review Policy
+Hundred-thousands    Avg exposure: $315,456.00 | Max exposure: $558,000.00
+
+Needs-Review Policy
+----------------------------------------------------------------------
+Ones                 Max exposure: $      5.58 | LOWER RISK
+Tens                 Max exposure: $     55.80 | LOWER RISK
+Hundreds             Max exposure: $    558.00 | NEEDS REVIEW
+Thousands            Max exposure: $  5,580.00 | NEEDS REVIEW
+Ten-thousands        Max exposure: $ 55,800.00 | NEEDS REVIEW
+Hundred-thousands    Max exposure: $558,000.00 | NEEDS REVIEW

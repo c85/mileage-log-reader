@@ -1,0 +1,87 @@
+{
+  "test_id": "QA-21B analysis",
+  "run_time_utc": "2026-10-06T03:57:33.380912+00:00",
+  "tested_code_revision": "ff674684e8834c1de4b0a105c773444605336d9d",
+  "execution": "QA notebook controlled check",
+  "scope": "Standalone SCRUM-19 analysis calculations and labels, not integration into reader routing.",
+  "policy": {
+    "policy_name": "prototype-conservative",
+    "auto_post_enabled": true,
+    "min_character_confidence": 0.82,
+    "critical_odometer_digit_min_confidence": 0.92,
+    "critical_odometer_positions": [
+      0,
+      1,
+      2
+    ],
+    "reimbursement_rate": 0.62,
+    "route_log_when_header_invalid": true,
+    "route_rows_when_total_mismatch": true,
+    "note": "Demonstration settings only. Calibrate and approve thresholds on independent, manually labeled handwriting before any production use."
+  },
+  "variant_count": 6,
+  "passed_variants": 6,
+  "variants": [
+    {
+      "name": "Ones",
+      "place_value": 1,
+      "expected_one_unit_cost": "0.62",
+      "expected_maximum_cost": "5.58",
+      "actual_maximum_cost": "5.58",
+      "expected_label": "LOWER RISK",
+      "actual_printed_label": "Ones                 Max exposure: $      5.58 | LOWER RISK",
+      "passed": true
+    },
+    {
+      "name": "Tens",
+      "place_value": 10,
+      "expected_one_unit_cost": "6.20",
+      "expected_maximum_cost": "55.80",
+      "actual_maximum_cost": "55.8",
+      "expected_label": "LOWER RISK",
+      "actual_printed_label": "Tens                 Max exposure: $     55.80 | LOWER RISK",
+      "passed": true
+    },
+    {
+      "name": "Hundreds",
+      "place_value": 100,
+      "expected_one_unit_cost": "62.00",
+      "expected_maximum_cost": "558.00",
+      "actual_maximum_cost": "558.0",
+      "expected_label": "NEEDS REVIEW",
+      "actual_printed_label": "Hundreds             Max exposure: $    558.00 | NEEDS REVIEW",
+      "passed": true
+    },
+    {
+      "name": "Thousands",
+      "place_value": 1000,
+      "expected_one_unit_cost": "620.00",
+      "expected_maximum_cost": "5580.00",
+      "actual_maximum_cost": "5580.0",
+      "expected_label": "NEEDS REVIEW",
+      "actual_printed_label": "Thousands            Max exposure: $  5,580.00 | NEEDS REVIEW",
+      "passed": true
+    },
+    {
+      "name": "Ten-thousands",
+      "place_value": 10000,
+      "expected_one_unit_cost": "6200.00",
+      "expected_maximum_cost": "55800.00",
+      "actual_maximum_cost": "55800.0",
+      "expected_label": "NEEDS REVIEW",
+      "actual_printed_label": "Ten-thousands        Max exposure: $ 55,800.00 | NEEDS REVIEW",
+      "passed": true
+    },
+    {
+      "name": "Hundred-thousands",
+      "place_value": 100000,
+      "expected_one_unit_cost": "62000.00",
+      "expected_maximum_cost": "558000.00",
+      "actual_maximum_cost": "558000.0",
+      "expected_label": "NEEDS REVIEW",
+      "actual_printed_label": "Hundred-thousands    Max exposure: $558,000.00 | NEEDS REVIEW",
+      "passed": true
+    }
+  ],
+  "reader_high_impact_integration": "Pending component / final policy under SCRUM-22."
+}

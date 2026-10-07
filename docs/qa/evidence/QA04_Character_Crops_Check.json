@@ -1,7 +1,7 @@
 {
   "test_id": "QA-04",
-  "run_time_utc": "2026-10-06T03:57:32.923795+00:00",
-  "code_commit": "ff674684e8834c1de4b0a105c773444605336d9d",
+  "run_time_utc": "2026-10-07T14:49:59.116332+00:00",
+  "code_commit": "208a29981c65ce8121302a5fc05ee9e326aa2f44",
   "seed": 6642,
   "condition": "clean",
   "field": "rows.1.odometer_start",
@@ -83,7 +83,7 @@
         482
       ],
       "extraction_status": "ok",
-      "ink_pixels": 134,
+      "ink_pixels": 163,
       "normalized_shape": [
         28,
         28

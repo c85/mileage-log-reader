@@ -1,29 +1,11 @@
 {
-  "task": "Model preparation for the synthetic QA run",
-  "code_commit": "ff674684e8834c1de4b0a105c773444605336d9d",
-  "started_utc": "2026-10-06T03:57:33.444116+00:00",
-  "finished_utc": "2026-10-06T04:03:42.685415+00:00",
-  "command": [
-    "/workspace/scratch/6805ef4d87c8/analysis/qa_refresh/.venv/bin/python",
-    "-u",
-    "scripts/train_model.py",
-    "--max-train-images",
-    "90000",
-    "--epochs",
-    "10",
-    "--batch-size",
-    "256",
-    "--hidden-size",
-    "192",
-    "--learning-rate",
-    "0.001",
-    "--seed",
-    "6642"
-  ],
-  "numerical_library_threads": 2,
-  "model_file": "emnist_mlp.npz",
-  "model_sha256": "a8fd14989fdb0040b2f476675c6e8e2de92ffda181a8174b852ef59518a67510",
-  "metrics_file": "metrics.json",
+  "task": "Evaluate the existing frozen checkpoint without training",
+  "code_commit": "208a29981c65ce8121302a5fc05ee9e326aa2f44",
+  "frozen_reader_commit": "5e95a2cbdbe7d86d32d3aa9d88d3db77d7a9db2c",
+  "started_utc": "2026-10-07T14:49:59.475338+00:00",
+  "finished_utc": "2026-10-07T14:50:03.725259+00:00",
+  "model_sha256": "9da5b69c57476cae69a266553c3b1d39c35cd0ae1306716ed586270a92d3dfa9",
+  "training_performed": false,
   "test_sample_count": 89262,
-  "scope": "Isolated-character measurements from the model used for QA. These results do not complete the separate SCRUM-18 evaluation."
+  "scope": "Isolated-character evaluation of the checkpoint used for current QA."
 }

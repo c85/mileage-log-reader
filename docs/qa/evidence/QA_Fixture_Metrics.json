@@ -1,0 +1,1251 @@
+{
+  "dataset": "SCRUM-26 controlled synthetic QA fixtures",
+  "code_commit": "208a29981c65ce8121302a5fc05ee9e326aa2f44",
+  "frozen_reader_commit": "5e95a2cbdbe7d86d32d3aa9d88d3db77d7a9db2c",
+  "model_sha256": "9da5b69c57476cae69a266553c3b1d39c35cd0ae1306716ed586270a92d3dfa9",
+  "evaluation_date": "2026-10-05",
+  "recorded_utc": "2026-10-07T14:50:17.660387+00:00",
+  "known_value_cases": 36,
+  "known_value_cases_passed": 36,
+  "metrics": {
+    "images": 36,
+    "preprocessing_warning_cells": 920,
+    "border_recovered_cells": 0,
+    "lighting_adjusted_cells": 920,
+    "registered_images": 36,
+    "registration_success_rate": 1.0,
+    "characters": 5328,
+    "correct_characters": 5222,
+    "character_accuracy": 0.9801051051051051,
+    "digit_characters": 4608,
+    "correct_digits": 4526,
+    "digit_accuracy": 0.9822048611111112,
+    "capital_letter_characters": 720,
+    "correct_capital_letters": 696,
+    "capital_letter_accuracy": 0.9666666666666667,
+    "fields": 1188,
+    "exact_fields": 1089,
+    "field_exact_accuracy": 0.9166666666666666,
+    "trip_rows": 216,
+    "exact_rows": 139,
+    "row_exact_accuracy": 0.6435185185185185,
+    "auto_post_rows": 26,
+    "incorrect_auto_post_rows": 0,
+    "auto_post_residual_error_rate": 0.0,
+    "extra_predicted_rows": 0,
+    "cell_extraction_successes": 5328,
+    "cell_extraction_success_rate": 1.0,
+    "row_validation_routes": {
+      "needs_review": 190,
+      "auto_post": 26
+    },
+    "field_metrics": {
+      "client": {
+        "exact": 196,
+        "total": 216,
+        "exact_accuracy": 0.9074074074074074
+      },
+      "date": {
+        "exact": 199,
+        "total": 216,
+        "exact_accuracy": 0.9212962962962963
+      },
+      "employee_id": {
+        "exact": 36,
+        "total": 36,
+        "exact_accuracy": 1.0
+      },
+      "miles": {
+        "exact": 210,
+        "total": 216,
+        "exact_accuracy": 0.9722222222222222
+      },
+      "odometer_end": {
+        "exact": 199,
+        "total": 216,
+        "exact_accuracy": 0.9212962962962963
+      },
+      "odometer_start": {
+        "exact": 183,
+        "total": 216,
+        "exact_accuracy": 0.8472222222222222
+      },
+      "total_miles": {
+        "exact": 36,
+        "total": 36,
+        "exact_accuracy": 1.0
+      },
+      "week_ending": {
+        "exact": 30,
+        "total": 36,
+        "exact_accuracy": 0.8333333333333334
+      }
+    }
+  },
+  "valid_images": {
+    "images": 15,
+    "preprocessing_warning_cells": 388,
+    "border_recovered_cells": 0,
+    "lighting_adjusted_cells": 388,
+    "registered_images": 15,
+    "registration_success_rate": 1.0,
+    "characters": 2220,
+    "correct_characters": 2152,
+    "character_accuracy": 0.9693693693693693,
+    "digit_characters": 1920,
+    "correct_digits": 1867,
+    "digit_accuracy": 0.9723958333333333,
+    "capital_letter_characters": 300,
+    "correct_capital_letters": 285,
+    "capital_letter_accuracy": 0.95,
+    "fields": 495,
+    "exact_fields": 433,
+    "field_exact_accuracy": 0.8747474747474747,
+    "trip_rows": 90,
+    "exact_rows": 47,
+    "row_exact_accuracy": 0.5222222222222223,
+    "auto_post_rows": 8,
+    "incorrect_auto_post_rows": 0,
+    "auto_post_residual_error_rate": 0.0,
+    "extra_predicted_rows": 0,
+    "cell_extraction_successes": 2220,
+    "cell_extraction_success_rate": 1.0,
+    "row_validation_routes": {
+      "needs_review": 82,
+      "auto_post": 8
+    },
+    "field_metrics": {
+      "client": {
+        "exact": 78,
+        "total": 90,
+        "exact_accuracy": 0.8666666666666667
+      },
+      "date": {
+        "exact": 75,
+        "total": 90,
+        "exact_accuracy": 0.8333333333333334
+      },
+      "employee_id": {
+        "exact": 15,
+        "total": 15,
+        "exact_accuracy": 1.0
+      },
+      "miles": {
+        "exact": 84,
+        "total": 90,
+        "exact_accuracy": 0.9333333333333333
+      },
+      "odometer_end": {
+        "exact": 82,
+        "total": 90,
+        "exact_accuracy": 0.9111111111111111
+      },
+      "odometer_start": {
+        "exact": 75,
+        "total": 90,
+        "exact_accuracy": 0.8333333333333334
+      },
+      "total_miles": {
+        "exact": 15,
+        "total": 15,
+        "exact_accuracy": 1.0
+      },
+      "week_ending": {
+        "exact": 9,
+        "total": 15,
+        "exact_accuracy": 0.6
+      }
+    }
+  },
+  "invalid_images": {
+    "images": 21,
+    "preprocessing_warning_cells": 532,
+    "border_recovered_cells": 0,
+    "lighting_adjusted_cells": 532,
+    "registered_images": 21,
+    "registration_success_rate": 1.0,
+    "characters": 3108,
+    "correct_characters": 3070,
+    "character_accuracy": 0.9877734877734877,
+    "digit_characters": 2688,
+    "correct_digits": 2659,
+    "digit_accuracy": 0.9892113095238095,
+    "capital_letter_characters": 420,
+    "correct_capital_letters": 411,
+    "capital_letter_accuracy": 0.9785714285714285,
+    "fields": 693,
+    "exact_fields": 656,
+    "field_exact_accuracy": 0.9466089466089466,
+    "trip_rows": 126,
+    "exact_rows": 92,
+    "row_exact_accuracy": 0.7301587301587301,
+    "auto_post_rows": 18,
+    "incorrect_auto_post_rows": 0,
+    "auto_post_residual_error_rate": 0.0,
+    "extra_predicted_rows": 0,
+    "cell_extraction_successes": 3108,
+    "cell_extraction_success_rate": 1.0,
+    "row_validation_routes": {
+      "needs_review": 108,
+      "auto_post": 18
+    },
+    "field_metrics": {
+      "client": {
+        "exact": 118,
+        "total": 126,
+        "exact_accuracy": 0.9365079365079365
+      },
+      "date": {
+        "exact": 124,
+        "total": 126,
+        "exact_accuracy": 0.9841269841269841
+      },
+      "employee_id": {
+        "exact": 21,
+        "total": 21,
+        "exact_accuracy": 1.0
+      },
+      "miles": {
+        "exact": 126,
+        "total": 126,
+        "exact_accuracy": 1.0
+      },
+      "odometer_end": {
+        "exact": 117,
+        "total": 126,
+        "exact_accuracy": 0.9285714285714286
+      },
+      "odometer_start": {
+        "exact": 108,
+        "total": 126,
+        "exact_accuracy": 0.8571428571428571
+      },
+      "total_miles": {
+        "exact": 21,
+        "total": 21,
+        "exact_accuracy": 1.0
+      },
+      "week_ending": {
+        "exact": 21,
+        "total": 21,
+        "exact_accuracy": 1.0
+      }
+    }
+  },
+  "by_condition": {
+    "clean": {
+      "images": 12,
+      "preprocessing_warning_cells": 2,
+      "border_recovered_cells": 0,
+      "lighting_adjusted_cells": 2,
+      "registered_images": 12,
+      "registration_success_rate": 1.0,
+      "characters": 1776,
+      "correct_characters": 1741,
+      "character_accuracy": 0.9802927927927928,
+      "digit_characters": 1536,
+      "correct_digits": 1508,
+      "digit_accuracy": 0.9817708333333334,
+      "capital_letter_characters": 240,
+      "correct_capital_letters": 233,
+      "capital_letter_accuracy": 0.9708333333333333,
+      "fields": 396,
+      "exact_fields": 364,
+      "field_exact_accuracy": 0.9191919191919192,
+      "trip_rows": 72,
+      "exact_rows": 47,
+      "row_exact_accuracy": 0.6527777777777778,
+      "auto_post_rows": 13,
+      "incorrect_auto_post_rows": 0,
+      "auto_post_residual_error_rate": 0.0,
+      "extra_predicted_rows": 0,
+      "cell_extraction_successes": 1776,
+      "cell_extraction_success_rate": 1.0,
+      "row_validation_routes": {
+        "needs_review": 59,
+        "auto_post": 13
+      },
+      "field_metrics": {
+        "client": {
+          "exact": 66,
+          "total": 72,
+          "exact_accuracy": 0.9166666666666666
+        },
+        "date": {
+          "exact": 66,
+          "total": 72,
+          "exact_accuracy": 0.9166666666666666
+        },
+        "employee_id": {
+          "exact": 12,
+          "total": 12,
+          "exact_accuracy": 1.0
+        },
+        "miles": {
+          "exact": 70,
+          "total": 72,
+          "exact_accuracy": 0.9722222222222222
+        },
+        "odometer_end": {
+          "exact": 67,
+          "total": 72,
+          "exact_accuracy": 0.9305555555555556
+        },
+        "odometer_start": {
+          "exact": 61,
+          "total": 72,
+          "exact_accuracy": 0.8472222222222222
+        },
+        "total_miles": {
+          "exact": 12,
+          "total": 12,
+          "exact_accuracy": 1.0
+        },
+        "week_ending": {
+          "exact": 10,
+          "total": 12,
+          "exact_accuracy": 0.8333333333333334
+        }
+      }
+    },
+    "rotated": {
+      "images": 12,
+      "preprocessing_warning_cells": 2,
+      "border_recovered_cells": 0,
+      "lighting_adjusted_cells": 2,
+      "registered_images": 12,
+      "registration_success_rate": 1.0,
+      "characters": 1776,
+      "correct_characters": 1737,
+      "character_accuracy": 0.9780405405405406,
+      "digit_characters": 1536,
+      "correct_digits": 1507,
+      "digit_accuracy": 0.9811197916666666,
+      "capital_letter_characters": 240,
+      "correct_capital_letters": 230,
+      "capital_letter_accuracy": 0.9583333333333334,
+      "fields": 396,
+      "exact_fields": 359,
+      "field_exact_accuracy": 0.9065656565656566,
+      "trip_rows": 72,
+      "exact_rows": 43,
+      "row_exact_accuracy": 0.5972222222222222,
+      "auto_post_rows": 13,
+      "incorrect_auto_post_rows": 0,
+      "auto_post_residual_error_rate": 0.0,
+      "extra_predicted_rows": 0,
+      "cell_extraction_successes": 1776,
+      "cell_extraction_success_rate": 1.0,
+      "row_validation_routes": {
+        "needs_review": 59,
+        "auto_post": 13
+      },
+      "field_metrics": {
+        "client": {
+          "exact": 63,
+          "total": 72,
+          "exact_accuracy": 0.875
+        },
+        "date": {
+          "exact": 65,
+          "total": 72,
+          "exact_accuracy": 0.9027777777777778
+        },
+        "employee_id": {
+          "exact": 12,
+          "total": 12,
+          "exact_accuracy": 1.0
+        },
+        "miles": {
+          "exact": 70,
+          "total": 72,
+          "exact_accuracy": 0.9722222222222222
+        },
+        "odometer_end": {
+          "exact": 68,
+          "total": 72,
+          "exact_accuracy": 0.9444444444444444
+        },
+        "odometer_start": {
+          "exact": 59,
+          "total": 72,
+          "exact_accuracy": 0.8194444444444444
+        },
+        "total_miles": {
+          "exact": 12,
+          "total": 12,
+          "exact_accuracy": 1.0
+        },
+        "week_ending": {
+          "exact": 10,
+          "total": 12,
+          "exact_accuracy": 0.8333333333333334
+        }
+      }
+    },
+    "perspective_shadow": {
+      "images": 12,
+      "preprocessing_warning_cells": 916,
+      "border_recovered_cells": 0,
+      "lighting_adjusted_cells": 916,
+      "registered_images": 12,
+      "registration_success_rate": 1.0,
+      "characters": 1776,
+      "correct_characters": 1744,
+      "character_accuracy": 0.9819819819819819,
+      "digit_characters": 1536,
+      "correct_digits": 1511,
+      "digit_accuracy": 0.9837239583333334,
+      "capital_letter_characters": 240,
+      "correct_capital_letters": 233,
+      "capital_letter_accuracy": 0.9708333333333333,
+      "fields": 396,
+      "exact_fields": 366,
+      "field_exact_accuracy": 0.9242424242424242,
+      "trip_rows": 72,
+      "exact_rows": 49,
+      "row_exact_accuracy": 0.6805555555555556,
+      "auto_post_rows": 0,
+      "incorrect_auto_post_rows": 0,
+      "auto_post_residual_error_rate": null,
+      "extra_predicted_rows": 0,
+      "cell_extraction_successes": 1776,
+      "cell_extraction_success_rate": 1.0,
+      "row_validation_routes": {
+        "needs_review": 72
+      },
+      "field_metrics": {
+        "client": {
+          "exact": 67,
+          "total": 72,
+          "exact_accuracy": 0.9305555555555556
+        },
+        "date": {
+          "exact": 68,
+          "total": 72,
+          "exact_accuracy": 0.9444444444444444
+        },
+        "employee_id": {
+          "exact": 12,
+          "total": 12,
+          "exact_accuracy": 1.0
+        },
+        "miles": {
+          "exact": 70,
+          "total": 72,
+          "exact_accuracy": 0.9722222222222222
+        },
+        "odometer_end": {
+          "exact": 64,
+          "total": 72,
+          "exact_accuracy": 0.8888888888888888
+        },
+        "odometer_start": {
+          "exact": 63,
+          "total": 72,
+          "exact_accuracy": 0.875
+        },
+        "total_miles": {
+          "exact": 12,
+          "total": 12,
+          "exact_accuracy": 1.0
+        },
+        "week_ending": {
+          "exact": 10,
+          "total": 12,
+          "exact_accuracy": 0.8333333333333334
+        }
+      }
+    }
+  },
+  "invalid_source_rows_auto_posted": 0,
+  "payment_context_errors_among_auto_post_rows": 0,
+  "extra_auto_post_rows": 0,
+  "case_outcomes": [
+    {
+      "case_id": "valid_form_01_clean",
+      "case_type": "valid",
+      "condition": "clean",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [
+        3,
+        6
+      ],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "valid_form_01_rotated",
+      "case_type": "valid",
+      "condition": "rotated",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [
+        3,
+        4,
+        6
+      ],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "valid_form_01_perspective_shadow",
+      "case_type": "valid",
+      "condition": "perspective_shadow",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "valid_form_02_clean",
+      "case_type": "valid",
+      "condition": "clean",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "footer.weekly_total_matches",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.3.miles_equals_odometer_difference",
+        "rows.3.odometer_end_after_start",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.miles_equals_odometer_difference",
+        "rows.4.trip_date_format_and_in_week",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.trip_date_format_and_in_week",
+        "rows.6.miles_equals_odometer_difference",
+        "rows.6.odometer_continuity"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "valid_form_02_rotated",
+      "case_type": "valid",
+      "condition": "rotated",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "footer.weekly_total_matches",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.miles_equals_odometer_difference",
+        "rows.2.odometer_end_after_start",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.3.miles_equals_odometer_difference",
+        "rows.3.odometer_end_after_start",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.miles_equals_odometer_difference",
+        "rows.4.trip_date_format_and_in_week",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.trip_date_format_and_in_week",
+        "rows.6.miles_equals_odometer_difference",
+        "rows.6.odometer_continuity"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "valid_form_02_perspective_shadow",
+      "case_type": "valid",
+      "condition": "perspective_shadow",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "footer.weekly_total_matches",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.miles_equals_odometer_difference",
+        "rows.2.odometer_end_after_start",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.3.miles_equals_odometer_difference",
+        "rows.3.odometer_end_after_start",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.miles_equals_odometer_difference",
+        "rows.6.miles_equals_odometer_difference",
+        "rows.6.odometer_continuity"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "valid_form_03_clean",
+      "case_type": "valid",
+      "condition": "clean",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "header.week_ending_is_sunday",
+        "rows.1.client_on_visit_schedule",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.odometer_continuity",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.3.client_on_visit_schedule",
+        "rows.3.trip_date_format_and_in_week",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.trip_date_format_and_in_week",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start",
+        "rows.5.trip_date_format_and_in_week",
+        "rows.6.client_on_visit_schedule",
+        "rows.6.trip_date_format_and_in_week"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "valid_form_03_rotated",
+      "case_type": "valid",
+      "condition": "rotated",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "header.week_ending_is_sunday",
+        "rows.1.client_on_visit_schedule",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.odometer_continuity",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.3.client_on_visit_schedule",
+        "rows.3.trip_date_format_and_in_week",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.trip_date_format_and_in_week",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start",
+        "rows.5.trip_date_format_and_in_week",
+        "rows.6.client_on_visit_schedule",
+        "rows.6.trip_date_format_and_in_week"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "valid_form_03_perspective_shadow",
+      "case_type": "valid",
+      "condition": "perspective_shadow",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "header.week_ending_is_sunday",
+        "rows.1.client_on_visit_schedule",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.odometer_continuity",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.3.client_on_visit_schedule",
+        "rows.3.trip_date_format_and_in_week",
+        "rows.4.client_on_visit_schedule",
+        "rows.4.trip_date_format_and_in_week",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start",
+        "rows.5.trip_date_format_and_in_week",
+        "rows.6.client_on_visit_schedule",
+        "rows.6.trip_date_format_and_in_week"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "valid_form_04_clean",
+      "case_type": "valid",
+      "condition": "clean",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "footer.weekly_total_matches",
+        "header.week_ending_is_sunday",
+        "rows.1.client_on_visit_schedule",
+        "rows.1.trip_date_format_and_in_week",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.miles_equals_odometer_difference",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.6.client_on_visit_schedule"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "valid_form_04_rotated",
+      "case_type": "valid",
+      "condition": "rotated",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "footer.weekly_total_matches",
+        "header.week_ending_is_sunday",
+        "rows.1.client_on_visit_schedule",
+        "rows.1.trip_date_format_and_in_week",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.miles_equals_odometer_difference",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.6.client_on_visit_schedule"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "valid_form_04_perspective_shadow",
+      "case_type": "valid",
+      "condition": "perspective_shadow",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "footer.weekly_total_matches",
+        "header.week_ending_is_sunday",
+        "rows.1.client_on_visit_schedule",
+        "rows.1.trip_date_format_and_in_week",
+        "rows.2.client_on_visit_schedule",
+        "rows.2.miles_equals_odometer_difference",
+        "rows.2.trip_date_format_and_in_week",
+        "rows.6.client_on_visit_schedule"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "valid_form_05_clean",
+      "case_type": "valid",
+      "condition": "clean",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "rows.5.client_on_visit_schedule",
+        "rows.5.trip_date_format_and_in_week"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [
+        4
+      ],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "valid_form_05_rotated",
+      "case_type": "valid",
+      "condition": "rotated",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.trip_date_format_and_in_week",
+        "rows.6.miles_equals_odometer_difference",
+        "rows.6.odometer_continuity"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [
+        2,
+        4
+      ],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "valid_form_05_perspective_shadow",
+      "case_type": "valid",
+      "condition": "perspective_shadow",
+      "expected_failed_checks": [],
+      "observed_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.client_on_visit_schedule",
+        "rows.5.trip_date_format_and_in_week"
+      ],
+      "expected_failures_identified": null,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_date_clean",
+      "case_type": "invalid",
+      "condition": "clean",
+      "expected_failed_checks": [
+        "rows.1.client_on_visit_schedule",
+        "rows.1.trip_date_format_and_in_week"
+      ],
+      "observed_failed_checks": [
+        "rows.1.client_on_visit_schedule",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.1.trip_date_format_and_in_week"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [
+        3,
+        4,
+        6
+      ],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_date_rotated",
+      "case_type": "invalid",
+      "condition": "rotated",
+      "expected_failed_checks": [
+        "rows.1.client_on_visit_schedule",
+        "rows.1.trip_date_format_and_in_week"
+      ],
+      "observed_failed_checks": [
+        "rows.1.client_on_visit_schedule",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.1.trip_date_format_and_in_week",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [
+        3,
+        4,
+        6
+      ],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_date_perspective_shadow",
+      "case_type": "invalid",
+      "condition": "perspective_shadow",
+      "expected_failed_checks": [
+        "rows.1.client_on_visit_schedule",
+        "rows.1.trip_date_format_and_in_week"
+      ],
+      "observed_failed_checks": [
+        "rows.1.client_on_visit_schedule",
+        "rows.1.trip_date_format_and_in_week",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_schedule_clean",
+      "case_type": "invalid",
+      "condition": "clean",
+      "expected_failed_checks": [
+        "rows.1.client_on_visit_schedule"
+      ],
+      "observed_failed_checks": [
+        "rows.1.client_on_visit_schedule",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [
+        3,
+        6
+      ],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_schedule_rotated",
+      "case_type": "invalid",
+      "condition": "rotated",
+      "expected_failed_checks": [
+        "rows.1.client_on_visit_schedule"
+      ],
+      "observed_failed_checks": [
+        "rows.1.client_on_visit_schedule",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.client_on_visit_schedule"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [
+        3
+      ],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_schedule_perspective_shadow",
+      "case_type": "invalid",
+      "condition": "perspective_shadow",
+      "expected_failed_checks": [
+        "rows.1.client_on_visit_schedule"
+      ],
+      "observed_failed_checks": [
+        "rows.1.client_on_visit_schedule",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_odometer_clean",
+      "case_type": "invalid",
+      "condition": "clean",
+      "expected_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.1.odometer_end_after_start"
+      ],
+      "observed_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start"
+      ],
+      "expected_failures_identified": false,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [
+        3,
+        6
+      ],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_odometer_rotated",
+      "case_type": "invalid",
+      "condition": "rotated",
+      "expected_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.1.odometer_end_after_start"
+      ],
+      "observed_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.client_on_visit_schedule"
+      ],
+      "expected_failures_identified": false,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [
+        3
+      ],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_odometer_perspective_shadow",
+      "case_type": "invalid",
+      "condition": "perspective_shadow",
+      "expected_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.1.odometer_end_after_start"
+      ],
+      "observed_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.1.odometer_end_after_start",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_employee_clean",
+      "case_type": "invalid",
+      "condition": "clean",
+      "expected_failed_checks": [
+        "header.employee_exists"
+      ],
+      "observed_failed_checks": [
+        "header.employee_exists",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_employee_rotated",
+      "case_type": "invalid",
+      "condition": "rotated",
+      "expected_failed_checks": [
+        "header.employee_exists"
+      ],
+      "observed_failed_checks": [
+        "header.employee_exists",
+        "rows.1.miles_equals_odometer_difference"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_employee_perspective_shadow",
+      "case_type": "invalid",
+      "condition": "perspective_shadow",
+      "expected_failed_checks": [
+        "header.employee_exists"
+      ],
+      "observed_failed_checks": [
+        "header.employee_exists",
+        "rows.1.miles_equals_odometer_difference"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_continuity_clean",
+      "case_type": "invalid",
+      "condition": "clean",
+      "expected_failed_checks": [
+        "rows.2.odometer_continuity"
+      ],
+      "observed_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.2.odometer_continuity"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [
+        3,
+        6
+      ],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_continuity_rotated",
+      "case_type": "invalid",
+      "condition": "rotated",
+      "expected_failed_checks": [
+        "rows.2.odometer_continuity"
+      ],
+      "observed_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.2.odometer_continuity"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [
+        3,
+        4
+      ],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_continuity_perspective_shadow",
+      "case_type": "invalid",
+      "condition": "perspective_shadow",
+      "expected_failed_checks": [
+        "rows.2.odometer_continuity"
+      ],
+      "observed_failed_checks": [
+        "rows.2.odometer_continuity"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_row_miles_clean",
+      "case_type": "invalid",
+      "condition": "clean",
+      "expected_failed_checks": [
+        "rows.1.miles_equals_odometer_difference"
+      ],
+      "observed_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.client_on_visit_schedule"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [
+        3
+      ],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_row_miles_rotated",
+      "case_type": "invalid",
+      "condition": "rotated",
+      "expected_failed_checks": [
+        "rows.1.miles_equals_odometer_difference"
+      ],
+      "observed_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.client_on_visit_schedule",
+        "rows.6.client_on_visit_schedule"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [
+        3
+      ],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_row_miles_perspective_shadow",
+      "case_type": "invalid",
+      "condition": "perspective_shadow",
+      "expected_failed_checks": [
+        "rows.1.miles_equals_odometer_difference"
+      ],
+      "observed_failed_checks": [
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_weekly_total_clean",
+      "case_type": "invalid",
+      "condition": "clean",
+      "expected_failed_checks": [
+        "footer.weekly_total_matches"
+      ],
+      "observed_failed_checks": [
+        "footer.weekly_total_matches",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.6.client_on_visit_schedule"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_weekly_total_rotated",
+      "case_type": "invalid",
+      "condition": "rotated",
+      "expected_failed_checks": [
+        "footer.weekly_total_matches"
+      ],
+      "observed_failed_checks": [
+        "footer.weekly_total_matches",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.client_on_visit_schedule"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    },
+    {
+      "case_id": "invalid_weekly_total_perspective_shadow",
+      "case_type": "invalid",
+      "condition": "perspective_shadow",
+      "expected_failed_checks": [
+        "footer.weekly_total_matches"
+      ],
+      "observed_failed_checks": [
+        "footer.weekly_total_matches",
+        "rows.1.miles_equals_odometer_difference",
+        "rows.5.miles_equals_odometer_difference",
+        "rows.5.odometer_end_after_start"
+      ],
+      "expected_failures_identified": true,
+      "invalid_source_rows_auto_posted": [],
+      "auto_post_rows": [],
+      "payment_context_errors_among_auto_post_rows": [],
+      "extra_predicted_rows": [],
+      "extra_auto_post_rows": []
+    }
+  ],
+  "execution_errors": [],
+  "scope": "Repeated synthetic fixtures; 18 images overlap SCRUM-9. Paired views are not independent samples. Payment-context error includes header, week, total and row transcription; separate source-validity counters identify invalid inputs."
+}

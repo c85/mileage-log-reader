@@ -2,6 +2,8 @@
   {
     "image": "log_001_clean.jpg",
     "condition": "clean",
-    "truth_file": "log_001_clean.truth.json"
+    "truth_file": "log_001_clean.truth.json",
+    "source_split": "EMNIST ByClass test",
+    "intended_use": "held_out_test"
   }
 ]

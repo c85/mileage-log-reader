@@ -4,6 +4,8 @@
 
 - [Project overview and requirements](OVERVIEW.md), converted from the supplied final-project brief.
 - [Team contract](TEAM_CONTRACT.md), converted from the signed team contract.
+- [Frozen v3 QA package](docs/qa/README.md), with the current execution log,
+  notebook, 36-image fixture results, and archived historical evidence.
 
 This repository contains a from-scratch prototype for reading the supplied
 synthetic Sabal Coast Form ML-7. It accepts an image path at demo time,

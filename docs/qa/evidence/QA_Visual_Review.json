@@ -1,21 +1,23 @@
 {
-  "review_type": "Visual inspection of saved QA evidence",
-  "reviewed_utc": "2026-10-06T03:59:31.325301+00:00",
-  "code_commit": "ff674684e8834c1de4b0a105c773444605336d9d",
+  "review_type": "Codex visual inspection of newly generated frozen-v3 evidence",
+  "reviewed_utc": "2026-10-07T14:51:45.895036+00:00",
+  "code_commit": "208a29981c65ce8121302a5fc05ee9e326aa2f44",
+  "frozen_reader_commit": "5e95a2cbdbe7d86d32d3aa9d88d3db77d7a9db2c",
+  "team_signoff": "Not recorded; automated QA and Codex visual inspection only.",
   "results": [
     {
       "test_id": "QA-02",
       "status": "Passed",
       "image": "QA02_Orientation_Check.png",
-      "observation": "All nine selected F, L and 2 samples are upright and face correctly after correction. Assessment is limited to these displayed samples.",
-      "image_sha256": "06a0860fb579352c8679aa25bfcf914325ebaf15ae2713a85a750ce6403d76f7"
+      "observation": "The nine F, L and 2 samples are upright and correctly facing after transposition. This is a sample visual check.",
+      "image_sha256": "37b11135a3457c9a3b4fceb351a4bcc6506b244694a4594fb8b692806e3192db"
     },
     {
       "test_id": "QA-04",
       "status": "Passed",
       "image": "QA04_Character_Crops.png",
-      "observation": "All six crops match the corresponding source characters in order. No missing character, clipped glyph or neighboring character was observed. Each normalized crop is 28 by 28.",
-      "image_sha256": "26c32bff32f919b7d3e78dff0b6ca30cddd37b5529d991caeb1e4e0462610d66"
+      "observation": "Six ordered crops preserve their source glyphs for 048213, with no observed clipping or neighboring characters; six normalized crops are 28 by 28.",
+      "image_sha256": "edb8213461a23890d9156245f6b911f98839ddde6fef0ac04b327c8f6672ba94"
     }
   ]
 }

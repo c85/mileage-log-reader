@@ -1,0 +1,1165 @@
+{
+  "test_id": "QA-03 Part D",
+  "run_time_utc": "2026-10-06T03:57:31.324612+00:00",
+  "code_commit": "ff674684e8834c1de4b0a105c773444605336d9d",
+  "seed": 6642,
+  "condition": "clean",
+  "logs_checked": 1,
+  "character_sources_checked": 148,
+  "excluded_test_indices": [
+    75979,
+    83597
+  ],
+  "all_sources_are_eligible_test_images": true,
+  "all_source_labels_match_truth": true,
+  "every_expected_position_has_one_source": true,
+  "status": "Passed",
+  "scope": "Recorded character sources for one generated six-row log.",
+  "generated_log_record": {
+    "image": "log_001_clean.jpg",
+    "condition": "clean",
+    "truth_file": "log_001_clean.truth.json",
+    "truth": {
+      "employee_id": "LM2984",
+      "week_ending": "2026-09-27",
+      "rows": [
+        {
+          "row_number": 1,
+          "date": "0922",
+          "trip_date_iso": "2026-09-22",
+          "client": "SOL",
+          "odometer_start": "068253",
+          "odometer_end": "068290",
+          "miles": "037",
+          "actual_distance": 37
+        },
+        {
+          "row_number": 2,
+          "date": "0923",
+          "trip_date_iso": "2026-09-23",
+          "client": "TRB",
+          "odometer_start": "068294",
+          "odometer_end": "068369",
+          "miles": "075",
+          "actual_distance": 75
+        },
+        {
+          "row_number": 3,
+          "date": "0924",
+          "trip_date_iso": "2026-09-24",
+          "client": "MXQ",
+          "odometer_start": "068369",
+          "odometer_end": "068402",
+          "miles": "033",
+          "actual_distance": 33
+        },
+        {
+          "row_number": 4,
+          "date": "0925",
+          "trip_date_iso": "2026-09-25",
+          "client": "GEN",
+          "odometer_start": "068402",
+          "odometer_end": "068481",
+          "miles": "079",
+          "actual_distance": 79
+        },
+        {
+          "row_number": 5,
+          "date": "0926",
+          "trip_date_iso": "2026-09-26",
+          "client": "SOL",
+          "odometer_start": "068481",
+          "odometer_end": "068545",
+          "miles": "064",
+          "actual_distance": 64
+        },
+        {
+          "row_number": 6,
+          "date": "0927",
+          "trip_date_iso": "2026-09-27",
+          "client": "TRB",
+          "odometer_start": "068547",
+          "odometer_end": "068604",
+          "miles": "057",
+          "actual_distance": 57
+        }
+      ],
+      "total_miles": "0345",
+      "fields": {
+        "header.employee_id": "LM2984",
+        "header.week_ending": "092726",
+        "footer.total_miles": "0345",
+        "rows.1.date": "0922",
+        "rows.1.client": "SOL",
+        "rows.1.odometer_start": "068253",
+        "rows.1.odometer_end": "068290",
+        "rows.1.miles": "037",
+        "rows.2.date": "0923",
+        "rows.2.client": "TRB",
+        "rows.2.odometer_start": "068294",
+        "rows.2.odometer_end": "068369",
+        "rows.2.miles": "075",
+        "rows.3.date": "0924",
+        "rows.3.client": "MXQ",
+        "rows.3.odometer_start": "068369",
+        "rows.3.odometer_end": "068402",
+        "rows.3.miles": "033",
+        "rows.4.date": "0925",
+        "rows.4.client": "GEN",
+        "rows.4.odometer_start": "068402",
+        "rows.4.odometer_end": "068481",
+        "rows.4.miles": "079",
+        "rows.5.date": "0926",
+        "rows.5.client": "SOL",
+        "rows.5.odometer_start": "068481",
+        "rows.5.odometer_end": "068545",
+        "rows.5.miles": "064",
+        "rows.6.date": "0927",
+        "rows.6.client": "TRB",
+        "rows.6.odometer_start": "068547",
+        "rows.6.odometer_end": "068604",
+        "rows.6.miles": "057"
+      }
+    },
+    "character_sources": [
+      {
+        "field": "header.employee_id",
+        "position": 0,
+        "label": "L",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 68495
+      },
+      {
+        "field": "header.employee_id",
+        "position": 1,
+        "label": "M",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 56391
+      },
+      {
+        "field": "header.employee_id",
+        "position": 2,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 43482
+      },
+      {
+        "field": "header.employee_id",
+        "position": 3,
+        "label": "9",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 38709
+      },
+      {
+        "field": "header.employee_id",
+        "position": 4,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 54372
+      },
+      {
+        "field": "header.employee_id",
+        "position": 5,
+        "label": "4",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 64192
+      },
+      {
+        "field": "header.week_ending",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 77742
+      },
+      {
+        "field": "header.week_ending",
+        "position": 1,
+        "label": "9",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 34955
+      },
+      {
+        "field": "header.week_ending",
+        "position": 2,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 85127
+      },
+      {
+        "field": "header.week_ending",
+        "position": 3,
+        "label": "7",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 33788
+      },
+      {
+        "field": "header.week_ending",
+        "position": 4,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 28254
+      },
+      {
+        "field": "header.week_ending",
+        "position": 5,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 87723
+      },
+      {
+        "field": "footer.total_miles",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 82220
+      },
+      {
+        "field": "footer.total_miles",
+        "position": 1,
+        "label": "3",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 14643
+      },
+      {
+        "field": "footer.total_miles",
+        "position": 2,
+        "label": "4",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 29391
+      },
+      {
+        "field": "footer.total_miles",
+        "position": 3,
+        "label": "5",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 70834
+      },
+      {
+        "field": "rows.1.date",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 68730
+      },
+      {
+        "field": "rows.1.date",
+        "position": 1,
+        "label": "9",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 8355
+      },
+      {
+        "field": "rows.1.date",
+        "position": 2,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 26350
+      },
+      {
+        "field": "rows.1.date",
+        "position": 3,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 10565
+      },
+      {
+        "field": "rows.1.client",
+        "position": 0,
+        "label": "S",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 74696
+      },
+      {
+        "field": "rows.1.client",
+        "position": 1,
+        "label": "O",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 1347
+      },
+      {
+        "field": "rows.1.client",
+        "position": 2,
+        "label": "L",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 59145
+      },
+      {
+        "field": "rows.1.odometer_start",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 32467
+      },
+      {
+        "field": "rows.1.odometer_start",
+        "position": 1,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 50979
+      },
+      {
+        "field": "rows.1.odometer_start",
+        "position": 2,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 44304
+      },
+      {
+        "field": "rows.1.odometer_start",
+        "position": 3,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 11124
+      },
+      {
+        "field": "rows.1.odometer_start",
+        "position": 4,
+        "label": "5",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 75785
+      },
+      {
+        "field": "rows.1.odometer_start",
+        "position": 5,
+        "label": "3",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 73589
+      },
+      {
+        "field": "rows.1.odometer_end",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 55173
+      },
+      {
+        "field": "rows.1.odometer_end",
+        "position": 1,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 59515
+      },
+      {
+        "field": "rows.1.odometer_end",
+        "position": 2,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 32461
+      },
+      {
+        "field": "rows.1.odometer_end",
+        "position": 3,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 1097
+      },
+      {
+        "field": "rows.1.odometer_end",
+        "position": 4,
+        "label": "9",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 26056
+      },
+      {
+        "field": "rows.1.odometer_end",
+        "position": 5,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 18026
+      },
+      {
+        "field": "rows.1.miles",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 81199
+      },
+      {
+        "field": "rows.1.miles",
+        "position": 1,
+        "label": "3",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 49387
+      },
+      {
+        "field": "rows.1.miles",
+        "position": 2,
+        "label": "7",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 71162
+      },
+      {
+        "field": "rows.2.date",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 28358
+      },
+      {
+        "field": "rows.2.date",
+        "position": 1,
+        "label": "9",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 15135
+      },
+      {
+        "field": "rows.2.date",
+        "position": 2,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 77888
+      },
+      {
+        "field": "rows.2.date",
+        "position": 3,
+        "label": "3",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 8373
+      },
+      {
+        "field": "rows.2.client",
+        "position": 0,
+        "label": "T",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 41194
+      },
+      {
+        "field": "rows.2.client",
+        "position": 1,
+        "label": "R",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 19010
+      },
+      {
+        "field": "rows.2.client",
+        "position": 2,
+        "label": "B",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 82854
+      },
+      {
+        "field": "rows.2.odometer_start",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 87821
+      },
+      {
+        "field": "rows.2.odometer_start",
+        "position": 1,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 17982
+      },
+      {
+        "field": "rows.2.odometer_start",
+        "position": 2,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 84659
+      },
+      {
+        "field": "rows.2.odometer_start",
+        "position": 3,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 85659
+      },
+      {
+        "field": "rows.2.odometer_start",
+        "position": 4,
+        "label": "9",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 86208
+      },
+      {
+        "field": "rows.2.odometer_start",
+        "position": 5,
+        "label": "4",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 59294
+      },
+      {
+        "field": "rows.2.odometer_end",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 34994
+      },
+      {
+        "field": "rows.2.odometer_end",
+        "position": 1,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 46138
+      },
+      {
+        "field": "rows.2.odometer_end",
+        "position": 2,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 69551
+      },
+      {
+        "field": "rows.2.odometer_end",
+        "position": 3,
+        "label": "3",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 87461
+      },
+      {
+        "field": "rows.2.odometer_end",
+        "position": 4,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 66583
+      },
+      {
+        "field": "rows.2.odometer_end",
+        "position": 5,
+        "label": "9",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 47786
+      },
+      {
+        "field": "rows.2.miles",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 84760
+      },
+      {
+        "field": "rows.2.miles",
+        "position": 1,
+        "label": "7",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 3097
+      },
+      {
+        "field": "rows.2.miles",
+        "position": 2,
+        "label": "5",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 85199
+      },
+      {
+        "field": "rows.3.date",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 5053
+      },
+      {
+        "field": "rows.3.date",
+        "position": 1,
+        "label": "9",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 85695
+      },
+      {
+        "field": "rows.3.date",
+        "position": 2,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 55652
+      },
+      {
+        "field": "rows.3.date",
+        "position": 3,
+        "label": "4",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 13556
+      },
+      {
+        "field": "rows.3.client",
+        "position": 0,
+        "label": "M",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 29815
+      },
+      {
+        "field": "rows.3.client",
+        "position": 1,
+        "label": "X",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 60486
+      },
+      {
+        "field": "rows.3.client",
+        "position": 2,
+        "label": "Q",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 74213
+      },
+      {
+        "field": "rows.3.odometer_start",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 63179
+      },
+      {
+        "field": "rows.3.odometer_start",
+        "position": 1,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 50355
+      },
+      {
+        "field": "rows.3.odometer_start",
+        "position": 2,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 74783
+      },
+      {
+        "field": "rows.3.odometer_start",
+        "position": 3,
+        "label": "3",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 11373
+      },
+      {
+        "field": "rows.3.odometer_start",
+        "position": 4,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 86173
+      },
+      {
+        "field": "rows.3.odometer_start",
+        "position": 5,
+        "label": "9",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 80263
+      },
+      {
+        "field": "rows.3.odometer_end",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 41371
+      },
+      {
+        "field": "rows.3.odometer_end",
+        "position": 1,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 79773
+      },
+      {
+        "field": "rows.3.odometer_end",
+        "position": 2,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 67172
+      },
+      {
+        "field": "rows.3.odometer_end",
+        "position": 3,
+        "label": "4",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 20395
+      },
+      {
+        "field": "rows.3.odometer_end",
+        "position": 4,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 32066
+      },
+      {
+        "field": "rows.3.odometer_end",
+        "position": 5,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 19453
+      },
+      {
+        "field": "rows.3.miles",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 66241
+      },
+      {
+        "field": "rows.3.miles",
+        "position": 1,
+        "label": "3",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 37602
+      },
+      {
+        "field": "rows.3.miles",
+        "position": 2,
+        "label": "3",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 49161
+      },
+      {
+        "field": "rows.4.date",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 6533
+      },
+      {
+        "field": "rows.4.date",
+        "position": 1,
+        "label": "9",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 41461
+      },
+      {
+        "field": "rows.4.date",
+        "position": 2,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 69669
+      },
+      {
+        "field": "rows.4.date",
+        "position": 3,
+        "label": "5",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 52823
+      },
+      {
+        "field": "rows.4.client",
+        "position": 0,
+        "label": "G",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 86235
+      },
+      {
+        "field": "rows.4.client",
+        "position": 1,
+        "label": "E",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 22570
+      },
+      {
+        "field": "rows.4.client",
+        "position": 2,
+        "label": "N",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 58554
+      },
+      {
+        "field": "rows.4.odometer_start",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 4769
+      },
+      {
+        "field": "rows.4.odometer_start",
+        "position": 1,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 601
+      },
+      {
+        "field": "rows.4.odometer_start",
+        "position": 2,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 81067
+      },
+      {
+        "field": "rows.4.odometer_start",
+        "position": 3,
+        "label": "4",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 62682
+      },
+      {
+        "field": "rows.4.odometer_start",
+        "position": 4,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 557
+      },
+      {
+        "field": "rows.4.odometer_start",
+        "position": 5,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 43961
+      },
+      {
+        "field": "rows.4.odometer_end",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 13270
+      },
+      {
+        "field": "rows.4.odometer_end",
+        "position": 1,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 71252
+      },
+      {
+        "field": "rows.4.odometer_end",
+        "position": 2,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 37512
+      },
+      {
+        "field": "rows.4.odometer_end",
+        "position": 3,
+        "label": "4",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 39213
+      },
+      {
+        "field": "rows.4.odometer_end",
+        "position": 4,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 81696
+      },
+      {
+        "field": "rows.4.odometer_end",
+        "position": 5,
+        "label": "1",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 2307
+      },
+      {
+        "field": "rows.4.miles",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 22474
+      },
+      {
+        "field": "rows.4.miles",
+        "position": 1,
+        "label": "7",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 36313
+      },
+      {
+        "field": "rows.4.miles",
+        "position": 2,
+        "label": "9",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 80637
+      },
+      {
+        "field": "rows.5.date",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 59467
+      },
+      {
+        "field": "rows.5.date",
+        "position": 1,
+        "label": "9",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 79902
+      },
+      {
+        "field": "rows.5.date",
+        "position": 2,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 25424
+      },
+      {
+        "field": "rows.5.date",
+        "position": 3,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 5340
+      },
+      {
+        "field": "rows.5.client",
+        "position": 0,
+        "label": "S",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 21877
+      },
+      {
+        "field": "rows.5.client",
+        "position": 1,
+        "label": "O",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 42974
+      },
+      {
+        "field": "rows.5.client",
+        "position": 2,
+        "label": "L",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 16833
+      },
+      {
+        "field": "rows.5.odometer_start",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 52054
+      },
+      {
+        "field": "rows.5.odometer_start",
+        "position": 1,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 3804
+      },
+      {
+        "field": "rows.5.odometer_start",
+        "position": 2,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 48788
+      },
+      {
+        "field": "rows.5.odometer_start",
+        "position": 3,
+        "label": "4",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 74922
+      },
+      {
+        "field": "rows.5.odometer_start",
+        "position": 4,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 26989
+      },
+      {
+        "field": "rows.5.odometer_start",
+        "position": 5,
+        "label": "1",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 72432
+      },
+      {
+        "field": "rows.5.odometer_end",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 69133
+      },
+      {
+        "field": "rows.5.odometer_end",
+        "position": 1,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 62290
+      },
+      {
+        "field": "rows.5.odometer_end",
+        "position": 2,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 84385
+      },
+      {
+        "field": "rows.5.odometer_end",
+        "position": 3,
+        "label": "5",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 77921
+      },
+      {
+        "field": "rows.5.odometer_end",
+        "position": 4,
+        "label": "4",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 89199
+      },
+      {
+        "field": "rows.5.odometer_end",
+        "position": 5,
+        "label": "5",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 33701
+      },
+      {
+        "field": "rows.5.miles",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 28324
+      },
+      {
+        "field": "rows.5.miles",
+        "position": 1,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 46959
+      },
+      {
+        "field": "rows.5.miles",
+        "position": 2,
+        "label": "4",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 34078
+      },
+      {
+        "field": "rows.6.date",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 87846
+      },
+      {
+        "field": "rows.6.date",
+        "position": 1,
+        "label": "9",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 11650
+      },
+      {
+        "field": "rows.6.date",
+        "position": 2,
+        "label": "2",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 55686
+      },
+      {
+        "field": "rows.6.date",
+        "position": 3,
+        "label": "7",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 70134
+      },
+      {
+        "field": "rows.6.client",
+        "position": 0,
+        "label": "T",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 1922
+      },
+      {
+        "field": "rows.6.client",
+        "position": 1,
+        "label": "R",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 73354
+      },
+      {
+        "field": "rows.6.client",
+        "position": 2,
+        "label": "B",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 35357
+      },
+      {
+        "field": "rows.6.odometer_start",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 991
+      },
+      {
+        "field": "rows.6.odometer_start",
+        "position": 1,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 77396
+      },
+      {
+        "field": "rows.6.odometer_start",
+        "position": 2,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 67471
+      },
+      {
+        "field": "rows.6.odometer_start",
+        "position": 3,
+        "label": "5",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 60534
+      },
+      {
+        "field": "rows.6.odometer_start",
+        "position": 4,
+        "label": "4",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 46134
+      },
+      {
+        "field": "rows.6.odometer_start",
+        "position": 5,
+        "label": "7",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 63411
+      },
+      {
+        "field": "rows.6.odometer_end",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 54846
+      },
+      {
+        "field": "rows.6.odometer_end",
+        "position": 1,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 22580
+      },
+      {
+        "field": "rows.6.odometer_end",
+        "position": 2,
+        "label": "8",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 39260
+      },
+      {
+        "field": "rows.6.odometer_end",
+        "position": 3,
+        "label": "6",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 28229
+      },
+      {
+        "field": "rows.6.odometer_end",
+        "position": 4,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 3354
+      },
+      {
+        "field": "rows.6.odometer_end",
+        "position": 5,
+        "label": "4",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 58533
+      },
+      {
+        "field": "rows.6.miles",
+        "position": 0,
+        "label": "0",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 44450
+      },
+      {
+        "field": "rows.6.miles",
+        "position": 1,
+        "label": "5",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 69092
+      },
+      {
+        "field": "rows.6.miles",
+        "position": 2,
+        "label": "7",
+        "source_split": "EMNIST ByClass test",
+        "test_image_index": 54275
+      }
+    ],
+    "excluded_test_images_shared_with_train_or_validation": 2,
+    "split": "EMNIST ByClass test only"
+  }
+}
