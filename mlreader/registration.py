@@ -113,7 +113,7 @@ def _template_features():
     return keypoints, descriptors
 
 
-def _align_template(image):
+def _align_template(image, allow_page_transform=False):
     """Align the printed ML-7 features, independently of the handwritten answers."""
     template_points, template_descriptors = _template_features()
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -138,9 +138,34 @@ def _align_template(image):
     details["inliers"] = int(accepted.sum())
     coverage = cv2.contourArea(cv2.convexHull(target[accepted])) / (CANVAS_WIDTH * CANVAS_HEIGHT)
     corners = np.float32([[0, 0], [CANVAS_WIDTH - 1, 0], [CANVAS_WIDTH - 1, CANVAS_HEIGHT - 1], [0, CANVAS_HEIGHT - 1]])
-    aligned_corners = cv2.perspectiveTransform(corners[None], transform)[0]
-    displacement = float(np.linalg.norm(aligned_corners - corners, axis=1).max())
-    details["maximum_corner_displacement"] = displacement
+    page_corners = None
+    if allow_page_transform:
+        try:
+            page_corners = cv2.perspectiveTransform(corners[None], np.linalg.inv(transform))[0]
+        except np.linalg.LinAlgError:
+            details["reason"] = "Printed form alignment could not be estimated reliably."
+            return image, details
+        if not np.isfinite(page_corners).all() or not cv2.isContourConvex(page_corners):
+            details["reason"] = "Printed form alignment failed the coverage or geometry checks."
+            return image, details
+        height, width = image.shape[:2]
+        x_min, y_min = page_corners.min(axis=0)
+        x_max, y_max = page_corners.max(axis=0)
+        page_share = abs(cv2.contourArea(page_corners)) / (width * height)
+        details["captured_page_area_share"] = float(page_share)
+        page_geometry_ok = (
+            x_min >= -width * 0.1
+            and y_min >= -height * 0.1
+            and x_max <= width * 1.1
+            and y_max <= height * 1.1
+            and 0.06 <= page_share <= 1.2
+        )
+        displacement = None
+    else:
+        aligned_corners = cv2.perspectiveTransform(corners[None], transform)[0]
+        displacement = float(np.linalg.norm(aligned_corners - corners, axis=1).max())
+        details["maximum_corner_displacement"] = displacement
+        page_geometry_ok = np.isfinite(aligned_corners).all() and cv2.isContourConvex(aligned_corners)
     details["matched_template_area_share"] = float(coverage)
     spans = np.ptp(target[accepted], axis=0)
     if (
@@ -149,14 +174,20 @@ def _align_template(image):
         or coverage < 0.05
         or spans[0] < CANVAS_WIDTH * 0.45
         or spans[1] < CANVAS_HEIGHT * 0.1
-        or not np.isfinite(aligned_corners).all()
-        or displacement > CANVAS_WIDTH * 0.1
+        or (displacement is not None and displacement > CANVAS_WIDTH * 0.1)
         or np.linalg.det(transform[:2, :2]) <= 0
-        or not cv2.isContourConvex(aligned_corners)
+        or not page_geometry_ok
     ):
         details["reason"] = "Printed form alignment failed the coverage or geometry checks."
         return image, details
     details.update(verified=True, reason=None, transform=transform.tolist())
+    if allow_page_transform:
+        details.update(applied=True, method="printed-template-perspective", page_corners=page_corners.tolist())
+        aligned = cv2.warpPerspective(
+            image, transform, (CANVAS_WIDTH, CANVAS_HEIGHT),
+            flags=cv2.INTER_CUBIC, borderValue=(255, 255, 255),
+        )
+        return aligned, details
     # Preserve an already aligned scan rather than resampling its characters.
     if displacement <= 1.0:
         return image, details
@@ -179,9 +210,9 @@ def register_page(source):
     """Find a paper boundary and warp it to the supplied ML-7 template size.
 
     Printed template features then correct offsets caused by printing margins.
-    An aspect-ratio fallback supports flatbed scans that have already been
-    cropped to the page. Phone images without a recoverable page boundary are
-    rejected so they can be reviewed instead of silently mis-cropped.
+    If the page edge blends into a phone-photo background, printed ML-7 features
+    provide a second registration path. An aspect-ratio fallback supports
+    flatbed scans that have already been cropped to the page.
     """
     image = load_image(source)
     height, width = image.shape[:2]
@@ -201,12 +232,37 @@ def register_page(source):
         )
         return _registered_result(warped, "paper-boundary-perspective", quad.tolist())
 
+    # A phone can capture a white page against a white or unevenly lit surface,
+    # leaving no reliable outer contour. The fixed printed form still provides
+    # enough landmarks to estimate a perspective transform in many such cases.
+    aligned, alignment = _align_template(image, allow_page_transform=True)
+    if alignment["verified"]:
+        return RegistrationResult(
+            True, aligned, "printed-template-perspective", alignment["page_corners"],
+            template_alignment=alignment,
+        )
+
     input_ratio = width / max(height, 1)
     target_ratio = CANVAS_WIDTH / CANVAS_HEIGHT
     if abs(input_ratio - target_ratio) <= 0.035:
         resized = cv2.resize(image, (CANVAS_WIDTH, CANVAS_HEIGHT), interpolation=cv2.INTER_AREA)
         corners = [[0.0, 0.0], [width - 1.0, 0.0], [width - 1.0, height - 1.0], [0.0, height - 1.0]]
         return _registered_result(resized, "aspect-ratio-flat-scan", corners)
+
+    # Some mobile browsers save a landscape form in a portrait-oriented pixel
+    # buffer. Try both quarter-turns and accept only the one that matches the
+    # printed template in its expected orientation.
+    if abs((1 / max(input_ratio, 1e-9)) - target_ratio) <= 0.035:
+        for rotation in (cv2.ROTATE_90_CLOCKWISE, cv2.ROTATE_90_COUNTERCLOCKWISE):
+            rotated = cv2.rotate(image, rotation)
+            resized = cv2.resize(rotated, (CANVAS_WIDTH, CANVAS_HEIGHT), interpolation=cv2.INTER_AREA)
+            aligned, alignment = _align_template(resized)
+            if alignment["verified"]:
+                corners = [[0.0, 0.0], [height - 1.0, 0.0], [height - 1.0, width - 1.0], [0.0, width - 1.0]]
+                return RegistrationResult(
+                    True, aligned, "rotated-aspect-ratio-flat-scan", corners,
+                    template_alignment=alignment,
+                )
 
     return RegistrationResult(
         False,
