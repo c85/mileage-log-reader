@@ -1,0 +1,29 @@
+```markdown
+**Name:** Ishti Boedjawan  
+**Team role:** Scrum Lead
+
+During this project, I personally contributed by coordinating Jira tasks and
+reviewing our documentation, evaluation results and presentation. My assigned
+work included the team contract and Definition of Done (SCRUM-23), sprint
+workbook and plan (SCRUM-29), performance evaluation (SCRUM-18), business note
+(SCRUM-20), approach document (SCRUM-32), and delivery coordination (SCRUM-31).
+I owned the decisions to simplify the business explanation, and leave per-review 
+cost unmeasuredrather than introduce an unsupported estimate. I worked with Ana on product
+recommendations, Christopher on demo handoffs, Giuseppe on data and results,
+and Felix on QA acceptance and remaining tasks.
+
+One technical challenge was understanding why higher character accuracy did
+not mean that complete mileage rows were correct. I addressed it by reviewing
+the reported 69.5% character accuracy alongside zero entirely correct rows
+out of 67 on the handwriting benchmark. This helped me explain why human
+approval remained necessary. The part of the system I can explain most
+clearly is the business cost comparison; it works by comparing the $34,000
+monthly manual-entry baseline with scenarios for avoided keying, while
+recognizing that review, software and correction costs still need measurement.
+
+AI assistance is disclosed in `docs/ai_assistance.md`. My own review or
+follow-up work on AI-assisted code was focused on interpreting reported
+outputs. I used Codex for drafting and review support;
+I do not claim to have independently written or verified every implementation
+change.
+```
