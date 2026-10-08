@@ -208,7 +208,7 @@ documents. Blank and unsupported fields go to review.
 
 ## AI assistance disclosure
 
-OpenAI Codex assisted with implementation scaffolding, code edits, development
+OpenAI Codex and Claude assisted with implementation scaffolding, code edits, development
 labels, border and lighting recovery, evaluation analysis and draft project
 documentation, as detailed in `docs/ai_assistance.md`. The team remains responsible for understanding,
 reviewing, explaining, and presenting every part of the submitted work.
