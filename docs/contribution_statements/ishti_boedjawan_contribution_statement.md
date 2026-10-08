@@ -1,4 +1,3 @@
-```markdown
 **Name:** Ishti Boedjawan  
 **Team role:** Scrum Lead
 
@@ -26,4 +25,4 @@ follow-up work on AI-assisted code was focused on interpreting reported
 outputs. I used Codex for drafting and review support;
 I do not claim to have independently written or verified every implementation
 change.
-```
+
