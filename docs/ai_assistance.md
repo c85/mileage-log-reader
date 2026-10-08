@@ -1,6 +1,6 @@
 # AI assistance disclosure
 
-OpenAI Codex assisted with repository implementation, code scaffolding,
+OpenAI Codex and Claude assisted with repository implementation, code scaffolding,
 review of the supplied project brief, and draft documentation. This included
 manually transcribing fictional development-form labels,
 implementing printed-template and box alignment with OpenCV, small-artifact
